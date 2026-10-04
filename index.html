@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gabi Knits</title>
+<meta name="description" content="Gabi Knits - a knitting chart reader for Android phones, tablets and BOOX e-ink. Coming soon to Google Play.">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+/* Strona tymczasowa: bez skryptów, bez analityki, bez zewnętrznych zasobów (krój i logo są lokalne). */
+@font-face{font-family:"Prata";src:url("assets/prata.ttf") format("truetype");font-display:swap}
+:root{--paper:#FBF7F2;--ink:#1E3350;--muted:#5D6B7D;--yarn:#E9846A;color-scheme:light}
+@media (prefers-color-scheme: dark){:root{--paper:#151B24;--ink:#EEF1F5;--muted:#A6B0BD;--yarn:#F09A82;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5;display:flex;align-items:center;justify-content:center;padding:32px 16px}
+main{max-width:560px;text-align:center}
+img{width:min(220px,60vw);height:auto;border-radius:28px}
+h1{font-family:"Prata",Georgia,serif;font-weight:400;font-size:clamp(2.4rem,9vw,3.4rem);margin:20px 0 4px}
+.soon{display:inline-block;margin:10px 0 26px;padding:4px 14px;border:1.5px solid var(--yarn);border-radius:999px;font-size:.95rem;letter-spacing:.04em}
+p{margin:6px 0;font-size:1.08rem}
+p[lang="pl"]{color:var(--muted)}
+footer{margin-top:36px;font-size:.82rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+  <img src="assets/logo.png" width="400" height="416" alt="Gabi Knits logo: a cat in glasses knitting">
+  <h1>Gabi Knits</h1>
+  <div class="soon">Coming soon to Google Play · Wkrótce w Google Play</div>
+  <p>A knitting chart reader for Android phones, tablets and BOOX e-ink. It finds the chart in your PDF pattern and guides you row by row.</p>
+  <p lang="pl">Czytnik schematów dziewiarskich na telefon, tablet i e-ink BOOX. Sam znajduje schemat we wzorze PDF i prowadzi rząd po rzędzie.</p>
+  <footer>No account, no ads, no tracking. · Bez konta, bez reklam, bez śledzenia.</footer>
+</main>
+</body>
+</html>
