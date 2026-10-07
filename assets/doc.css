@@ -1,0 +1,28 @@
+/* Strony z tekstem (polityka prywatności, później warunki i FAQ). Bez skryptów, krój lokalny. */
+@font-face{font-family:"Prata";src:url("prata.ttf") format("truetype");font-display:swap}
+:root{--paper:#FBF7F2;--ink:#1E3350;--muted:#5D6B7D;--yarn:#E9846A;--rule:#E6DDD2;color-scheme:light}
+@media (prefers-color-scheme: dark){:root{--paper:#151B24;--ink:#EEF1F5;--muted:#A6B0BD;--yarn:#F09A82;--rule:#2C3644;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;padding:24px 16px 48px}
+main{max-width:720px;margin:0 auto}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between;border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:8px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-family:"Prata",Georgia,serif;font-size:1.35rem}
+.brand img{width:40px;height:40px;border-radius:9px}
+.lang{display:flex;flex-wrap:wrap;gap:4px}
+.lang a,.lang .cur{display:inline-flex;align-items:center;gap:6px;padding:3px 8px 3px 5px;border-radius:999px;border:1.5px solid transparent;font-size:.85rem;text-decoration:none;letter-spacing:.04em}
+.lang .cur{border-color:var(--yarn);font-weight:600}
+.flag{display:inline-flex}
+.flag svg{width:22px;height:15px;border-radius:3px;box-shadow:0 0 0 1px rgba(30,51,80,.18);display:block}
+a{color:var(--ink);text-decoration-color:var(--yarn);text-underline-offset:3px}
+h1{font-family:"Prata",Georgia,serif;font-weight:400;font-size:clamp(1.9rem,6vw,2.5rem);line-height:1.2;margin:26px 0 4px}
+h2{font-family:"Prata",Georgia,serif;font-weight:400;font-size:1.35rem;margin:34px 0 8px}
+h3{font-size:1.02rem;font-weight:600;margin:18px 0 4px}
+.updated{color:var(--muted);margin:0 0 18px}
+.summary{border-left:3px solid var(--yarn);padding:4px 0 4px 16px;margin:20px 0}
+ul{padding-left:1.3em}
+li{margin:4px 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:10px 0}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--rule)}
+th{font-weight:600}
+.table{overflow-x:auto}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--rule);color:var(--muted);font-size:.88rem}

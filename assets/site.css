@@ -1,0 +1,111 @@
+/* Strona główna Gabi Knits. Bez skryptów, bez zewnętrznych zasobów - krój i obrazy są lokalne. */
+@font-face{font-family:"Prata";src:url("prata.ttf") format("truetype");font-display:swap}
+:root{--paper:#FBF7F2;--card:#FFFFFF;--ink:#1E3350;--muted:#5D6B7D;--yarn:#E9846A;--yarn-soft:#FBE7DF;--rule:#E6DDD2;--band:#F3EDE5;color-scheme:light}
+@media (prefers-color-scheme: dark){:root{--paper:#151B24;--card:#1C2430;--ink:#EEF1F5;--muted:#A6B0BD;--yarn:#F09A82;--yarn-soft:#3A2A26;--rule:#2C3644;--band:#19212C;color-scheme:dark}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;font-size:17px}
+a{color:var(--ink);text-decoration-color:var(--yarn);text-underline-offset:3px}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:"Prata",Georgia,serif;font-weight:400;line-height:1.2}
+h2{font-size:clamp(1.7rem,4.5vw,2.3rem);margin:0 0 10px}
+h3{font-size:1.2rem;margin:0 0 6px}
+.lead{color:var(--muted);max-width:640px;margin:0 0 28px}
+section{padding:64px 0}
+
+/* Nagłówek */
+.top{border-bottom:1px solid var(--rule);background:var(--paper)}
+.top .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:"Prata",Georgia,serif;font-size:1.35rem;margin-right:auto}
+.brand img{width:40px;height:40px;border-radius:9px}
+.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:.95rem}
+.nav a{text-decoration:none}
+.nav a:hover{text-decoration:underline}
+.lang{display:flex;gap:4px;flex-wrap:wrap;font-size:.82rem}
+.lang a,.lang .cur{display:inline-flex;align-items:center;gap:6px;padding:4px 9px 4px 6px;border-radius:999px;border:1.5px solid transparent;text-decoration:none;letter-spacing:.04em}
+.lang .cur{border-color:var(--yarn);font-weight:600}
+.lang a:hover{background:var(--band)}
+.flag{display:inline-flex}
+.flag svg{width:22px;height:15px;border-radius:3px;box-shadow:0 0 0 1px rgba(30,51,80,.18);display:block}
+
+/* Otwarcie */
+.hero{text-align:center;padding:56px 0 40px}
+.hero img.logo{width:min(180px,46vw);margin:0 auto;border-radius:30px}
+.hero h1{font-size:clamp(2.6rem,9vw,3.8rem);margin:18px 0 6px}
+.claim{font-family:"Prata",Georgia,serif;font-size:clamp(1.25rem,4vw,1.6rem);margin:0 0 14px}
+.hero p.intro{max-width:620px;margin:0 auto 22px;color:var(--muted)}
+.soon{display:inline-block;padding:7px 18px;border:2px solid var(--yarn);border-radius:999px;font-weight:600;letter-spacing:.02em}
+.devices{margin:16px 0 0;color:var(--muted);font-size:.95rem}
+.pledge{margin:6px 0 0;font-size:.92rem;color:var(--muted)}
+
+/* Zrzuty */
+.shots{padding:24px 0 56px}
+.shots .grid{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:end;max-width:860px;margin:0 auto}
+.shots figure{margin:0}
+.shots figcaption{text-align:center;color:var(--muted);font-size:.92rem;margin-top:10px}
+.frame{background:#111;padding:10px;border-radius:22px;box-shadow:0 12px 34px rgba(30,51,80,.16)}
+.frame img{border-radius:12px}
+.frame.eink{background:#3a3a3a;padding:14px 14px 34px;border-radius:18px}
+.frame.eink img{border-radius:2px}
+.frame.phone{border-radius:34px;padding:10px}
+.frame.phone img{border-radius:24px}
+.frame.tablet{border-radius:26px;padding:14px}
+.shots .wide{max-width:860px;margin:32px auto 0}
+
+/* Jak to działa */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:22px}
+.step .n{font-family:"Prata",Georgia,serif;font-size:2.2rem;color:var(--yarn);line-height:1}
+.step p{margin:6px 0 0;color:var(--muted)}
+
+/* Co potrafi */
+.band{background:var(--band)}
+.features{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 28px;list-style:none;padding:0;margin:0}
+.features li{position:relative;padding-left:26px}
+.features li::before{content:"";position:absolute;left:0;top:.55em;width:11px;height:11px;border-radius:50%;background:var(--yarn)}
+.features strong{display:block}
+.features span{color:var(--muted)}
+
+/* E-ink */
+.eink-box{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;background:var(--card);border:1px solid var(--rule);border-radius:22px;padding:28px}
+.eink-box .badge{font-family:"Prata",Georgia,serif;font-size:1.1rem;border:2px solid var(--ink);border-radius:14px;padding:16px 18px;text-align:center;line-height:1.25}
+.eink-box p{margin:0;color:var(--muted)}
+
+/* Cena */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.plan{background:var(--card);border:1px solid var(--rule);border-radius:20px;padding:26px 22px;display:flex;flex-direction:column;gap:6px;position:relative}
+.plan.best{border:2px solid var(--yarn);box-shadow:0 10px 28px rgba(233,132,106,.18)}
+.plan .tag{position:absolute;top:-13px;left:22px;background:var(--yarn);color:#fff;font-size:.8rem;font-weight:700;padding:3px 12px;border-radius:999px;letter-spacing:.03em}
+.plan .name{font-weight:600}
+.plan .price{font-family:"Prata",Georgia,serif;font-size:2.1rem;line-height:1.1}
+.plan .per{color:var(--muted);font-size:.95rem}
+.plan .trial{margin-top:auto;padding-top:12px;font-size:.92rem}
+.plan .trial b{color:var(--yarn)}
+.note{color:var(--muted);font-size:.92rem;margin-top:18px}
+
+/* Prywatność */
+.privacy-points{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px;padding:0;list-style:none}
+.privacy-points li{background:var(--yarn-soft);border-radius:999px;padding:6px 14px;font-weight:600;font-size:.95rem}
+
+/* Pytania */
+.faq details{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:4px 18px;margin-bottom:10px}
+.faq summary{cursor:pointer;font-weight:600;padding:12px 0;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";float:right;color:var(--yarn);font-size:1.3rem;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq details p{margin:0 0 14px;color:var(--muted)}
+
+/* Kontakt i stopka */
+.contact{text-align:center}
+.contact a.mail{font-family:"Prata",Georgia,serif;font-size:clamp(1.4rem,5vw,2rem);text-decoration:none;border-bottom:2px solid var(--yarn)}
+footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--muted);font-size:.88rem}
+footer .wrap{display:flex;gap:10px 24px;flex-wrap:wrap;justify-content:space-between}
+
+@media (max-width:760px){
+  section{padding:48px 0}
+  .shots .grid,.steps,.features,.plans,.eink-box{grid-template-columns:1fr}
+  .shots .grid{max-width:420px}
+  .nav{display:none}
+  .plan .tag{left:18px}
+}

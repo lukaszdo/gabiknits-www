@@ -3,34 +3,76 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gabi Knits</title>
-<meta name="description" content="Gabi Knits - a knitting chart reader for Android phones, tablets and BOOX e-ink. Coming soon to Google Play.">
+<title>Gabi Knits – knitting chart reader for Android and BOOX e-ink</title>
+<meta name="description" content="Gabi Knits opens your PDF knitting patterns, finds the chart and guides you row by row. For Android phones, tablets and BOOX e-ink. No account, no ads.">
 <link rel="icon" type="image/png" href="favicon.png">
-<style>
-/* Strona tymczasowa: bez skryptów, bez analityki, bez zewnętrznych zasobów (krój i logo są lokalne). */
-@font-face{font-family:"Prata";src:url("assets/prata.ttf") format("truetype");font-display:swap}
-:root{--paper:#FBF7F2;--ink:#1E3350;--muted:#5D6B7D;--yarn:#E9846A;color-scheme:light}
-@media (prefers-color-scheme: dark){:root{--paper:#151B24;--ink:#EEF1F5;--muted:#A6B0BD;--yarn:#F09A82;color-scheme:dark}}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5;display:flex;align-items:center;justify-content:center;padding:32px 16px}
-main{max-width:560px;text-align:center}
-img{width:min(220px,60vw);height:auto;border-radius:28px}
-h1{font-family:"Prata",Georgia,serif;font-weight:400;font-size:clamp(2.4rem,9vw,3.4rem);margin:20px 0 4px}
-.soon{display:inline-block;margin:10px 0 26px;padding:4px 14px;border:1.5px solid var(--yarn);border-radius:999px;font-size:.95rem;letter-spacing:.04em}
-p{margin:6px 0;font-size:1.08rem}
-p[lang="pl"]{color:var(--muted)}
-footer{margin-top:36px;font-size:.82rem;color:var(--muted)}
-</style>
+<link rel="stylesheet" href="assets/site.css">
+<link rel="alternate" hreflang="en" href="https://gabiknits.app/">
+<link rel="alternate" hreflang="pl" href="https://gabiknits.app/pl/">
+<link rel="alternate" hreflang="de" href="https://gabiknits.app/de/">
+<link rel="alternate" hreflang="nb" href="https://gabiknits.app/nb/">
+<link rel="alternate" hreflang="da" href="https://gabiknits.app/da/">
+<link rel="alternate" hreflang="sv" href="https://gabiknits.app/sv/">
+<link rel="alternate" hreflang="x-default" href="https://gabiknits.app/">
 </head>
 <body>
+<header class="top"><div class="wrap">
+  <a class="brand" href=""><img src="assets/logo.png" alt="" width="40" height="40">Gabi Knits</a>
+  <nav class="nav"><a href="#how">How it works</a><a href="#features">Features</a><a href="#price">Price</a><a href="#faq">Questions</a><a href="#contact">Contact</a></nav>
+  <nav class="lang" aria-label="Language"><span class="cur" lang="en"><span class="flag" aria-hidden="true"><svg viewBox="0 0 60 30"><clipPath id="uk"><path d="M0 0v30h60V0z"/></clipPath><g clip-path="url(#uk)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" stroke="#C8102E" stroke-width="2.4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg></span><span>EN</span></span><a href="pl/" hreflang="pl" lang="pl"><span class="flag" aria-hidden="true"><svg viewBox="0 0 16 10"><path d="M0 0h16v5H0z" fill="#fff"/><path d="M0 5h16v5H0z" fill="#DC143C"/></svg></span><span>PL</span></a><a href="de/" hreflang="de" lang="de"><span class="flag" aria-hidden="true"><svg viewBox="0 0 5 3"><path d="M0 0h5v1H0z" fill="#000"/><path d="M0 1h5v1H0z" fill="#DD0000"/><path d="M0 2h5v1H0z" fill="#FFCE00"/></svg></span><span>DE</span></a><a href="nb/" hreflang="nb" lang="nb"><span class="flag" aria-hidden="true"><svg viewBox="0 0 22 16"><path d="M0 0h22v16H0z" fill="#BA0C2F"/><path d="M6 0h4v16H6zM0 6h22v4H0z" fill="#fff"/><path d="M7 0h2v16H7zM0 7h22v2H0z" fill="#00205B"/></svg></span><span>NO</span></a><a href="da/" hreflang="da" lang="da"><span class="flag" aria-hidden="true"><svg viewBox="0 0 37 28"><path d="M0 0h37v28H0z" fill="#C8102E"/><path d="M12 0h4v28h-4zM0 12h37v4H0z" fill="#fff"/></svg></span><span>DA</span></a><a href="sv/" hreflang="sv" lang="sv"><span class="flag" aria-hidden="true"><svg viewBox="0 0 16 10"><path d="M0 0h16v10H0z" fill="#006AA7"/><path d="M5 0h2v10H5zM0 4h16v2H0z" fill="#FECC00"/></svg></span><span>SV</span></a></nav>
+</div></header>
 <main>
-  <img src="assets/logo.png" width="400" height="416" alt="Gabi Knits logo: a cat in glasses knitting">
+<section class="hero"><div class="wrap">
+  <img class="logo" src="assets/logo.png" width="400" height="416" alt="Gabi Knits">
   <h1>Gabi Knits</h1>
-  <div class="soon">Coming soon to Google Play · Wkrótce w Google Play</div>
-  <p>A knitting chart reader for Android phones, tablets and BOOX e-ink. It finds the chart in your PDF pattern and guides you row by row.</p>
-  <p lang="pl">Czytnik schematów dziewiarskich na telefon, tablet i e-ink BOOX. Sam znajduje schemat we wzorze PDF i prowadzi rząd po rzędzie.</p>
-  <footer>No account, no ads, no tracking. · Bez konta, bez reklam, bez śledzenia.</footer>
+  <p class="claim">Knit from your chart, row by row.</p>
+  <p class="intro">Gabi Knits opens your PDF patterns, finds the chart on the page and clearly marks the row you are knitting. Your progress in every project is saved automatically.</p>
+  <span class="soon">Coming soon to Google Play</span>
+  <p class="devices">Android phones · tablets · BOOX e-ink tablets</p>
+  <p class="pledge">No account · no ads · no tracking</p>
+</div></section>
+<section class="shots"><div class="wrap">
+  <div class="grid">
+    <figure><div class="frame eink"><img src="assets/shots/eink.svg" width="760" height="952" alt="" loading="lazy"></div><figcaption>BOOX e-ink tablet</figcaption></figure>
+    <figure><div class="frame phone"><img src="assets/shots/phone.svg" width="540" height="1071" alt="" loading="lazy"></div><figcaption>Phone</figcaption></figure>
+  </div>
+  <figure class="wide"><div class="frame tablet"><img src="assets/shots/tablet.svg" width="1200" height="827" alt="" loading="lazy"></div><figcaption>Tablet</figcaption></figure>
+</div></section>
+<section id="how"><div class="wrap">
+  <h2>How it works</h2><p class="lead">Three steps from a PDF to the needles.</p>
+  <div class="steps"><div class="step"><div class="n">1</div><h3>Open your pattern</h3><p>Add a PDF pattern as a project. It gets its own name and remembers where you stopped.</p></div><div class="step"><div class="n">2</div><h3>Tap the chart</h3><p>Gabi Knits finds the chart&#x27;s frame and rows by itself. You can correct the edges if needed.</p></div><div class="step"><div class="n">3</div><h3>Knit row by row</h3><p>The current row is clearly marked. One big button takes you to the next row – easy with one hand.</p></div></div>
+</div></section>
+<section id="features" class="band"><div class="wrap">
+  <h2>What it can do</h2><p class="lead">Only what helps you finish the row – nothing that gets in the way.</p>
+  <ul class="features"><li><strong>Several charts in one pattern</strong><span>Front, back and sleeves – each chart keeps its own row and history.</span></li><li><strong>Switch charts with one tap</strong><span>A floating list, or a bar by the row counter that never covers the page.</span></li><li><strong>The pattern key at hand</strong><span>Mark the symbol key once and open it over the page without losing your row.</span></li><li><strong>The row follows you</strong><span>The chart can move under a fixed bar, so the current row stays in the middle of the screen.</span></li><li><strong>Knitting timer</strong><span>See how long a project took – it runs only when you start it.</span></li><li><strong>Six languages</strong><span>English, Polish, German, Norwegian, Danish and Swedish.</span></li></ul>
+</div></section>
+<section><div class="wrap">
+  <div class="eink-box"><div class="badge">Made for<br>e-ink</div><div><h2>Calm on e-ink</h2><p>Gabi Knits started on a BOOX Note Air. On e-ink it has no animations or colours that matter – black on white, large buttons and big row numbers you can read from your knitting. On phones and regular tablets it uses colour and smooth movement.</p></div></div>
+</div></section>
+<section id="price" class="band"><div class="wrap">
+  <h2>Price</h2><p class="lead">Try everything free for 14 days. Then choose what suits you.</p>
+  <div class="plans"><div class="plan"><div class="name">Monthly</div><div class="price">€2.99</div><div class="per">per month</div><div class="trial"><b>14 days free</b>, then renews automatically unless you cancel.</div></div><div class="plan best"><span class="tag">Best value</span><div class="name">Yearly</div><div class="price">€5.99</div><div class="per">per year</div><div class="trial"><b>14 days free</b>, then renews automatically unless you cancel.</div></div><div class="plan"><div class="name">Forever</div><div class="price">€14.99</div><div class="per">one-time payment</div><div class="trial">Pay once, keep it for good.</div></div></div>
+  <p class="note">One free trial per Google account. Prices are in euro; Google Play shows the price in your currency. Cancel any time in Google Play.</p>
+</div></section>
+<section><div class="wrap">
+  <h2>Your patterns stay with you</h2>
+  <ul class="privacy-points"><li>No account</li><li>No ads</li><li>No tracking or analytics</li><li>Works offline</li></ul>
+  <p class="lead">Your PDF patterns, projects and row numbers stay on your device. The app uses the internet only to handle a purchase and check that you have access.</p>
+  <a href="privacy/">Read the privacy policy →</a>
+</div></section>
+<section id="faq" class="band faq"><div class="wrap">
+  <h2>Questions</h2>
+  <details><summary>Do I need an account?</summary><p>No. There is no sign-up and no login. Purchases go through your Google Play account.</p></details><details><summary>Does it work without internet?</summary><p>Yes. Reading and knitting never need the internet. A connection is needed only to buy and, now and then, to confirm your subscription.</p></details><details><summary>Which devices does it run on?</summary><p>Android 8.1 or newer: phones, tablets and BOOX e-ink tablets with Google Play.</p></details><details><summary>Which patterns work?</summary><p>PDF patterns with a chart drawn on a grid. It is tested on dozens of DROPS charts; the app finds the grid and rows itself, and you can correct the edges by hand.</p></details><details><summary>What can I do without buying?</summary><p>Add projects, open patterns, browse the pages and mark charts. Knitting row by row with the highlighted row needs the free trial or a purchase.</p></details><details><summary>I have a new phone. Do I pay again?</summary><p>No. Install Gabi Knits with the same Google account and tap “Restore purchases”.</p></details><details><summary>How do I cancel the subscription?</summary><p>In Google Play: Payments &amp; subscriptions → Subscriptions. Your projects stay where they are.</p></details><details><summary>Is there an iPhone or iPad version?</summary><p>Not yet – Android comes first.</p></details>
+</div></section>
+<section id="contact" class="contact"><div class="wrap">
+  <h2>Contact</h2>
+  <p>Questions, ideas, a pattern that doesn’t work? Write to us:</p>
+  <a class="mail" href="mailto:contact@gabiknits.app">contact@gabiknits.app</a>
+</div></section>
 </main>
+<footer><div class="wrap">
+  <span>Gabi Knits · ŁUKASZ DOMAŃSKI IT ONE STUDIO · VAT ID PL7321956817</span>
+  <span><a href="privacy/">Privacy policy</a> · <a href="mailto:contact@gabiknits.app">contact@gabiknits.app</a></span>
+</div></footer>
 </body>
 </html>
