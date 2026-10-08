@@ -14,6 +14,10 @@ LANGS = ["en", "pl", "de", "nb", "da", "sv"]
 NAMES = {"en": "EN", "pl": "PL", "de": "DE", "nb": "NO", "da": "DA", "sv": "SV"}
 COMPANY = "ŁUKASZ DOMAŃSKI IT ONE STUDIO"
 
+# Cennik ukryty do startu w sklepie (decyzja 2026-10-08: strategia cenowa nie wychodzi przed premierą).
+# Teksty sekcji zostają w słowniku T; True przywraca sekcję „Cena” i odnośnik w nagłówku.
+SHOW_PRICE = False
+
 # Flagi do wyboru języka - rysowane w SVG w treści strony (bez zewnętrznych plików).
 # Angielski: flaga Wielkiej Brytanii.
 FLAGS = {
@@ -323,7 +327,9 @@ def page(lang):
     ) + '\n<link rel="alternate" hreflang="x-default" href="https://gabiknits.app/">'
     langs = lang_nav(lang, lambda l: f"{up}{home(l)}")
     ids = ("how", "features", "price", "faq", "contact")
-    nav = "".join(f'<a href="#{i}">{escape(n)}</a>' for i, n in zip(ids, t["nav"]))
+    nav = "".join(
+        f'<a href="#{i}">{escape(n)}</a>' for i, n in zip(ids, t["nav"]) if SHOW_PRICE or i != "price"
+    )
     steps = "".join(
         f'<div class="step"><div class="n">{k}</div><h3>{escape(a)}</h3><p>{escape(b)}</p></div>'
         for k, (a, b) in enumerate(t["steps"], 1)
@@ -339,6 +345,15 @@ def page(lang):
             + f'<div class="per">{escape(per)}</div>'
             + f'<div class="trial">{t["trial_yes"] if trial else escape(t["trial_no"])}</div></div>'
         )
+    price = (
+        f"""<section id="price" class="band"><div class="wrap">
+  <h2>{escape(t["price_t"])}</h2><p class="lead">{escape(t["price_l"])}</p>
+  <div class="plans">{plans}</div>
+  <p class="note">{escape(t["price_note"])}</p>
+</div></section>
+"""
+        if SHOW_PRICE else ""
+    )
     points = "".join(f"<li>{escape(p)}</li>" for p in t["priv_points"])
     faq = "".join(f"<details><summary>{escape(q)}</summary><p>{escape(a)}</p></details>" for q, a in t["faq"])
     privacy = f'{up}{"" if lang == "en" else lang + "/"}privacy/'
@@ -387,12 +402,7 @@ def page(lang):
 <section><div class="wrap">
   <div class="eink-box"><div class="badge">{t["eink_badge"]}</div><div><h2>{escape(t["eink_t"])}</h2><p>{escape(t["eink_p"])}</p></div></div>
 </div></section>
-<section id="price" class="band"><div class="wrap">
-  <h2>{escape(t["price_t"])}</h2><p class="lead">{escape(t["price_l"])}</p>
-  <div class="plans">{plans}</div>
-  <p class="note">{escape(t["price_note"])}</p>
-</div></section>
-<section><div class="wrap">
+{price}<section><div class="wrap">
   <h2>{escape(t["priv_t"])}</h2>
   <ul class="privacy-points">{points}</ul>
   <p class="lead">{escape(t["priv_p"])}</p>
