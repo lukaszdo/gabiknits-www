@@ -1,27 +1,46 @@
 #!/usr/bin/env python3
 """Generator stron głównych Gabi Knits w sześciu językach.
 
-Teksty są w słowniku T poniżej; układ w funkcji page(). Uruchomienie: `python3 generuj.py`
-nadpisuje index.html (angielski, w korzeniu) i pl/, de/, nb/, da/, sv/index.html.
-Polityka prywatności (privacy/, xx/privacy/) jest pisana ręcznie - generator jej nie rusza.
+Teksty są w `teksty.py` (słownik T), układ w funkcji page(), wygląd w assets/site.css.
+Zrzuty aplikacji: assets/shots/<język>/*.png; brakujące zastępuje szkic z assets/shots/_szkic/.
+Uruchomienie: `python3 generuj.py` nadpisuje index.html (angielski, w korzeniu) i pl/, de/, nb/, da/, sv/index.html.
+Polityka prywatności (privacy/, xx/privacy/) jest pisana ręcznie - generator podmienia w niej
+tylko przełącznik języków.
 """
 import re
+import struct
+import sys
 from html import escape
 from pathlib import Path
+
+sys.dont_write_bytecode = True          # bez __pycache__ w repozytorium strony
+from teksty import T                    # teksty strony w sześciu językach
 
 ROOT = Path(__file__).parent
 LANGS = ["en", "pl", "de", "nb", "da", "sv"]
 NAMES = {"en": "EN", "pl": "PL", "de": "DE", "nb": "NO", "da": "DA", "sv": "SV"}
 COMPANY = "ŁUKASZ DOMAŃSKI IT ONE STUDIO"
+EMAIL = "contact@gabiknits.app"
 
 # Cennik ukryty do startu w sklepie (decyzja 2026-10-08: strategia cenowa nie wychodzi przed premierą).
 # Teksty sekcji zostają w słowniku T; True przywraca sekcję „Cena” i odnośnik w nagłówku.
 SHOW_PRICE = False
 
+# Aplikacja w sklepie (decyzja 2026-10-09). Przed startem: „Wkrótce w Google Play” na górze i blok
+# kontaktu na dole. Po starcie (True): na górze i na dole przycisk do sklepu, a blok na dole zachęca
+# do pobrania. UWAGA: wtedy Google wymaga oficjalnej odznaki „Get it on Google Play” (wytyczne marki)
+# zamiast naszej - podmienić play_badge() na oficjalny plik odznaki w każdym języku.
+LAUNCHED = False
+PLAY_URL = "https://play.google.com/store/apps/details?id=io.github.lukaszdo.motek"
+
+# Podpis przycisku menu na wąskim ekranie (jedyny tekst spoza T - jedno słowo na język).
+MENU = {"en": "Menu", "pl": "Menu", "de": "Menü", "nb": "Meny", "da": "Menu", "sv": "Meny"}
+
 # Flagi do wyboru języka - rysowane w SVG w treści strony (bez zewnętrznych plików).
-# Angielski: flaga Wielkiej Brytanii.
+# Angielski: flaga Wielkiej Brytanii. Identyfikator przycięcia zależy od miejsca użycia
+# (przełącznik stoi na stronie kilka razy, a id w dokumencie musi być jedyny).
 FLAGS = {
-    "en": '<svg viewBox="0 0 60 30"><clipPath id="uk"><path d="M0 0v30h60V0z"/></clipPath><g clip-path="url(#uk)">'
+    "en": '<svg viewBox="0 0 60 30"><clipPath id="uk{k}"><path d="M0 0v30h60V0z"/></clipPath><g clip-path="url(#uk{k})">'
           '<path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/>'
           '<path d="M0 0l60 30m0-30L0 30" stroke="#C8102E" stroke-width="2.4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/>'
           '<path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>',
@@ -34,285 +53,115 @@ FLAGS = {
 }
 
 
-def lang_nav(lang, href, label="Language"):
+def lang_nav(lang, href, label="Language", key=""):
     """Przełącznik języków z flagami; [href] - adres strony w danym języku względem bieżącej."""
     items = []
     for l in LANGS:
-        inner = f'<span class="flag" aria-hidden="true">{FLAGS[l]}</span><span>{NAMES[l]}</span>'
+        flag = FLAGS[l].replace("{k}", key)
+        inner = f'<span class="flag" aria-hidden="true">{flag}</span><span>{NAMES[l]}</span>'
         if l == lang:
-            items.append(f'<span class="cur" lang="{l}">{inner}</span>')
+            items.append(f'<span class="cur" lang="{l}" aria-current="page">{inner}</span>')
         else:
             items.append(f'<a href="{href(l)}" hreflang="{l}" lang="{l}">{inner}</a>')
     return f'<nav class="lang" aria-label="{label}">' + "".join(items) + "</nav>"
-EMAIL = "contact@gabiknits.app"
 
-T = {
-    "en": dict(
-        title="Gabi Knits – knitting chart reader for Android and BOOX e-ink",
-        desc="Gabi Knits opens your PDF knitting patterns, finds the chart and guides you row by row. For Android phones, tablets and BOOX e-ink. No account, no ads.",
-        nav=("How it works", "Features", "Price", "Questions", "Contact"),
-        claim="Knit from your chart, row by row.",
-        intro="Gabi Knits opens your PDF patterns, finds the chart on the page and clearly marks the row you are knitting. Your progress in every project is saved automatically.",
-        soon="Coming soon to Google Play",
-        devices="Android phones · tablets · BOOX e-ink tablets",
-        pledge="No account · no ads · no tracking",
-        shots=("BOOX e-ink tablet", "Phone", "Tablet"),
-        # Opisy prawdziwych zrzutów - wrócą z nimi; na razie puste ilustracje (alt="").
-        alt=("Gabi Knits on a BOOX e-ink tablet: a chart with the current row framed", "Gabi Knits on a phone: the current row highlighted in yellow", "Gabi Knits on a tablet in landscape: chart and row buttons side by side"),
-        how_t="How it works", how_l="Three steps from a PDF to the needles.",
-        steps=[("Open your pattern", "Add a PDF pattern as a project. It gets its own name and remembers where you stopped."),
-               ("Tap the chart", "Gabi Knits finds the chart's frame and rows by itself. You can correct the edges if needed."),
-               ("Knit row by row", "The current row is clearly marked. One big button takes you to the next row – easy with one hand.")],
-        feat_t="What it can do", feat_l="Only what helps you finish the row – nothing that gets in the way.",
-        feats=[("Several charts in one pattern", "Front, back and sleeves – each chart keeps its own row and history."),
-               ("Switch charts with one tap", "A floating list, or a bar by the row counter that never covers the page."),
-               ("The pattern key at hand", "Mark the symbol key once and open it over the page without losing your row."),
-               ("The row follows you", "The chart can move under a fixed bar, so the current row stays in the middle of the screen."),
-               ("Knitting timer", "See how long a project took – it runs only when you start it."),
-               ("Six languages", "English, Polish, German, Norwegian, Danish and Swedish.")],
-        eink_badge="Made for<br>e-ink", eink_t="Calm on e-ink",
-        eink_p="Gabi Knits started on a BOOX Note Air. On e-ink it has no animations or colours that matter – black on white, large buttons and big row numbers you can read from your knitting. On phones and regular tablets it uses colour and smooth movement.",
-        price_t="Price", price_l="Try everything free for 14 days. Then choose what suits you.",
-        plans=[("Monthly", "€2.99", "per month", True), ("Yearly", "€5.99", "per year", True), ("Forever", "€14.99", "one-time payment", False)],
-        best="Best value", trial_yes="<b>14 days free</b>, then renews automatically unless you cancel.", trial_no="Pay once, keep it for good.",
-        price_note="One free trial per Google account. Prices are in euro; Google Play shows the price in your currency. Cancel any time in Google Play.",
-        priv_t="Your patterns stay with you",
-        priv_points=("No account", "No ads", "No tracking or analytics", "Works offline"),
-        priv_p="Your PDF patterns, projects and row numbers stay on your device. The app uses the internet only to handle a purchase and check that you have access.",
-        priv_link="Read the privacy policy",
-        faq_t="Questions",
-        faq=[("Do I need an account?", "No. There is no sign-up and no login. Purchases go through your Google Play account."),
-             ("Does it work without internet?", "Yes. Reading and knitting never need the internet. A connection is needed only to buy and, now and then, to confirm your subscription."),
-             ("Which devices does it run on?", "Android 8.1 or newer: phones, tablets and BOOX e-ink tablets with Google Play."),
-             ("Which patterns work?", "PDF patterns with a chart drawn on a grid. It is tested on dozens of DROPS charts; the app finds the grid and rows itself, and you can correct the edges by hand."),
-             ("What can I do without buying?", "Add projects, open patterns, browse the pages and mark charts. Knitting row by row with the highlighted row needs the free trial or a purchase."),
-             ("I have a new phone. Do I pay again?", "No. Install Gabi Knits with the same Google account and tap “Restore purchases”."),
-             ("How do I cancel the subscription?", "In Google Play: Payments & subscriptions → Subscriptions. Your projects stay where they are."),
-             ("Is there an iPhone or iPad version?", "Not yet – Android comes first.")],
-        contact_t="Contact", contact_p="Questions, ideas, a pattern that doesn’t work? Write to us:",
-        vat="VAT ID PL7321956817", privacy="Privacy policy",
-    ),
-    "pl": dict(
-        title="Gabi Knits – czytnik schematów dziewiarskich na Androida i e-ink BOOX",
-        desc="Gabi Knits otwiera wzory PDF, sam znajduje schemat i prowadzi rząd po rzędzie. Na telefon, tablet i e-ink BOOX. Bez konta i bez reklam.",
-        nav=("Jak to działa", "Co potrafi", "Cena", "Pytania", "Kontakt"),
-        claim="Dziergaj ze schematu rząd po rzędzie.",
-        intro="Gabi Knits otwiera wzory PDF, znajduje schemat na stronie i wyraźnie zaznacza rząd, który dziergasz. Postęp w każdym projekcie zapisuje się sam.",
-        soon="Wkrótce w Google Play",
-        devices="Telefony z Androidem · tablety · tablety e-ink BOOX",
-        pledge="Bez konta · bez reklam · bez śledzenia",
-        shots=("Tablet e-ink BOOX", "Telefon", "Tablet"),
-        alt=("Gabi Knits na tablecie e-ink BOOX: schemat z obwiedzionym bieżącym rzędem", "Gabi Knits na telefonie: bieżący rząd podświetlony na żółto", "Gabi Knits na tablecie w poziomie: schemat i przyciski rzędu obok siebie"),
-        how_t="Jak to działa", how_l="Trzy kroki od PDF-a do drutów.",
-        steps=[("Otwórz wzór", "Dodaj wzór PDF jako projekt. Dostaje własną nazwę i pamięta, gdzie skończyłaś."),
-               ("Dotknij schematu", "Gabi Knits sama znajduje ramkę i rzędy schematu. Krawędzie możesz w razie potrzeby poprawić."),
-               ("Dziergaj rząd po rzędzie", "Bieżący rząd jest wyraźnie zaznaczony. Jeden duży przycisk prowadzi do następnego – wygodnie jedną ręką.")],
-        feat_t="Co potrafi", feat_l="Tylko to, co pomaga skończyć rząd – nic, co by przeszkadzało.",
-        feats=[("Kilka schematów w jednym wzorze", "Przód, tył i rękawy – każdy schemat pamięta swój rząd i historię."),
-               ("Przełączanie jednym dotknięciem", "Pływająca lista albo pasek przy liczniku, który nie zasłania strony."),
-               ("Legenda pod ręką", "Zaznacz objaśnienie symboli raz i otwieraj je nad stroną, nie gubiąc rzędu."),
-               ("Rząd idzie za Tobą", "Schemat może przesuwać się pod stojącym paskiem – bieżący rząd zostaje na środku ekranu."),
-               ("Licznik czasu", "Zobacz, ile trwał projekt – liczy tylko wtedy, gdy go włączysz."),
-               ("Sześć języków", "Polski, angielski, niemiecki, norweski, duński i szwedzki.")],
-        eink_badge="Stworzona<br>dla e-inku", eink_t="Spokojna na e-inku",
-        eink_p="Gabi Knits powstała na BOOX Note Air. Na e-inku nie ma animacji ani kolorów niosących znaczenie – czerń na bieli, duże przyciski i duże numery rzędów, czytelne znad robótki. Na telefonie i zwykłym tablecie korzysta z koloru i płynnego ruchu.",
-        price_t="Cena", price_l="Przez 14 dni wypróbujesz wszystko za darmo. Potem wybierz, co Ci pasuje.",
-        plans=[("Miesięcznie", "6,99 zł", "za miesiąc", True), ("Rocznie", "14,99 zł", "za rok", True), ("Na zawsze", "39,99 zł", "jednorazowo", False)],
-        best="Najkorzystniej", trial_yes="<b>14 dni za darmo</b>, potem odnawia się samo, jeśli nie anulujesz.", trial_no="Płacisz raz i masz na zawsze.",
-        price_note="Jedna darmowa próba na konto Google. Subskrypcję anulujesz w każdej chwili w Google Play.",
-        priv_t="Twoje wzory zostają u Ciebie",
-        priv_points=("Bez konta", "Bez reklam", "Bez śledzenia i analityki", "Działa bez internetu"),
-        priv_p="Wzory PDF, projekty i numery rzędów zostają na Twoim urządzeniu. Aplikacja łączy się z internetem tylko po to, żeby obsłużyć zakup i sprawdzić dostęp.",
-        priv_link="Przeczytaj politykę prywatności",
-        faq_t="Pytania",
-        faq=[("Czy potrzebuję konta?", "Nie. Nie ma rejestracji ani logowania. Zakup idzie przez Twoje konto Google Play."),
-             ("Czy działa bez internetu?", "Tak. Czytanie i dzierganie nigdy nie wymagają internetu. Połączenie jest potrzebne tylko do zakupu i co jakiś czas do potwierdzenia subskrypcji."),
-             ("Na jakich urządzeniach działa?", "Android 8.1 lub nowszy: telefony, tablety i tablety e-ink BOOX ze Sklepem Play."),
-             ("Jakie wzory się nadają?", "Wzory PDF ze schematem na siatce. Sprawdzona na kilkudziesięciu schematach DROPS; siatkę i rzędy znajduje sama, a krawędzie możesz poprawić ręcznie."),
-             ("Co mogę bez zakupu?", "Dodawać projekty, otwierać wzory, przeglądać strony i zaznaczać schematy. Dzierganie rząd po rzędzie z podświetlonym rzędem wymaga darmowej próby albo zakupu."),
-             ("Mam nowy telefon. Płacę jeszcze raz?", "Nie. Zainstaluj Gabi Knits na tym samym koncie Google i dotknij „Przywróć zakupy”."),
-             ("Jak anulować subskrypcję?", "W Google Play: Płatności i subskrypcje → Subskrypcje. Projekty zostają na miejscu."),
-             ("Czy jest wersja na iPhone’a albo iPada?", "Jeszcze nie – najpierw Android.")],
-        contact_t="Kontakt", contact_p="Pytanie, pomysł, wzór, który nie działa? Napisz do nas:",
-        vat="NIP 7321956817", privacy="Polityka prywatności",
-    ),
-    "de": dict(
-        title="Gabi Knits – Strickdiagramm-Leser für Android und BOOX E-Ink",
-        desc="Gabi Knits öffnet deine PDF-Strickanleitungen, findet das Diagramm und führt dich Reihe für Reihe. Für Android-Handys, Tablets und BOOX E-Ink. Kein Konto, keine Werbung.",
-        nav=("So geht’s", "Funktionen", "Preis", "Fragen", "Kontakt"),
-        claim="Stricke nach Diagramm, Reihe für Reihe.",
-        intro="Gabi Knits öffnet deine PDF-Anleitungen, findet das Diagramm auf der Seite und markiert deutlich die Reihe, die du strickst. Der Fortschritt jedes Projekts wird automatisch gespeichert.",
-        soon="Bald bei Google Play",
-        devices="Android-Handys · Tablets · BOOX E-Ink-Tablets",
-        pledge="Kein Konto · keine Werbung · kein Tracking",
-        shots=("BOOX E-Ink-Tablet", "Handy", "Tablet"),
-        alt=("Gabi Knits auf einem BOOX E-Ink-Tablet: Diagramm mit umrahmter aktueller Reihe", "Gabi Knits auf dem Handy: die aktuelle Reihe gelb hervorgehoben", "Gabi Knits auf einem Tablet im Querformat: Diagramm und Reihentasten nebeneinander"),
-        how_t="So geht’s", how_l="In drei Schritten vom PDF zu den Nadeln.",
-        steps=[("Öffne deine Anleitung", "Füge eine PDF-Anleitung als Projekt hinzu. Es bekommt einen eigenen Namen und merkt sich, wo du aufgehört hast."),
-               ("Tippe auf das Diagramm", "Gabi Knits findet Rahmen und Reihen des Diagramms selbst. Die Ränder kannst du bei Bedarf korrigieren."),
-               ("Stricke Reihe für Reihe", "Die aktuelle Reihe ist deutlich markiert. Eine große Taste bringt dich zur nächsten – bequem mit einer Hand.")],
-        feat_t="Was sie kann", feat_l="Nur was dir hilft, die Reihe zu beenden – nichts, was stört.",
-        feats=[("Mehrere Diagramme in einer Anleitung", "Vorderteil, Rückenteil, Ärmel – jedes Diagramm behält seine Reihe und seinen Verlauf."),
-               ("Wechsel mit einem Tippen", "Eine schwebende Liste oder eine Leiste am Reihenzähler, die die Seite nie verdeckt."),
-               ("Die Legende griffbereit", "Markiere die Zeichenerklärung einmal und öffne sie über der Seite, ohne die Reihe zu verlieren."),
-               ("Die Reihe folgt dir", "Das Diagramm kann sich unter einer festen Leiste bewegen – die aktuelle Reihe bleibt in der Bildschirmmitte."),
-               ("Strickzeit", "Sieh, wie lange ein Projekt gedauert hat – die Uhr läuft nur, wenn du sie startest."),
-               ("Sechs Sprachen", "Deutsch, Englisch, Polnisch, Norwegisch, Dänisch und Schwedisch.")],
-        eink_badge="Gemacht<br>für E-Ink", eink_t="Ruhig auf E-Ink",
-        eink_p="Gabi Knits ist auf einem BOOX Note Air entstanden. Auf E-Ink gibt es keine Animationen und keine bedeutungstragenden Farben – Schwarz auf Weiß, große Tasten und große Reihennummern, lesbar über dem Strickzeug. Auf Handys und normalen Tablets nutzt sie Farbe und flüssige Bewegung.",
-        price_t="Preis", price_l="Probiere 14 Tage lang alles kostenlos aus. Dann wähle, was zu dir passt.",
-        plans=[("Monatlich", "2,99 €", "pro Monat", True), ("Jährlich", "5,99 €", "pro Jahr", True), ("Für immer", "14,99 €", "einmalig", False)],
-        best="Am günstigsten", trial_yes="<b>14 Tage kostenlos</b>, danach automatische Verlängerung, wenn du nicht kündigst.", trial_no="Einmal zahlen, für immer behalten.",
-        price_note="Ein kostenloser Test pro Google-Konto. Preise in Euro; Google Play zeigt den Preis in deiner Währung. Jederzeit in Google Play kündbar.",
-        priv_t="Deine Anleitungen bleiben bei dir",
-        priv_points=("Kein Konto", "Keine Werbung", "Kein Tracking, keine Analyse", "Funktioniert offline"),
-        priv_p="Deine PDF-Anleitungen, Projekte und Reihennummern bleiben auf deinem Gerät. Die App nutzt das Internet nur, um einen Kauf abzuwickeln und deinen Zugang zu prüfen.",
-        priv_link="Datenschutzerklärung lesen",
-        faq_t="Fragen",
-        faq=[("Brauche ich ein Konto?", "Nein. Keine Registrierung, keine Anmeldung. Käufe laufen über dein Google-Play-Konto."),
-             ("Funktioniert sie ohne Internet?", "Ja. Lesen und Stricken brauchen nie Internet. Eine Verbindung ist nur zum Kaufen und ab und zu zur Bestätigung des Abos nötig."),
-             ("Auf welchen Geräten läuft sie?", "Android 8.1 oder neuer: Handys, Tablets und BOOX E-Ink-Tablets mit Google Play."),
-             ("Welche Anleitungen passen?", "PDF-Anleitungen mit einem Diagramm auf einem Raster. Getestet mit Dutzenden DROPS-Diagrammen; Raster und Reihen findet die App selbst, die Ränder kannst du von Hand korrigieren."),
-             ("Was geht ohne Kauf?", "Projekte anlegen, Anleitungen öffnen, Seiten durchblättern und Diagramme markieren. Reihe für Reihe mit hervorgehobener Reihe stricken erfordert den kostenlosen Test oder einen Kauf."),
-             ("Ich habe ein neues Handy. Zahle ich noch einmal?", "Nein. Installiere Gabi Knits mit demselben Google-Konto und tippe auf „Käufe wiederherstellen“."),
-             ("Wie kündige ich das Abo?", "In Google Play: Zahlungen und Abos → Abos. Deine Projekte bleiben, wo sie sind."),
-             ("Gibt es eine Version für iPhone oder iPad?", "Noch nicht – zuerst Android.")],
-        contact_t="Kontakt", contact_p="Fragen, Ideen, eine Anleitung, die nicht funktioniert? Schreib uns:",
-        vat="USt-IdNr. PL7321956817", privacy="Datenschutzerklärung",
-    ),
-    "nb": dict(
-        title="Gabi Knits – leser for strikkediagrammer på Android og BOOX e-ink",
-        desc="Gabi Knits åpner PDF-strikkeoppskriftene dine, finner diagrammet og leder deg rad for rad. For Android-telefoner, nettbrett og BOOX e-ink. Ingen konto, ingen reklame.",
-        nav=("Slik virker det", "Funksjoner", "Pris", "Spørsmål", "Kontakt"),
-        claim="Strikk etter diagram, rad for rad.",
-        intro="Gabi Knits åpner PDF-oppskriftene dine, finner diagrammet på siden og markerer tydelig raden du strikker. Fremdriften i hvert prosjekt lagres automatisk.",
-        soon="Kommer snart på Google Play",
-        devices="Android-telefoner · nettbrett · BOOX e-ink-nettbrett",
-        pledge="Ingen konto · ingen reklame · ingen sporing",
-        shots=("BOOX e-ink-nettbrett", "Telefon", "Nettbrett"),
-        alt=("Gabi Knits på et BOOX e-ink-nettbrett: diagram med gjeldende rad innrammet", "Gabi Knits på telefon: gjeldende rad uthevet i gult", "Gabi Knits på nettbrett i liggende format: diagram og radknapper side om side"),
-        how_t="Slik virker det", how_l="Tre trinn fra PDF til pinnene.",
-        steps=[("Åpne oppskriften", "Legg til en PDF-oppskrift som prosjekt. Det får sitt eget navn og husker hvor du stoppet."),
-               ("Trykk på diagrammet", "Gabi Knits finner rammen og radene i diagrammet selv. Kantene kan du rette ved behov."),
-               ("Strikk rad for rad", "Gjeldende rad er tydelig markert. Én stor knapp tar deg til neste rad – lett med én hånd.")],
-        feat_t="Hva den kan", feat_l="Bare det som hjelper deg å fullføre raden – ingenting som er i veien.",
-        feats=[("Flere diagrammer i én oppskrift", "Forstykke, bakstykke og ermer – hvert diagram husker sin rad og historikk."),
-               ("Bytt med ett trykk", "En flytende liste eller en stripe ved radtelleren som aldri dekker siden."),
-               ("Tegnforklaringen for hånden", "Marker tegnforklaringen én gang og åpne den over siden uten å miste raden."),
-               ("Raden følger deg", "Diagrammet kan flytte seg under en fast stripe – gjeldende rad blir i midten av skjermen."),
-               ("Strikketid", "Se hvor lang tid et prosjekt tok – klokken går bare når du starter den."),
-               ("Seks språk", "Norsk, engelsk, polsk, tysk, dansk og svensk.")],
-        eink_badge="Laget<br>for e-ink", eink_t="Rolig på e-ink",
-        eink_p="Gabi Knits ble laget på en BOOX Note Air. På e-ink er det ingen animasjoner eller farger som bærer mening – svart på hvitt, store knapper og store radnumre du kan lese over strikketøyet. På telefoner og vanlige nettbrett bruker den farger og jevn bevegelse.",
-        price_t="Pris", price_l="Prøv alt gratis i 14 dager. Velg så det som passer deg.",
-        plans=[("Månedlig", "2,99 €", "per måned", True), ("Årlig", "5,99 €", "per år", True), ("For alltid", "14,99 €", "engangsbetaling", False)],
-        best="Mest lønnsomt", trial_yes="<b>14 dager gratis</b>, fornyes deretter automatisk hvis du ikke sier opp.", trial_no="Betal én gang, behold den for alltid.",
-        price_note="Én gratis prøveperiode per Google-konto. Prisene er i euro; Google Play viser prisen i din valuta. Si opp når som helst i Google Play.",
-        priv_t="Oppskriftene dine blir hos deg",
-        priv_points=("Ingen konto", "Ingen reklame", "Ingen sporing eller analyse", "Virker uten internett"),
-        priv_p="PDF-oppskriftene, prosjektene og radnumrene dine blir på enheten din. Appen bruker internett bare til å gjennomføre et kjøp og sjekke at du har tilgang.",
-        priv_link="Les personvernerklæringen",
-        faq_t="Spørsmål",
-        faq=[("Trenger jeg en konto?", "Nei. Ingen registrering og ingen innlogging. Kjøp går gjennom Google Play-kontoen din."),
-             ("Virker den uten internett?", "Ja. Lesing og strikking trenger aldri internett. Du trenger tilkobling bare for å kjøpe og av og til for å bekrefte abonnementet."),
-             ("Hvilke enheter virker den på?", "Android 8.1 eller nyere: telefoner, nettbrett og BOOX e-ink-nettbrett med Google Play."),
-             ("Hvilke oppskrifter passer?", "PDF-oppskrifter med diagram på rutenett. Testet på dusinvis av DROPS-diagrammer; appen finner rutenettet og radene selv, og kantene kan du rette for hånd."),
-             ("Hva kan jeg gjøre uten å kjøpe?", "Legge til prosjekter, åpne oppskrifter, bla i sidene og markere diagrammer. Å strikke rad for rad med uthevet rad krever gratis prøveperiode eller kjøp."),
-             ("Jeg har ny telefon. Betaler jeg igjen?", "Nei. Installer Gabi Knits med samme Google-konto og trykk «Gjenopprett kjøp»."),
-             ("Hvordan sier jeg opp abonnementet?", "I Google Play: Betalinger og abonnementer → Abonnementer. Prosjektene dine blir der de er."),
-             ("Finnes det en versjon for iPhone eller iPad?", "Ikke ennå – Android kommer først.")],
-        contact_t="Kontakt", contact_p="Spørsmål, ideer, en oppskrift som ikke virker? Skriv til oss:",
-        vat="MVA-nr. PL7321956817", privacy="Personvernerklæring",
-    ),
-    "da": dict(
-        title="Gabi Knits – læser til strikkediagrammer på Android og BOOX e-ink",
-        desc="Gabi Knits åbner dine PDF-strikkeopskrifter, finder diagrammet og fører dig række for række. Til Android-telefoner, tablets og BOOX e-ink. Ingen konto, ingen reklamer.",
-        nav=("Sådan virker det", "Funktioner", "Pris", "Spørgsmål", "Kontakt"),
-        claim="Strik efter diagram, række for række.",
-        intro="Gabi Knits åbner dine PDF-opskrifter, finder diagrammet på siden og markerer tydeligt den række, du strikker. Fremskridtet i hvert projekt gemmes automatisk.",
-        soon="Kommer snart på Google Play",
-        devices="Android-telefoner · tablets · BOOX e-ink-tablets",
-        pledge="Ingen konto · ingen reklamer · ingen sporing",
-        shots=("BOOX e-ink-tablet", "Telefon", "Tablet"),
-        alt=("Gabi Knits på en BOOX e-ink-tablet: diagram med den aktuelle række indrammet", "Gabi Knits på telefon: den aktuelle række fremhævet med gult", "Gabi Knits på en tablet på langs: diagram og rækkeknapper side om side"),
-        how_t="Sådan virker det", how_l="Tre trin fra PDF til pindene.",
-        steps=[("Åbn din opskrift", "Tilføj en PDF-opskrift som projekt. Det får sit eget navn og husker, hvor du stoppede."),
-               ("Tryk på diagrammet", "Gabi Knits finder selv diagrammets ramme og rækker. Kanterne kan du rette efter behov."),
-               ("Strik række for række", "Den aktuelle række er tydeligt markeret. Én stor knap fører dig til næste række – nemt med én hånd.")],
-        feat_t="Hvad den kan", feat_l="Kun det, der hjælper dig med at gøre rækken færdig – intet, der er i vejen.",
-        feats=[("Flere diagrammer i én opskrift", "Forstykke, ryg og ærmer – hvert diagram husker sin række og historik."),
-               ("Skift med ét tryk", "En flydende liste eller en bjælke ved rækketælleren, der aldrig dækker siden."),
-               ("Symbolforklaringen ved hånden", "Markér symbolforklaringen én gang og åbn den over siden uden at miste rækken."),
-               ("Rækken følger dig", "Diagrammet kan flytte sig under en fast bjælke – den aktuelle række bliver midt på skærmen."),
-               ("Strikketid", "Se, hvor lang tid et projekt tog – uret går kun, når du starter det."),
-               ("Seks sprog", "Dansk, engelsk, polsk, tysk, norsk og svensk.")],
-        eink_badge="Lavet<br>til e-ink", eink_t="Rolig på e-ink",
-        eink_p="Gabi Knits blev skabt på en BOOX Note Air. På e-ink er der ingen animationer eller farver, der bærer betydning – sort på hvidt, store knapper og store rækkenumre, du kan læse over strikketøjet. På telefoner og almindelige tablets bruger den farver og glidende bevægelse.",
-        price_t="Pris", price_l="Prøv alt gratis i 14 dage. Vælg så det, der passer dig.",
-        plans=[("Månedlig", "2,99 €", "pr. måned", True), ("Årlig", "5,99 €", "pr. år", True), ("For altid", "14,99 €", "engangsbetaling", False)],
-        best="Bedst værdi", trial_yes="<b>14 dage gratis</b>, fornyes derefter automatisk, medmindre du opsiger.", trial_no="Betal én gang, behold den for altid.",
-        price_note="Én gratis prøveperiode pr. Google-konto. Priserne er i euro; Google Play viser prisen i din valuta. Opsig når som helst i Google Play.",
-        priv_t="Dine opskrifter bliver hos dig",
-        priv_points=("Ingen konto", "Ingen reklamer", "Ingen sporing eller analyse", "Virker uden internet"),
-        priv_p="Dine PDF-opskrifter, projekter og rækkenumre bliver på din enhed. Appen bruger kun internettet til at gennemføre et køb og kontrollere, at du har adgang.",
-        priv_link="Læs privatlivspolitikken",
-        faq_t="Spørgsmål",
-        faq=[("Skal jeg have en konto?", "Nej. Ingen oprettelse og intet login. Køb går gennem din Google Play-konto."),
-             ("Virker den uden internet?", "Ja. Læsning og strikning kræver aldrig internet. Forbindelse er kun nødvendig for at købe og en gang imellem for at bekræfte abonnementet."),
-             ("Hvilke enheder virker den på?", "Android 8.1 eller nyere: telefoner, tablets og BOOX e-ink-tablets med Google Play."),
-             ("Hvilke opskrifter passer?", "PDF-opskrifter med et diagram på et gitter. Testet på snesevis af DROPS-diagrammer; appen finder selv gitteret og rækkerne, og kanterne kan du rette i hånden."),
-             ("Hvad kan jeg uden at købe?", "Tilføje projekter, åbne opskrifter, bladre i siderne og markere diagrammer. At strikke række for række med fremhævet række kræver den gratis prøveperiode eller et køb."),
-             ("Jeg har en ny telefon. Betaler jeg igen?", "Nej. Installer Gabi Knits med samme Google-konto og tryk på »Gendan køb«."),
-             ("Hvordan opsiger jeg abonnementet?", "I Google Play: Betalinger og abonnementer → Abonnementer. Dine projekter bliver, hvor de er."),
-             ("Findes der en version til iPhone eller iPad?", "Ikke endnu – Android kommer først.")],
-        contact_t="Kontakt", contact_p="Spørgsmål, idéer, en opskrift, der ikke virker? Skriv til os:",
-        vat="Moms-nr. PL7321956817", privacy="Privatlivspolitik",
-    ),
-    "sv": dict(
-        title="Gabi Knits – läsare för stickdiagram på Android och BOOX e-ink",
-        desc="Gabi Knits öppnar dina stickmönster i PDF, hittar diagrammet och guidar dig varv för varv. För Android-telefoner, surfplattor och BOOX e-ink. Inget konto, ingen reklam.",
-        nav=("Så fungerar det", "Funktioner", "Pris", "Frågor", "Kontakt"),
-        claim="Sticka efter diagram, varv för varv.",
-        intro="Gabi Knits öppnar dina PDF-mönster, hittar diagrammet på sidan och markerar tydligt varvet du stickar. Framstegen i varje projekt sparas automatiskt.",
-        soon="Kommer snart till Google Play",
-        devices="Android-telefoner · surfplattor · BOOX e-ink-plattor",
-        pledge="Inget konto · ingen reklam · ingen spårning",
-        shots=("BOOX e-ink-platta", "Telefon", "Surfplatta"),
-        alt=("Gabi Knits på en BOOX e-ink-platta: diagram med det aktuella varvet inramat", "Gabi Knits på telefon: det aktuella varvet markerat i gult", "Gabi Knits på en surfplatta liggande: diagram och varvknappar sida vid sida"),
-        how_t="Så fungerar det", how_l="Tre steg från PDF till stickorna.",
-        steps=[("Öppna ditt mönster", "Lägg till ett PDF-mönster som projekt. Det får ett eget namn och minns var du slutade."),
-               ("Tryck på diagrammet", "Gabi Knits hittar själv diagrammets ram och varv. Kanterna kan du justera vid behov."),
-               ("Sticka varv för varv", "Det aktuella varvet är tydligt markerat. En stor knapp tar dig till nästa varv – enkelt med en hand.")],
-        feat_t="Vad den kan", feat_l="Bara det som hjälper dig att sticka klart varvet – inget som är i vägen.",
-        feats=[("Flera diagram i ett mönster", "Framstycke, bakstycke och ärmar – varje diagram minns sitt varv och sin historik."),
-               ("Byt med ett tryck", "En flytande lista eller en list vid varvräknaren som aldrig täcker sidan."),
-               ("Teckenförklaringen till hands", "Markera teckenförklaringen en gång och öppna den över sidan utan att tappa varvet."),
-               ("Varvet följer dig", "Diagrammet kan flytta sig under en fast list – det aktuella varvet stannar mitt på skärmen."),
-               ("Sticktid", "Se hur lång tid ett projekt tog – klockan går bara när du startar den."),
-               ("Sex språk", "Svenska, engelska, polska, tyska, norska och danska.")],
-        eink_badge="Gjord<br>för e-ink", eink_t="Lugn på e-ink",
-        eink_p="Gabi Knits skapades på en BOOX Note Air. På e-ink finns inga animationer eller färger som bär betydelse – svart på vitt, stora knappar och stora varvnummer som syns ovanför stickningen. På telefoner och vanliga surfplattor använder den färg och mjuka rörelser.",
-        price_t="Pris", price_l="Prova allt gratis i 14 dagar. Välj sedan det som passar dig.",
-        plans=[("Månadsvis", "2,99 €", "per månad", True), ("Årsvis", "5,99 €", "per år", True), ("För alltid", "14,99 €", "engångsbetalning", False)],
-        best="Mest prisvärd", trial_yes="<b>14 dagar gratis</b>, förnyas sedan automatiskt om du inte säger upp.", trial_no="Betala en gång, behåll den för alltid.",
-        price_note="En gratis provperiod per Google-konto. Priserna är i euro; Google Play visar priset i din valuta. Säg upp när som helst i Google Play.",
-        priv_t="Dina mönster stannar hos dig",
-        priv_points=("Inget konto", "Ingen reklam", "Ingen spårning eller analys", "Fungerar utan internet"),
-        priv_p="Dina PDF-mönster, projekt och varvnummer stannar på din enhet. Appen använder internet bara för att genomföra ett köp och kontrollera att du har åtkomst.",
-        priv_link="Läs integritetspolicyn",
-        faq_t="Frågor",
-        faq=[("Behöver jag ett konto?", "Nej. Ingen registrering och ingen inloggning. Köp går via ditt Google Play-konto."),
-             ("Fungerar den utan internet?", "Ja. Läsning och stickning kräver aldrig internet. Anslutning behövs bara för att köpa och ibland för att bekräfta prenumerationen."),
-             ("Vilka enheter fungerar den på?", "Android 8.1 eller senare: telefoner, surfplattor och BOOX e-ink-plattor med Google Play."),
-             ("Vilka mönster passar?", "PDF-mönster med ett diagram på ett rutnät. Testad på dussintals DROPS-diagram; appen hittar själv rutnätet och varven, och kanterna kan du justera för hand."),
-             ("Vad kan jag göra utan att köpa?", "Lägga till projekt, öppna mönster, bläddra bland sidorna och markera diagram. Att sticka varv för varv med markerat varv kräver den gratis provperioden eller ett köp."),
-             ("Jag har en ny telefon. Betalar jag igen?", "Nej. Installera Gabi Knits med samma Google-konto och tryck på ”Återställ köp”."),
-             ("Hur säger jag upp prenumerationen?", "I Google Play: Betalningar och prenumerationer → Prenumerationer. Dina projekt stannar där de är."),
-             ("Finns det en version för iPhone eller iPad?", "Inte än – Android kommer först.")],
-        contact_t="Kontakt", contact_p="Frågor, idéer, ett mönster som inte fungerar? Skriv till oss:",
-        vat="Momsreg.nr PL7321956817", privacy="Integritetspolicy",
-    ),
+
+# Ikony - rysowane ręcznie na siatce 24×24, kreska 1,75 px, zaokrąglone końce (styl jak w aplikacji:
+# hierarchię niesie kreska, nie kolor). Kolor bierze z currentColor.
+ICONS = {
+    "check": '<path d="M5 12.5l4.2 4.2L19 7"/>',
+    "arrow": '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    "menu": '<path d="M4 7h16M4 12h16M4 17h16"/>',
+    "mail": '<rect x="3" y="5.5" width="18" height="13" rx="2.2"/><path d="M3.8 7.2l8.2 6 8.2-6"/>',
+    "lock": '<rect x="5" y="10.5" width="14" height="10" rx="2.2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5M12 14.5v2"/>',
+    # filary: znajduje schemat / rząd zawsze na widoku / stworzona dla e-inku
+    "find": '<path d="M3.5 3.5h9v9h-9zM3.5 8h9M8 3.5v9"/><circle cx="16" cy="16" r="3.8"/><path d="M18.8 18.8l2.2 2.2"/>',
+    "row": '<rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M3.5 14.5h17"/>'
+           '<path d="M2 9.5h20v5H2z" fill="currentColor" fill-opacity=".2" stroke-width="2"/>',
+    "tablet": '<rect x="5" y="2.5" width="14" height="19" rx="2.2"/><path d="M5 17h14M10.5 19.3h3"/>',
+    "bookmark": '<path d="M7.2 3.5h9.6c.7 0 1.2.5 1.2 1.2V20.5l-6-4-6 4V4.7c0-.7.5-1.2 1.2-1.2z"/><path d="M9.5 8.5h5"/>',
+    # e-ink: gruba ramka zamiast koloru / bez animacji / duże przyciski i numery / sprawdzona na BOOX
+    "frame": '<path d="M4 4.5h16M4 19.5h16"/><rect x="2.5" y="9" width="19" height="6" rx="1" stroke-width="2.75"/>',
+    "still": '<circle cx="12" cy="12" r="8.5"/><path d="M10 9v6M14 9v6"/>',
+    "tabletcheck": '<rect x="5" y="2.5" width="14" height="19" rx="2.2"/><path d="M5 17h14M9.2 10.2l2 2 3.8-3.8"/>',
+    "buttons": '<rect x="3" y="13" width="7.5" height="7" rx="2"/><rect x="13.5" y="13" width="7.5" height="7" rx="2"/>'
+               '<path d="M8 16.5H5.5M7 15l-1.5 1.5L7 18M16 16.5h2.5M17 15l1.5 1.5L17 18M12 3.5v6M9.5 7l2.5 2.5L14.5 7"/>',
+    # funkcje (kolejność jak feats w T)
+    "sequence": '<rect x="2.5" y="8.5" width="6" height="7" rx="1.5"/><rect x="15.5" y="8.5" width="6" height="7" rx="1.5"/>'
+                '<path d="M9.5 12h5M12.6 10l2 2-2 2"/>',
+    "cat": '<path d="M5 10.5V4.5l4 3.2h6l4-3.2v6a7 7 0 0 1-14 0z"/><path d="M9.5 12.2v.6M14.5 12.2v.6M10.8 15.3l1.2.8 1.2-.8"/>',
+    "layers": '<path d="M12 3.5l8.5 4.5-8.5 4.5L3.5 8z"/><path d="M3.5 12l8.5 4.5 8.5-4.5M3.5 16l8.5 4.5 8.5-4.5"/>',
+    "key": '<rect x="3.5" y="4.5" width="4" height="4" rx=".8"/><rect x="3.5" y="10" width="4" height="4" rx=".8"/>'
+           '<rect x="3.5" y="15.5" width="4" height="4" rx=".8"/><path d="M10.5 6.5h10M10.5 12h8M10.5 17.5h9"/>',
+    "follow": '<path d="M3 12h18M12 2.8v5M9.6 5.2L12 2.8l2.4 2.4M12 21.2v-5M9.6 18.8l2.4 2.4 2.4-2.4"/>',
+    "clock": '<circle cx="12" cy="13" r="8"/><path d="M12 9v4.2l2.8 1.8M9.5 2.8h5"/>',
+    "globe": '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.5 3.5 5.3 3.5 8.5s-1.1 6-3.5 8.5c-2.4-2.5-3.5-5.3-3.5-8.5s1.1-6 3.5-8.5z"/>',
 }
+PILLAR_ICONS = ["find", "row", "tablet"]
+EINK_ICONS = ["frame", "still", "buttons", "tabletcheck"]
+# Funkcje: jedna ikona na kartę, w kolejności feats z T (sekwencja, legenda, kilka schematów, rząd na środku,
+# licznik czasu, prowadzony pierwszy projekt z kotem Gabi, postęp zapisuje się sam, języki).
+# Zmiana kolejności tekstów → tu też.
+FEAT_ICONS = ["sequence", "key", "layers", "follow", "clock", "cat", "bookmark", "globe"]
+
+
+def icon(name, cls="ico"):
+    return (f'<svg class="{cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" '
+            f'stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">{ICONS[name]}</svg>')
+
+
+def play_badge(text, cls="", href=None):
+    """Odznaka „Wkrótce w Google Play” w stylu odznaki sklepu - własny znak (zaokrąglony trójkąt
+    w kolorach marki), nie oficjalny znak Google Play. Część przed „Google Play” idzie małym pismem."""
+    pre, sep, _ = text.partition("Google Play")
+    words = (f'<span class="small">{escape(pre.strip())}</span><span class="big">Google Play</span>'
+             if sep else f'<span class="big">{escape(text)}</span>')
+    mark = ('<svg class="mark" viewBox="0 0 32 32" aria-hidden="true">'
+            '<path d="M9 5.6c0-1.6 1.7-2.5 3-1.7l15.2 10.4c1.2.8 1.2 2.6 0 3.4L12 28.1c-1.3.9-3-.1-3-1.7z" fill="#E9846A"/>'
+            '<path d="M13.2 12.5l3.6 3.5-3.6 3.5M17.6 12.5l3.6 3.5-3.6 3.5" fill="none" stroke="#FBF7F2" stroke-width="1.75" '
+            'stroke-linecap="round" stroke-linejoin="round"/></svg>')
+    c = f"store {cls}".strip()
+    if href:
+        return f'<a class="{c} link" href="{href}" aria-label="{escape(text)}">{mark}<span class="words">{words}</span></a>'
+    return f'<div class="{c}" role="img" aria-label="{escape(text)}">{mark}<span class="words">{words}</span></div>'
+
+
+# --- Zrzuty: prawdziwe PNG z assets/shots/<lang>/, a do czasu ich powstania szkice SVG z _szkic/
+SKETCH = {"eink": (900, 1200), "phone": (540, 1170), "tablet": (1280, 800),
+          "step1": (540, 1170), "step2": (540, 1170), "step3": (540, 1170)}
+
+
+def shot(lang, name):
+    """Ścieżka zrzutu względem korzenia strony: PNG danego języka, jeśli jest, inaczej szkic."""
+    png = f"assets/shots/{lang}/{name}.png"
+    return png if (ROOT / png).exists() else f"assets/shots/_szkic/{name}.svg"
+
+
+def shot_size(path, name):
+    """Szerokość i wysokość do atrybutów <img> (proporcje rezerwują miejsce przed wczytaniem)."""
+    if path.endswith(".png"):
+        with open(ROOT / path, "rb") as f:
+            head = f.read(24)
+        return struct.unpack(">II", head[16:24])
+    return SKETCH[name]
+
+
+def img(t, lang, up, name, lazy=True):
+    path = shot(lang, name)
+    w, h = shot_size(path, name)
+    extra = ' loading="lazy" decoding="async"' if lazy else ' fetchpriority="high"'
+    return f'<img src="{up}{path}" width="{w}" height="{h}" alt="{escape(t["alt"][name])}"{extra}>'
+
+
+def text(s):
+    """Tekst do treści strony: escape + „e-ink” w jednym kawałku (bez łamania na „E-” / „Ink”
+    w nagłówkach; dotyczy też odmian: e-inku, E-Ink-Tablets)."""
+    return re.sub(r"(?i)\be-ink[\w-]*", lambda m: f'<span class="nw">{m.group(0)}</span>', escape(s))
+
+
+def device(kind, inner):
+    """Ramka urządzenia z CSS: e-ink (grafit, szerszy dolny margines jak BOOX), telefon, tablet."""
+    return f'<div class="device {kind}"><div class="screen">{inner}</div></div>'
 
 
 def home(lang):
@@ -322,41 +171,80 @@ def home(lang):
 def page(lang):
     t = T[lang]
     up = "" if lang == "en" else "../"          # do korzenia strony
+    e = text                                    # tekst w treści; w atrybutach samo escape()
     alts = "\n".join(
         f'<link rel="alternate" hreflang="{l}" href="https://gabiknits.app/{home(l)}">' for l in LANGS
     ) + '\n<link rel="alternate" hreflang="x-default" href="https://gabiknits.app/">'
-    langs = lang_nav(lang, lambda l: f"{up}{home(l)}")
-    ids = ("how", "features", "price", "faq", "contact")
-    nav = "".join(
-        f'<a href="#{i}">{escape(n)}</a>' for i, n in zip(ids, t["nav"]) if SHOW_PRICE or i != "price"
+    href = lambda l: f"{up}{home(l)}"
+    ids = ["eink", "how", "features", "faq", "contact"]
+    labels = list(t["nav"])
+    if SHOW_PRICE:
+        ids.insert(3, "price")
+        labels.insert(3, t["price_title"])
+    links = "".join(f'<a href="#{i}">{e(n)}</a>' for i, n in zip(ids, labels))
+    privacy = f'{up}{home(lang)}privacy/'
+
+    trust = "".join(f"<li>{icon('check')}<span>{e(x)}</span></li>" for x in t["hero_trust"])
+    pillars = "".join(
+        f'<div class="pillar"><span class="badge-ico">{icon(PILLAR_ICONS[k])}</span>'
+        f"<div><h3>{e(a)}</h3><p>{e(b)}</p></div></div>"
+        for k, (a, b) in enumerate(t["pillars"])
+    )
+    epoints = "".join(
+        f'<li><span class="sq">{icon(EINK_ICONS[k])}</span><div><h3>{e(a)}</h3><p>{e(b)}</p></div></li>'
+        for k, (a, b) in enumerate(t["eink_points"])
     )
     steps = "".join(
-        f'<div class="step"><div class="n">{k}</div><h3>{escape(a)}</h3><p>{escape(b)}</p></div>'
+        f'<li class="step"><div class="tile">{device("phone", img(t, lang, up, f"step{k}"))}</div>'
+        f'<div class="step-text"><span class="n" aria-hidden="true">{k}</span><h3>{e(a)}</h3><p>{e(b)}</p></div></li>'
         for k, (a, b) in enumerate(t["steps"], 1)
     )
-    feats = "".join(f"<li><strong>{escape(a)}</strong><span>{escape(b)}</span></li>" for a, b in t["feats"])
+    feats = "".join(
+        f'<li class="card"><span class="badge-ico">{icon(FEAT_ICONS[k])}</span><h3>{e(a)}</h3><p>{e(b)}</p></li>'
+        for k, (a, b) in enumerate(t["feats"])
+    )
     plans = ""
     for k, (name, price, per, trial) in enumerate(t["plans"]):
         best = k == 1
         plans += (
             f'<div class="plan{" best" if best else ""}">'
-            + (f'<span class="tag">{escape(t["best"])}</span>' if best else "")
-            + f'<div class="name">{escape(name)}</div><div class="price">{escape(price)}</div>'
-            + f'<div class="per">{escape(per)}</div>'
-            + f'<div class="trial">{t["trial_yes"] if trial else escape(t["trial_no"])}</div></div>'
+            + (f'<span class="tag">{e(t["best"])}</span>' if best else "")
+            + f'<h3 class="name">{e(name)}</h3><div class="price">{e(price)}</div>'
+            + f'<div class="per">{e(per)}</div>'
+            + f'<div class="trial">{icon("check")}<span>{t["trial_yes"] if trial else e(t["trial_no"])}</span></div></div>'
         )
+    # Film z Gabi (Veo, 8 s) - zapętlony, bez dźwięku. Przy „ograniczaniu ruchu” w systemie zostaje
+    # sam kadr (CSS ukrywa film). Bez skryptów, więc film wczytuje się razem ze stroną (2,4 MB).
+    film = (f'<div class="cta-film">'
+            f'<video class="motion" src="{up}assets/media/gabi.mp4" poster="{up}assets/media/gabi.jpg" '
+            f'autoplay muted loop playsinline preload="auto" width="960" height="540" aria-hidden="true"></video>'
+            f'<img class="still" src="{up}assets/media/gabi.jpg" width="960" height="540" alt="{escape(t["video_alt"])}" loading="lazy" decoding="async">'
+            f'</div>')
+    if LAUNCHED:
+        side = (f'<h2>{e(t["get_title"])}</h2><p>{e(t["get_text"])}</p>'
+                f'{play_badge(t["get_badge"], "light on-dark", href=PLAY_URL)}'
+                f'<p class="cta-small">{e(t["get_contact"])} <a class="mail-link" href="mailto:{EMAIL}">{EMAIL}</a></p>')
+    else:
+        side = (f'<h2>{e(t["cta_title"])}</h2><p>{e(t["cta_text"])}</p>'
+                f'<a class="mail" href="mailto:{EMAIL}">{icon("mail")}<span>{EMAIL}</span></a>')
+    cta = (f'<section id="contact" class="sec cta"><div class="wrap"><div class="cta-card">'
+           f'{film}<div class="cta-main">{side}</div></div></div></section>')
     price = (
-        f"""<section id="price" class="band"><div class="wrap">
-  <h2>{escape(t["price_t"])}</h2><p class="lead">{escape(t["price_l"])}</p>
+        f"""<section id="price" class="sec pricing"><div class="wrap">
+  <header class="sec-head center"><h2>{e(t["price_title"])}</h2><p class="lead">{e(t["price_lead"])}</p></header>
   <div class="plans">{plans}</div>
-  <p class="note">{escape(t["price_note"])}</p>
+  <p class="note">{e(t["price_note"])}</p>
 </div></section>
+
 """
         if SHOW_PRICE else ""
     )
-    points = "".join(f"<li>{escape(p)}</li>" for p in t["priv_points"])
-    faq = "".join(f"<details><summary>{escape(q)}</summary><p>{escape(a)}</p></details>" for q, a in t["faq"])
-    privacy = f'{up}{"" if lang == "en" else lang + "/"}privacy/'
+    ppoints = "".join(f"<li>{icon('check')}<span>{e(p)}</span></li>" for p in t["priv_points"])
+    faq = "".join(
+        f'<details><summary><span>{e(q)}</span><i aria-hidden="true"></i></summary><p>{e(a)}</p></details>'
+        for q, a in t["faq"]
+    )
+    sh = t["shots"]
     return f"""<!doctype html>
 <html lang="{lang}">
 <head>
@@ -364,63 +252,100 @@ def page(lang):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{escape(t["title"])}</title>
 <meta name="description" content="{escape(t["desc"])}">
+<meta name="theme-color" content="#FBF7F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121820" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="{up}favicon.png">
+<link rel="preload" href="{up}assets/prata.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="{up}assets/site.css">
 {alts}
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="brand" href="{up}{home(lang)}"><img src="{up}assets/logo.png" alt="" width="40" height="40">Gabi Knits</a>
-  <nav class="nav">{nav}</nav>
-  {langs}
+  <a class="brand" href="{href(lang)}"><img src="{up}assets/logo.png" alt="" width="44" height="46">Gabi Knits</a>
+  <nav class="nav" aria-label="{escape(MENU[lang])}">{links}</nav>
+  <div class="langs-top">{lang_nav(lang, href, key="t")}</div>
+  <details class="menu">
+    <summary>{icon("menu")}<span>{e(MENU[lang])}</span></summary>
+    <div class="menu-panel">
+      <nav class="menu-links" aria-label="{escape(MENU[lang])}">{links}</nav>
+      {lang_nav(lang, href, key="m")}
+    </div>
+  </details>
 </div></header>
 <main>
 <section class="hero"><div class="wrap">
-  <img class="logo" src="{up}assets/logo.png" width="400" height="416" alt="Gabi Knits">
-  <h1>Gabi Knits</h1>
-  <p class="claim">{escape(t["claim"])}</p>
-  <p class="intro">{escape(t["intro"])}</p>
-  <span class="soon">{escape(t["soon"])}</span>
-  <p class="devices">{escape(t["devices"])}</p>
-  <p class="pledge">{escape(t["pledge"])}</p>
-</div></section>
-<section class="shots"><div class="wrap">
-  <div class="grid">
-    <figure><div class="frame eink"><img src="{up}assets/shots/eink.svg" width="760" height="952" alt="" loading="lazy"></div><figcaption>{escape(t["shots"][0])}</figcaption></figure>
-    <figure><div class="frame phone"><img src="{up}assets/shots/phone.svg" width="540" height="1071" alt="" loading="lazy"></div><figcaption>{escape(t["shots"][1])}</figcaption></figure>
+  <div class="hero-text">
+    <p class="eyebrow">{e(t["hero_eyebrow"])}</p>
+    <h1>{e(t["hero_title"])}</h1>
+    <p class="hero-lead">{e(t["hero_text"])}</p>
+    {play_badge(t["get_badge"], href=PLAY_URL) if LAUNCHED else play_badge(t["soon"])}
+    <ul class="trust">{trust}</ul>
   </div>
-  <figure class="wide"><div class="frame tablet"><img src="{up}assets/shots/tablet.svg" width="1200" height="827" alt="" loading="lazy"></div><figcaption>{escape(t["shots"][2])}</figcaption></figure>
+  <div class="stage">
+    {device("eink", img(t, lang, up, "eink", lazy=False))}
+    {device("phone", img(t, lang, up, "phone", lazy=False))}
+  </div>
 </div></section>
-<section id="how"><div class="wrap">
-  <h2>{escape(t["how_t"])}</h2><p class="lead">{escape(t["how_l"])}</p>
-  <div class="steps">{steps}</div>
+
+<section class="pillars-sec"><div class="wrap"><div class="pillars">{pillars}</div></div></section>
+
+<section id="eink" class="sec eink"><div class="wrap">
+  <div class="eink-shot">{device("eink", img(t, lang, up, "eink"))}</div>
+  <div class="eink-text">
+    <p class="eyebrow">{e(t["eink_eyebrow"])}</p>
+    <h2>{e(t["eink_title"])}</h2>
+    <p class="lead">{e(t["eink_text"])}</p>
+    <ul class="epoints">{epoints}</ul>
+  </div>
 </div></section>
-<section id="features" class="band"><div class="wrap">
-  <h2>{escape(t["feat_t"])}</h2><p class="lead">{escape(t["feat_l"])}</p>
-  <ul class="features">{feats}</ul>
+
+<section id="how" class="sec how"><div class="wrap">
+  <header class="sec-head center"><h2>{e(t["how_title"])}</h2><p class="lead">{e(t["how_lead"])}</p></header>
+  <ol class="steps">{steps}</ol>
 </div></section>
-<section><div class="wrap">
-  <div class="eink-box"><div class="badge">{t["eink_badge"]}</div><div><h2>{escape(t["eink_t"])}</h2><p>{escape(t["eink_p"])}</p></div></div>
+
+<section id="features" class="sec features"><div class="wrap">
+  <header class="sec-head center"><h2>{e(t["feat_title"])}</h2><p class="lead">{e(t["feat_lead"])}</p></header>
+  <ul class="cards">{feats}</ul>
 </div></section>
-{price}<section><div class="wrap">
-  <h2>{escape(t["priv_t"])}</h2>
-  <ul class="privacy-points">{points}</ul>
-  <p class="lead">{escape(t["priv_p"])}</p>
-  <a href="{privacy}">{escape(t["priv_link"])} →</a>
+
+<section class="sec devices"><div class="wrap">
+  <header class="sec-head center"><h2>{e(t["devices_title"])}</h2><p class="lead">{e(t["devices_lead"])}</p></header>
+  <div class="trio">
+    <figure class="d-eink">{device("eink", img(t, lang, up, "eink"))}<figcaption>{e(sh[0])}</figcaption></figure>
+    <figure class="d-tablet">{device("tablet", img(t, lang, up, "tablet"))}<figcaption>{e(sh[2])}</figcaption></figure>
+    <figure class="d-phone">{device("phone", img(t, lang, up, "phone"))}<figcaption>{e(sh[1])}</figcaption></figure>
+  </div>
 </div></section>
-<section id="faq" class="band faq"><div class="wrap">
-  <h2>{escape(t["faq_t"])}</h2>
-  {faq}
+
+{price}<section class="sec privacy"><div class="wrap">
+  <div class="priv-card">
+    <div class="priv-main">
+      <span class="badge-ico big">{icon("lock")}</span>
+      <h2>{e(t["priv_title"])}</h2>
+      <p>{e(t["priv_text"])}</p>
+      <a class="more" href="{privacy}">{e(t["priv_link"])}{icon("arrow")}</a>
+    </div>
+    <ul class="priv-points">{ppoints}</ul>
+  </div>
 </div></section>
-<section id="contact" class="contact"><div class="wrap">
-  <h2>{escape(t["contact_t"])}</h2>
-  <p>{escape(t["contact_p"])}</p>
-  <a class="mail" href="mailto:{EMAIL}">{EMAIL}</a>
+
+<section id="faq" class="sec faq"><div class="wrap">
+  <header class="sec-head"><h2>{e(t["faq_title"])}</h2></header>
+  <div class="faq-list">{faq}</div>
 </div></section>
+
+{cta}
 </main>
-<footer><div class="wrap">
-  <span>Gabi Knits · {escape(COMPANY)} · {escape(t["vat"])}</span>
-  <span><a href="{privacy}">{escape(t["privacy"])}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></span>
+<footer class="foot"><div class="wrap">
+  <div class="foot-row">
+    <a class="brand" href="{href(lang)}"><img src="{up}assets/logo.png" alt="" width="36" height="37" loading="lazy">Gabi Knits</a>
+    {lang_nav(lang, href, key="f")}
+  </div>
+  <div class="foot-row small">
+    <span>{e(COMPANY)} · <span class="nw">{e(t["vat"])}</span></span>
+    <span><a href="{privacy}">{e(t["privacy"])}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></span>
+  </div>
 </div></footer>
 </body>
 </html>
