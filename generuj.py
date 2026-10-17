@@ -4,8 +4,8 @@
 Teksty są w `teksty.py` (słownik T), układ w funkcji page(), wygląd w assets/site.css.
 Zrzuty aplikacji: assets/shots/<język>/*.png; brakujące zastępuje szkic z assets/shots/_szkic/.
 Uruchomienie: `python3 generuj.py` nadpisuje index.html (angielski, w korzeniu) i pl/, de/, nb/, da/, sv/index.html.
-Polityka prywatności (privacy/, xx/privacy/) jest pisana ręcznie - generator podmienia w niej
-tylko przełącznik języków.
+Polityka prywatności (privacy/, xx/privacy/) i regulamin (terms/, xx/terms/) są pisane ręcznie -
+generator podmienia w nich tylko przełącznik języków.
 """
 import re
 import struct
@@ -31,7 +31,7 @@ SHOW_PRICE = False
 # do pobrania. UWAGA: wtedy Google wymaga oficjalnej odznaki „Get it on Google Play” (wytyczne marki)
 # zamiast naszej - podmienić play_badge() na oficjalny plik odznaki w każdym języku.
 LAUNCHED = False
-PLAY_URL = "https://play.google.com/store/apps/details?id=io.github.lukaszdo.motek"
+PLAY_URL = "https://play.google.com/store/apps/details?id=app.gabiknits"
 
 # Podpis przycisku menu na wąskim ekranie (jedyny tekst spoza T - jedno słowo na język).
 MENU = {"en": "Menu", "pl": "Menu", "de": "Menü", "nb": "Meny", "da": "Menu", "sv": "Meny"}
@@ -183,6 +183,7 @@ def page(lang):
         labels.insert(3, t["price_title"])
     links = "".join(f'<a href="#{i}">{e(n)}</a>' for i, n in zip(ids, labels))
     privacy = f'{up}{home(lang)}privacy/'
+    terms = f'{up}{home(lang)}terms/'
 
     trust = "".join(f"<li>{icon('check')}<span>{e(x)}</span></li>" for x in t["hero_trust"])
     pillars = "".join(
@@ -344,7 +345,7 @@ def page(lang):
   </div>
   <div class="foot-row small">
     <span>{e(COMPANY)} · <span class="nw">{e(t["vat"])}</span></span>
-    <span><a href="{privacy}">{e(t["privacy"])}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></span>
+    <span><a href="{privacy}">{e(t["privacy"])}</a> · <a href="{terms}">{e(t["terms"])}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></span>
   </div>
 </div></footer>
 </body>
@@ -358,13 +359,14 @@ for lang in LANGS:
     out.write_text(page(lang), encoding="utf-8")
     print("zapisano", out.relative_to(ROOT))
 
-# Polityka prywatności jest pisana ręcznie - generator podmienia w niej tylko przełącznik języków.
-for lang in LANGS:
-    path = ROOT / home(lang) / "privacy" / "index.html"
-    up = "../" if lang == "en" else "../../"
-    text = path.read_text(encoding="utf-8")
-    nav = lang_nav(lang, lambda l: f"{up}{home(l)}privacy/")
-    text, n = re.subn(r'<nav class="lang"[^>]*>.*?</nav>', lambda _: nav, text, count=1, flags=re.S)
-    assert n == 1, path
-    path.write_text(text, encoding="utf-8")
-    print("przełącznik języków:", path.relative_to(ROOT))
+# Polityka prywatności i regulamin (2026-10-17) są pisane ręcznie - generator podmienia w nich tylko przełącznik języków.
+for doc in ("privacy", "terms"):
+    for lang in LANGS:
+        path = ROOT / home(lang) / doc / "index.html"
+        up = "../" if lang == "en" else "../../"
+        text = path.read_text(encoding="utf-8")
+        nav = lang_nav(lang, lambda l: f"{up}{home(l)}{doc}/")
+        text, n = re.subn(r'<nav class="lang"[^>]*>.*?</nav>', lambda _: nav, text, count=1, flags=re.S)
+        assert n == 1, path
+        path.write_text(text, encoding="utf-8")
+        print("przełącznik języków:", path.relative_to(ROOT))

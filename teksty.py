@@ -89,6 +89,7 @@ T = {
         "video_alt": "Gabi, the cat in glasses, knitting in an armchair in a cosy yarn shop",
         "vat": "VAT ID PL7321956817",
         "privacy": "Privacy policy",
+        "terms": "Terms of use",
     },
     "pl": {
         "title": "Gabi Knits – schematy dziewiarskie na e-ink i Androida",
@@ -180,6 +181,7 @@ T = {
         "video_alt": "Kotka Gabi w okularach dzierga w fotelu w przytulnym sklepie z włóczką",
         "vat": "NIP 7321956817",
         "privacy": "Polityka prywatności",
+        "terms": "Regulamin",
     },
     "de": {
         "title": "Gabi Knits – Strickdiagramme auf E-Ink und Android",
@@ -271,6 +273,7 @@ T = {
         "video_alt": "Die Katze Gabi mit Brille strickt im Sessel in einem gemütlichen Wollladen",
         "vat": "USt-IdNr. PL7321956817",
         "privacy": "Datenschutzerklärung",
+        "terms": "Nutzungsbedingungen",
     },
     "nb": {
         "title": "Gabi Knits – strikkediagrammer på e-ink og Android",
@@ -362,6 +365,7 @@ T = {
         "video_alt": "Katten Gabi med briller strikker i en lenestol i en koselig garnbutikk",
         "vat": "MVA-nr. PL7321956817",
         "privacy": "Personvernerklæring",
+        "terms": "Vilkår for bruk",
     },
     "da": {
         "title": "Gabi Knits – strikkediagrammer på e-ink og Android",
@@ -453,6 +457,7 @@ T = {
         "video_alt": "Katten Gabi med briller strikker i en lænestol i en hyggelig garnbutik",
         "vat": "Moms-nr. PL7321956817",
         "privacy": "Privatlivspolitik",
+        "terms": "Brugsvilkår",
     },
     "sv": {
         "title": "Gabi Knits – stickdiagram på e-ink och Android",
@@ -544,5 +549,6 @@ T = {
         "video_alt": "Katten Gabi med glasögon stickar i en fåtölj i en mysig garnbutik",
         "vat": "Momsreg.nr PL7321956817",
         "privacy": "Integritetspolicy",
+        "terms": "Användarvillkor",
     },
 }
