@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test aplikacji · Gabi Knits</title>
+<!-- Strona tylko dla osób testujących (2026-10-21): bez linków z innych stron, poza wyszukiwarkami. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FBF7F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121820" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../../favicon.png">
+<link rel="preload" href="../../assets/prata.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="../../assets/site.css">
+<style>
+/* Instrukcja dla testerek: czytana na telefonie, często przez starsze osoby - jedna kolumna,
+   duże pismo, jedna czynność w kroku, przyciski i nazwy z aplikacji wyróżnione. */
+.tt{max-width:760px;margin:0 auto;padding:0 20px}
+.tt-hero{padding:56px 0 28px}
+.tt-hero h1{font-size:clamp(2.2rem,1.4rem + 3.4vw,3.4rem);line-height:1.1;letter-spacing:-.01em}
+.tt-hero .lead{margin-top:20px;font-size:1.22rem}
+.free{display:flex;gap:14px;align-items:center;margin-top:28px;background:var(--teal-soft);color:var(--ink);border-radius:18px;padding:18px 22px;font-weight:600;font-size:1.15rem}
+.free span{flex:1;line-height:1.4}
+.free .ico{width:34px;height:34px;padding:7px;border-radius:50%;background:var(--teal);color:var(--card);stroke-width:2.4}
+
+.before{margin:28px 0 8px;background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:26px 26px 24px;box-shadow:var(--shadow-sm)}
+.before h2,.ask h2{font-size:1.6rem;margin-bottom:14px}
+.ticks li{display:flex;gap:14px;align-items:flex-start;margin:12px 0;color:var(--text)}
+.ticks .ico{width:28px;height:28px;padding:5px;border-radius:50%;background:var(--yarn-soft);color:var(--yarn-ink);stroke-width:2.4;margin-top:1px}
+
+.tsteps{counter-reset:k;margin:44px 0 0}
+.tstep{position:relative;padding:0 0 40px 76px}
+.tstep::before{counter-increment:k;content:counter(k);position:absolute;left:0;top:0;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;
+  border:2.5px solid var(--yarn);color:var(--yarn-ink);background:var(--paper);font-size:1.35rem;font-weight:700;line-height:1}
+.tstep::after{content:"";position:absolute;left:25px;top:60px;bottom:8px;border-left:2px dashed var(--rule)}
+.tstep:last-child::after{display:none}
+.tstep h3{font-size:1.5rem;margin:8px 0 12px}
+.tstep p{margin:0 0 12px}
+.tstep p:last-child{margin-bottom:0}
+.hint{color:var(--muted);font-size:1.05rem}
+/* Nazwa przycisku tak, jak wygląda na ekranie */
+.btn{display:inline-block;padding:1px 10px;border:1.5px solid var(--ink);border-radius:8px;font-weight:600;color:var(--ink);white-space:nowrap;font-size:.98em;background:var(--card)}
+.go{display:inline-flex;align-items:center;gap:12px;margin:6px 0 16px;background:var(--teal);color:#fff;text-decoration:none;font-weight:700;font-size:1.2rem;
+  padding:16px 26px;border-radius:999px;box-shadow:var(--shadow-sm)}
+.go .ico{width:22px;height:22px;stroke-width:2.4}
+.go:hover{filter:brightness(1.08)}
+@media (prefers-color-scheme: dark){.go{color:#0E1A18}}
+
+.box{border-radius:18px;padding:18px 20px;margin:16px 0 4px;font-size:1.08rem}
+.box b{color:var(--ink)}
+.box.ok{background:var(--teal-soft)}
+.box.warn{background:var(--yarn-soft);border-left:5px solid var(--yarn)}
+.box .t{display:block;font-weight:700;color:var(--ink);margin-bottom:4px;font-size:1.12rem}
+
+/* Jasny blok (jak „Prywatność” na stronie głównej) - ciemny jest niżej, kontakt ze strony głównej. */
+.ask{margin:16px 0 0;background:var(--teal-soft);color:var(--text);border-radius:28px;padding:36px 30px}
+.ask p{color:var(--text)}
+.ask ul{margin:18px 0}
+.ask li{display:flex;gap:12px;align-items:flex-start;margin:10px 0;color:var(--ink);font-weight:600;font-size:1.12rem}
+.ask li::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--yarn);margin-top:.62em}
+.ask .shot{margin-top:18px;padding-top:18px;border-top:1px solid color-mix(in srgb,var(--teal) 25%,transparent)}
+.tt-foot{margin-top:36px;padding-bottom:48px;color:var(--muted);font-size:.95rem;display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;align-items:center}
+.tt-foot .brand{font-size:1.2rem}
+.tt-foot .brand img{width:34px}
+/* Kontakt jak na stronie głównej, ale w szerokości instrukcji i zawsze w jednej kolumnie. */
+.sec.cta.tt-cta{padding:56px 0 0}
+.tt-cta .wrap{max-width:800px;padding:0 20px}
+.tt-cta .cta-card{grid-template-columns:1fr;gap:36px;padding:48px 40px}
+@media (max-width:640px){
+  .tt-cta .wrap{padding:0 16px}
+  .tt-cta .cta-card{padding:32px 20px}
+}
+@media (max-width:640px){
+  .tt{padding:0 16px}
+  .tt-hero{padding:36px 0 20px}
+  .tstep{padding-left:64px}
+  .tstep::before{width:46px;height:46px;font-size:1.2rem}
+  .tstep::after{left:22px;top:54px}
+  .tstep h3{font-size:1.32rem;margin-top:6px}
+  .go{font-size:1.1rem;padding:15px 22px}
+  .ask{padding:28px 20px;border-radius:22px}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../"><img src="../../assets/logo.png" alt="" width="44" height="46">Gabi Knits</a>
+</div></header>
+
+<main class="tt">
+<section class="tt-hero">
+  <p class="eyebrow">Test aplikacji</p>
+  <h1>Dziękujemy, że testujesz Gabi Knits!</h1>
+  <p class="lead">Gabi Knits otwiera wzór PDF, zaznacza rządek, który dziergasz, i prowadzi Cię rządek po rządku. Zanim trafi do wszystkich, sprawdzamy ją razem z dziergającymi osobami – Twoje uwagi naprawdę ją zmienią.</p>
+  <p class="free"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Test jest bezpłatny – nic nie płacisz.</span></p>
+</section>
+
+<section class="before">
+  <h2>Zanim zaczniesz</h2>
+  <ul class="ticks">
+    <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Potrzebny jest <b>telefon albo tablet z Androidem</b> i Sklepem Play. Na iPhonie aplikacji jeszcze nie ma.</span></li>
+    <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Gaba musi mieć <b>Twój adres Gmail</b> – ten, którego używasz w Sklepie Play. Bez niego zaproszenie nie zadziała.</span></li>
+    <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Przyda się <b>wzór dziewiarski w PDF</b>, z którego chcesz dziergać.</span></li>
+  </ul>
+</section>
+
+<ol class="tsteps">
+  <li class="tstep">
+    <h3>Dołącz do testów</h3>
+    <p>Otwórz zaproszenie <b>na telefonie</b>, na którym chcesz dziergać:</p>
+    <a class="go" href="https://play.google.com/apps/internaltest/4701416030222443770">Otwórz zaproszenie<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <p>Jeśli telefon zapyta o konto Google, wybierz to samo, którego używasz w Sklepie Play. Jeśli zobaczysz przycisk <span class="btn" lang="en">Become a tester</span> albo <span class="btn" lang="en">Accept invite</span>, dotknij go.</p>
+    <p class="hint">Strona jest po angielsku, a zamiast nazwy aplikacji widać „app.gabiknits (unreviewed)”. Tak ma być – to wersja testowa.</p>
+  </li>
+  <li class="tstep">
+    <h3>Zainstaluj aplikację</h3>
+    <p>Na tej samej stronie dotknij <span class="btn" lang="en">Download test app</span>. Otworzy się Sklep Play – dotknij <span class="btn">Zainstaluj</span>.</p>
+    <p class="hint">Sklep nie pokazuje aplikacji? Poczekaj kwadrans i otwórz zaproszenie jeszcze raz.</p>
+  </li>
+  <li class="tstep">
+    <h3>Przejdź samouczek</h3>
+    <p>Otwórz Gabi Knits. Aplikacja zaproponuje krótki samouczek na wzorze ćwiczebnym. Warto go przejść: w kilka minut pokaże wszystko, czego potrzeba.</p>
+  </li>
+  <li class="tstep">
+    <h3>Dziergaj ze swojego wzoru</h3>
+    <p>Dodaj swój wzór PDF w <span class="btn">Projekty</span> → <span class="btn">Nowy projekt</span> i dziergaj z niego tak, jak na co dzień.</p>
+  </li>
+  <li class="tstep">
+    <h3>Włącz pełną wersję – testowo</h3>
+    <p>Przy przejściu do drugiego rządka pojawi się okno <b>„Dziergaj dalej z pełną wersją”</b>.</p>
+    <p>Wybierz <span class="btn">Na zawsze</span> i dotknij przycisku <span class="btn">Kup za…</span>. W oknie Google wybierz płatność <b>„Testowa karta, zawsze zatwierdza”</b> i potwierdź.</p>
+    <div class="box ok"><span class="t">To zakup testowy</span>W oknie Google zobaczysz napis o zamówieniu testowym. Nic nie płacisz, a aplikacja działa w pełni.</div>
+    <div class="box warn"><span class="t">Widzisz swoją prawdziwą kartę?</span><b>Nie kupuj.</b> Zamknij okno i napisz do Gaby – dopisze Cię do testów, a wtedy zakup będzie bezpłatny.</div>
+  </li>
+</ol>
+
+<section class="ask">
+  <h2>Pisz do Gaby o wszystkim</h2>
+  <p>Na Messengerze, w zwykłej rozmowie. Każda uwaga się przyda – także drobna. Najbardziej ciekawi nas:</p>
+  <ul>
+    <li>co nie działa albo działa inaczej, niż się spodziewasz,</li>
+    <li>co jest niejasne,</li>
+    <li>co jest trudne albo męczące w dzierganiu.</li>
+  </ul>
+  <p class="shot">Zrzut ekranu bardzo pomaga. Na większości telefonów zrobisz go, przytrzymując <b style="color:var(--ink)">jednocześnie przycisk zasilania i ściszania</b>.</p>
+</section>
+</main>
+
+<!-- Ta sama sekcja co na stronie głównej (pl/index.html, #contact), węższa - w jednej kolumnie. -->
+<section id="contact" class="sec cta tt-cta"><div class="wrap"><div class="cta-card"><div class="cta-film"><video class="motion" src="../../assets/media/gabi.mp4" poster="../../assets/media/gabi.jpg" autoplay muted loop playsinline preload="auto" width="960" height="540" aria-hidden="true"></video><img class="still" src="../../assets/media/gabi.jpg" width="960" height="540" alt="Kotka Gabi w okularach dzierga w fotelu w przytulnym sklepie z włóczką" loading="lazy" decoding="async"></div><div class="cta-main"><h2>Masz pytanie albo pomysł?</h2><p>Napisz do Gabi – o wzorze, który nie działa, o pomyśle na aplikację albo z pytaniem przed premierą. Gabi czyta każdą wiadomość.</p><a class="mail" href="mailto:contact@gabiknits.app"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.2"/><path d="M3.8 7.2l8.2 6 8.2-6"/></svg><span>contact@gabiknits.app</span></a></div></div></div></section>
+
+<footer class="tt tt-foot">
+  <a class="brand" href="../"><img src="../../assets/logo.png" alt="" width="34" height="36">Gabi Knits</a>
+  <span>Strona dla osób testujących · <a href="mailto:contact@gabiknits.app">contact@gabiknits.app</a></span>
+</footer>
+</body>
+</html>
