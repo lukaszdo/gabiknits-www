@@ -92,10 +92,10 @@ T = {
         "terms": "Terms of use",
     },
     "pl": {
-        "title": "Gabi Knits – schematy dziewiarskie na e-ink i Androida",
+        "title": "Gabi Knits – schematy na druty dla e-inku i Androida",
         "desc": "Gabi Knits otwiera wzory PDF, sama znajduje schemat i prowadzi rządek po rządku. Stworzona dla e-inku BOOX, działa też na telefonie i tablecie. Bez reklam.",
         "nav": ("E-ink", "Jak to działa", "Funkcje", "Pytania", "Kontakt"),
-        "hero_eyebrow": "Czytnik schematów dziewiarskich",
+        "hero_eyebrow": "Czytnik schematów na druty",
         "hero_title": "Zawsze wiesz, który rządek dziergasz.",
         "hero_text": "Otwórz wzór PDF i dotknij schematu – Gabi Knits sama znajdzie rządki i wyraźnie zaznaczy ten, który właśnie dziergasz. Jeden duży przycisk prowadzi do następnego rządka, a postęp zapisuje się sam.",
         "soon": "Wkrótce w Google Play",
