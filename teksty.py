@@ -182,6 +182,10 @@ T = {
         "vat": "NIP 7321956817",
         "privacy": "Polityka prywatności",
         "terms": "Regulamin",
+        # Napiwek (2026-10-22): na razie tylko po polsku - buycoffee.to; pozostałe języki dostaną Ko-fi.
+        "tip": "Postaw Gabi kawę",
+        "tip_title": "Podoba Ci się Gabi Knits?",
+        "tip_text": "To dobrowolny napiwek – każda kawa to dla Gabi znak, że warto dalej rozwijać aplikację.",
     },
     "de": {
         "title": "Gabi Knits – Strickdiagramme auf E-Ink und Android",

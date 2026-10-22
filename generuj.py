@@ -95,6 +95,8 @@ ICONS = {
            '<rect x="3.5" y="15.5" width="4" height="4" rx=".8"/><path d="M10.5 6.5h10M10.5 12h8M10.5 17.5h9"/>',
     "follow": '<path d="M3 12h18M12 2.8v5M9.6 5.2L12 2.8l2.4 2.4M12 21.2v-5M9.6 18.8l2.4 2.4 2.4-2.4"/>',
     "clock": '<circle cx="12" cy="13" r="8"/><path d="M12 9v4.2l2.8 1.8M9.5 2.8h5"/>',
+    # filiżanka z parą - „Postaw kawę” (pas pod kontaktem i stopka)
+    "coffee": '<path d="M4 9.5h12v4.5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5c-.7.9-.7 1.9 0 2.8M12 3.5c-.7.9-.7 1.9 0 2.8"/>',
     "globe": '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.5 3.5 5.3 3.5 8.5s-1.1 6-3.5 8.5c-2.4-2.5-3.5-5.3-3.5-8.5s1.1-6 3.5-8.5z"/>',
 }
 PILLAR_ICONS = ["find", "row", "tablet"]
@@ -184,6 +186,19 @@ def page(lang):
     links = "".join(f'<a href="#{i}">{e(n)}</a>' for i, n in zip(ids, labels))
     privacy = f'{up}{home(lang)}privacy/'
     terms = f'{up}{home(lang)}terms/'
+    # „Postaw kawę” (2026-10-22): mały odnośnik tylko w stopce strony głównej, w językach, które mają
+    # klucz "tip" i stronę xx/tip/. Nigdy w polityce prywatności ani regulaminie - te strony otwiera
+    # aplikacja, a Google Play zdejmuje aplikacje prowadzące do płatności poza sklepem (AnkiDroid 2026).
+    # Po uwadze użytkownika (sam odnośnik w stopce był niewidoczny): także pas z filiżanką pod blokiem
+    # kontaktu, na samym końcu strony - z dala od góry strony i od pobierania aplikacji.
+    tip_url = f"{up}{home(lang)}tip/"
+    tip = (f' · <a class="foot-tip" href="{tip_url}">{icon("coffee")}<span>{e(t["tip"])}</span></a>'
+           if "tip" in t else "")
+    tipband = (f'<section class="sec tipband"><div class="wrap"><div class="tip-card">'
+               f'<span class="badge-ico">{icon("coffee")}</span>'
+               f'<div class="tip-text"><h2>{e(t["tip_title"])}</h2><p>{e(t["tip_text"])}</p></div>'
+               f'<a class="tip-go" href="{tip_url}">{icon("coffee")}<span>{e(t["tip"])}</span></a>'
+               f'</div></div></section>\n' if "tip" in t else "")
 
     trust = "".join(f"<li>{icon('check')}<span>{e(x)}</span></li>" for x in t["hero_trust"])
     pillars = "".join(
@@ -337,7 +352,7 @@ def page(lang):
 </div></section>
 
 {cta}
-</main>
+{tipband}</main>
 <footer class="foot"><div class="wrap">
   <div class="foot-row">
     <a class="brand" href="{href(lang)}"><img src="{up}assets/logo.png" alt="" width="36" height="37" loading="lazy">Gabi Knits</a>
@@ -345,7 +360,7 @@ def page(lang):
   </div>
   <div class="foot-row small">
     <span>{e(COMPANY)} · <span class="nw">{e(t["vat"])}</span></span>
-    <span><a href="{privacy}">{e(t["privacy"])}</a> · <a href="{terms}">{e(t["terms"])}</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></span>
+    <span><a href="{privacy}">{e(t["privacy"])}</a> · <a href="{terms}">{e(t["terms"])}</a>{tip} · <a href="mailto:{EMAIL}">{EMAIL}</a></span>
   </div>
 </div></footer>
 </body>
