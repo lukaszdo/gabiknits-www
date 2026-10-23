@@ -57,6 +57,13 @@
 .ask ul{margin:18px 0}
 .ask li{display:flex;gap:12px;align-items:flex-start;margin:10px 0;color:var(--ink);font-weight:600;font-size:1.12rem}
 .ask li::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--yarn);margin-top:.62em}
+/* Pytania po kilku dniach: numer w kółku jak kroki wyżej, tylko mniejszy; pytanie pogrubione, podpowiedź zwykłym pismem. */
+.ask h3{margin:30px 0 6px;padding-top:24px;border-top:1px solid color-mix(in srgb,var(--teal) 25%,transparent)}
+.ask .qs{counter-reset:q;margin:18px 0 0}
+.ask .qs li{display:block;position:relative;padding-left:46px;margin:16px 0}
+.ask .qs li::before{counter-increment:q;content:counter(q);position:absolute;left:0;top:-1px;display:grid;place-items:center;width:32px;height:32px;margin:0;
+ border-radius:50%;border:2px solid var(--yarn);background:var(--card);color:var(--yarn-ink);font-size:.98rem;font-weight:700;line-height:1}
+.ask .qs li span{display:block;margin-top:3px;font-weight:400;color:var(--text);font-size:1.04rem}
 .ask .shot{margin-top:18px;padding-top:18px;border-top:1px solid color-mix(in srgb,var(--teal) 25%,transparent)}
 .tt-foot{margin-top:36px;padding-bottom:48px;color:var(--muted);font-size:.95rem;display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;align-items:center}
 .tt-foot .brand{font-size:1.2rem}
@@ -141,6 +148,22 @@
     <li>co jest niejasne,</li>
     <li>co jest trudne albo męczące w dzierganiu.</li>
   </ul>
+  <h3>Po kilku dniach – kilka pytań</h3>
+  <p>Odpowiedz Gabie choćby na dwa–trzy. Wystarczy jedno zdanie.</p>
+  <ol class="qs">
+    <li>Na czym dziergasz – na telefonie czy na tablecie?</li>
+    <li>Z jakiego wzoru dziergasz?<span>Nazwa wzoru albo projektantki. Czy aplikacja sama znalazła schemat po dotknięciu? A może któregoś nie dało się zaznaczyć?</span></li>
+    <li>Czy podświetlony rządek był tam, gdzie trzeba?<span>Jeśli nie – zrzut ekranu pokaże, gdzie aplikacja się pomyliła.</span></li>
+    <li>Czy trzeba było poprawiać ramkę schematu albo liczbę rządków?<span>Przy którym wzorze?</span></li>
+    <li>Ile rządków udało się przerobić z aplikacją?<span>Mniej więcej. Czy coś przeszkadzało w trakcie dziergania?</span></li>
+    <li>Czy wiadomo, do czego służą przyciski i funkcje?<span>Który przycisk, napis albo krok samouczka był niejasny?</span></li>
+    <li>Czy wygodnie się poruszać po wzorze?<span>Przejście do następnego rządka, przybliżanie, przesuwanie schematu, zmiana strony. Czy przyciski łatwo trafić jedną ręką, a napisy odczytać znad robótki?</span></li>
+    <li>Czy zdarzyło się przez przypadek przeskoczyć rządek?<span>Jeśli tak – przy jakim ruchu ręki albo którym przycisku.</span></li>
+    <li>Czy korzystasz z licznika czasu, legendy albo sekwencji?<span>Sekwencja to kilka schematów po kolei. Przydają się, czy nie ma potrzeby?</span></li>
+    <li>Czego najbardziej brakuje?<span>Co by sprawiło, że aplikacja wygra z kartką i ołówkiem?</span></li>
+    <li>Co podobało Ci się najbardziej?</li>
+    <li>Czy polecisz Gabi Knits koleżance?<span>Dlaczego tak albo dlaczego nie.</span></li>
+  </ol>
   <p class="shot">Zrzut ekranu bardzo pomaga. Na większości telefonów zrobisz go, przytrzymując <b style="color:var(--ink)">jednocześnie przycisk zasilania i ściszania</b>.</p>
 </section>
 </main>
