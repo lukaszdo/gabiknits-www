@@ -74,7 +74,7 @@ ICONS = {
     "menu": '<path d="M4 7h16M4 12h16M4 17h16"/>',
     "mail": '<rect x="3" y="5.5" width="18" height="13" rx="2.2"/><path d="M3.8 7.2l8.2 6 8.2-6"/>',
     "lock": '<rect x="5" y="10.5" width="14" height="10" rx="2.2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5M12 14.5v2"/>',
-    # filary: znajduje schemat / rząd zawsze na widoku / stworzona dla e-inku
+    # filary: znajduje schemat / rząd zawsze na widoku / na każdym ekranie (do 2026-10-24 „stworzona dla e-inku”)
     "find": '<path d="M3.5 3.5h9v9h-9zM3.5 8h9M8 3.5v9"/><circle cx="16" cy="16" r="3.8"/><path d="M18.8 18.8l2.2 2.2"/>',
     "row": '<rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M3.5 14.5h17"/>'
            '<path d="M2 9.5h20v5H2z" fill="currentColor" fill-opacity=".2" stroke-width="2"/>',
@@ -178,8 +178,11 @@ def page(lang):
         f'<link rel="alternate" hreflang="{l}" href="https://gabiknits.app/{home(l)}">' for l in LANGS
     ) + '\n<link rel="alternate" hreflang="x-default" href="https://gabiknits.app/">'
     href = lambda l: f"{up}{home(l)}"
-    ids = ["eink", "how", "features", "faq", "contact"]
-    labels = list(t["nav"])
+    # Kolejność w menu jak sekcje na stronie: od 2026-10-24 e-ink po funkcjach (wcześniej pierwszy) -
+    # stronę otwierają telefon i tablet, e-ink to atut dla tych, którzy go mają.
+    ids = ["how", "features", "eink", "faq", "contact"]
+    nav = list(t["nav"])
+    labels = nav[1:3] + nav[0:1] + nav[3:]
     if SHOW_PRICE:
         ids.insert(3, "price")
         labels.insert(3, t["price_title"])
@@ -298,22 +301,12 @@ def page(lang):
     <ul class="trust">{trust}</ul>
   </div>
   <div class="stage">
-    {device("eink", img(t, lang, up, "eink", lazy=False))}
+    {device("tablet", img(t, lang, up, "tablet", lazy=False))}
     {device("phone", img(t, lang, up, "phone", lazy=False))}
   </div>
 </div></section>
 
 <section class="pillars-sec"><div class="wrap"><div class="pillars">{pillars}</div></div></section>
-
-<section id="eink" class="sec eink"><div class="wrap">
-  <div class="eink-shot">{device("eink", img(t, lang, up, "eink"))}</div>
-  <div class="eink-text">
-    <p class="eyebrow">{e(t["eink_eyebrow"])}</p>
-    <h2>{e(t["eink_title"])}</h2>
-    <p class="lead">{e(t["eink_text"])}</p>
-    <ul class="epoints">{epoints}</ul>
-  </div>
-</div></section>
 
 <section id="how" class="sec how"><div class="wrap">
   <header class="sec-head center"><h2>{e(t["how_title"])}</h2><p class="lead">{e(t["how_lead"])}</p></header>
@@ -325,12 +318,22 @@ def page(lang):
   <ul class="cards">{feats}</ul>
 </div></section>
 
+<section id="eink" class="sec eink"><div class="wrap">
+  <div class="eink-shot">{device("eink", img(t, lang, up, "eink"))}</div>
+  <div class="eink-text">
+    <p class="eyebrow">{e(t["eink_eyebrow"])}</p>
+    <h2>{e(t["eink_title"])}</h2>
+    <p class="lead">{e(t["eink_text"])}</p>
+    <ul class="epoints">{epoints}</ul>
+  </div>
+</div></section>
+
 <section class="sec devices"><div class="wrap">
   <header class="sec-head center"><h2>{e(t["devices_title"])}</h2><p class="lead">{e(t["devices_lead"])}</p></header>
   <div class="trio">
-    <figure class="d-eink">{device("eink", img(t, lang, up, "eink"))}<figcaption>{e(sh[0])}</figcaption></figure>
+    <figure class="d-phone">{device("phone", img(t, lang, up, "step3"))}<figcaption>{e(sh[1])}</figcaption></figure>
     <figure class="d-tablet">{device("tablet", img(t, lang, up, "tablet"))}<figcaption>{e(sh[2])}</figcaption></figure>
-    <figure class="d-phone">{device("phone", img(t, lang, up, "phone"))}<figcaption>{e(sh[1])}</figcaption></figure>
+    <figure class="d-eink">{device("eink", img(t, lang, up, "eink"))}<figcaption>{e(sh[0])}</figcaption></figure>
   </div>
 </div></section>
 

@@ -129,14 +129,16 @@ ul,ol{margin:0;padding:0;list-style:none}
 .trust li{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--ink);font-size:1.02rem}
 .trust .ico{width:28px;height:28px;padding:5px;border-radius:50%;background:var(--teal-soft);color:var(--teal);stroke-width:2.2}
 
-/* Kompozycja urządzeń: e-ink z przodu, telefon na nim (prawy dół), za nimi kłębek-koło */
+/* Kompozycja urządzeń: tablet z tyłu, telefon na nim (prawy dół), za nimi kłębek-koło. Od 2026-10-24
+   telefon i tablet zamiast e-inku (prośba użytkownika: e-ink mało popularny, a w kolorze widać więcej). */
 .stage{position:relative;isolation:isolate;padding:0 0 8% 0;max-width:580px;justify-self:center;width:100%}
 .stage::before{content:"";position:absolute;z-index:-1;width:96%;aspect-ratio:1;border-radius:50%;background:var(--yarn-soft);
   top:6%;left:10%}
 .stage::after{content:"";position:absolute;z-index:-1;width:96%;aspect-ratio:1;border-radius:50%;border:1.5px dashed var(--yarn);
   top:2%;left:14%;opacity:.55}
-.stage .device.eink{width:76%}
-.stage .device.phone{position:absolute;right:0;bottom:0;width:33%}
+.stage{padding:26% 0 4% 0;max-width:640px}
+.stage .device.tablet{width:90%}
+.stage .device.phone{position:absolute;right:0;bottom:0;width:31%}
 
 /* ---------- Ramki urządzeń (CSS, bez obrazów) ---------- */
 .device{position:relative;box-shadow:var(--shadow),inset 0 0 0 1px var(--frame-edge)}
@@ -164,7 +166,8 @@ ul,ol{margin:0;padding:0;list-style:none}
 .pillar p{color:var(--muted)}
 
 /* ---------- E-ink: papierowa szarość, czerń i biel ---------- */
-.sec.eink{background:var(--eink-bg);margin-top:96px}
+.sec.eink{background:var(--eink-bg)}
+/* Od 2026-10-24 sekcja e-ink stoi zaraz po funkcjach (wcześniej pod filarami) - bez odstępu, tło do tła. */
 .eink .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:80px;align-items:center}
 .eink-shot{max-width:470px;width:100%;justify-self:center}
 .eink .lead{margin:22px 0 40px}
@@ -195,7 +198,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .card p{color:var(--muted);font-size:1.0625rem}
 
 /* ---------- Urządzenia ---------- */
-.trio{display:grid;grid-template-columns:minmax(0,30fr) minmax(0,52fr) minmax(0,15fr);gap:clamp(20px,3vw,44px);align-items:end}
+.trio{display:grid;grid-template-columns:minmax(0,15fr) minmax(0,52fr) minmax(0,30fr);gap:clamp(20px,3vw,44px);align-items:end}
 .trio figure{margin:0}
 .trio figcaption{text-align:center;margin-top:20px;font-weight:600;color:var(--ink)}
 
@@ -311,7 +314,7 @@ ul,ol{margin:0;padding:0;list-style:none}
   .cta-contact h3{margin:0}
   .cta-contact p,.cta-contact .mail-link{grid-column:1/-1;justify-self:start}
   .cta-contact p{margin-top:18px}
-  .trio{grid-template-columns:minmax(0,1fr) minmax(0,.5fr);grid-template-areas:"e p" "t t";align-items:end;max-width:640px;margin:0 auto}
+  .trio{grid-template-columns:minmax(0,.5fr) minmax(0,1fr);grid-template-areas:"p e" "t t";align-items:end;max-width:640px;margin:0 auto}
   .d-eink{grid-area:e}.d-phone{grid-area:p}.d-tablet{grid-area:t;margin-top:20px}
 }
 @media (max-width:640px){
@@ -333,7 +336,6 @@ ul,ol{margin:0;padding:0;list-style:none}
   .pillar{padding:26px 22px;gap:16px}
   .badge-ico{width:48px;height:48px;border-radius:14px}
   .badge-ico .ico{width:24px;height:24px}
-  .sec.eink{margin-top:72px}
   .epoints{grid-template-columns:1fr;gap:24px}
   .tile{padding:32px 18px}
   .cards{grid-template-columns:1fr;gap:14px}
