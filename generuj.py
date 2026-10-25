@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Generator stron głównych Gabi Knits w sześciu językach.
+"""Generator stron głównych Gabi Knits w siedmiu językach.
 
 Teksty są w `teksty.py` (słownik T), układ w funkcji page(), wygląd w assets/site.css.
 Zrzuty aplikacji: assets/shots/<język>/*.png; brakujące zastępuje szkic z assets/shots/_szkic/.
-Uruchomienie: `python3 generuj.py` nadpisuje index.html (angielski, w korzeniu) i pl/, de/, nb/, da/, sv/index.html.
+Uruchomienie: `python3 generuj.py` nadpisuje index.html (angielski, w korzeniu) i pl/, cs/, de/, nb/, da/, sv/index.html.
 Polityka prywatności (privacy/, xx/privacy/) i regulamin (terms/, xx/terms/) są pisane ręcznie -
-generator podmienia w nich tylko przełącznik języków.
+generator podmienia w nich tylko przełącznik języków i odnośniki hreflang.
 """
 import re
 import struct
@@ -14,11 +14,12 @@ from html import escape
 from pathlib import Path
 
 sys.dont_write_bytecode = True          # bez __pycache__ w repozytorium strony
-from teksty import T                    # teksty strony w sześciu językach
+from teksty import T                    # teksty strony w siedmiu językach
 
 ROOT = Path(__file__).parent
-LANGS = ["en", "pl", "de", "nb", "da", "sv"]
-NAMES = {"en": "EN", "pl": "PL", "de": "DE", "nb": "NO", "da": "DA", "sv": "SV"}
+# Czeski od 2026-10-25, zaraz po polskim.
+LANGS = ["en", "pl", "cs", "de", "nb", "da", "sv"]
+NAMES = {"en": "EN", "pl": "PL", "cs": "CS", "de": "DE", "nb": "NO", "da": "DA", "sv": "SV"}
 COMPANY = "ŁUKASZ DOMAŃSKI IT ONE STUDIO"
 EMAIL = "contact@gabiknits.app"
 
@@ -34,7 +35,7 @@ LAUNCHED = False
 PLAY_URL = "https://play.google.com/store/apps/details?id=app.gabiknits"
 
 # Podpis przycisku menu na wąskim ekranie (jedyny tekst spoza T - jedno słowo na język).
-MENU = {"en": "Menu", "pl": "Menu", "de": "Menü", "nb": "Meny", "da": "Menu", "sv": "Meny"}
+MENU = {"en": "Menu", "pl": "Menu", "cs": "Menu", "de": "Menü", "nb": "Meny", "da": "Menu", "sv": "Meny"}
 
 # Flagi do wyboru języka - rysowane w SVG w treści strony (bez zewnętrznych plików).
 # Angielski: flaga Wielkiej Brytanii. Identyfikator przycięcia zależy od miejsca użycia
@@ -45,6 +46,8 @@ FLAGS = {
           '<path d="M0 0l60 30m0-30L0 30" stroke="#C8102E" stroke-width="2.4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/>'
           '<path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>',
     "pl": '<svg viewBox="0 0 16 10"><path d="M0 0h16v5H0z" fill="#fff"/><path d="M0 5h16v5H0z" fill="#DC143C"/></svg>',
+    # Czechy: biały pas u góry, czerwony u dołu, niebieski trójkąt od drzewca do środka.
+    "cs": '<svg viewBox="0 0 6 4"><path d="M0 0h6v2H0z" fill="#fff"/><path d="M0 2h6v2H0z" fill="#D7141A"/><path d="M0 0l3 2-3 2z" fill="#11457E"/></svg>',
     "de": '<svg viewBox="0 0 5 3"><path d="M0 0h5v1H0z" fill="#000"/><path d="M0 1h5v1H0z" fill="#DD0000"/><path d="M0 2h5v1H0z" fill="#FFCE00"/></svg>',
     "nb": '<svg viewBox="0 0 22 16"><path d="M0 0h22v16H0z" fill="#BA0C2F"/><path d="M6 0h4v16H6zM0 6h22v4H0z" fill="#fff"/>'
           '<path d="M7 0h2v16H7zM0 7h22v2H0z" fill="#00205B"/></svg>',
@@ -377,7 +380,9 @@ for lang in LANGS:
     out.write_text(page(lang), encoding="utf-8")
     print("zapisano", out.relative_to(ROOT))
 
-# Polityka prywatności i regulamin (2026-10-17) są pisane ręcznie - generator podmienia w nich tylko przełącznik języków.
+# Polityka prywatności i regulamin (2026-10-17) są pisane ręcznie - generator podmienia w nich tylko przełącznik języków
+# i (od 2026-10-25, przy dodaniu czeskiego) listę <link rel="alternate" hreflang> w nagłówku, żeby nowy język
+# w LANGS nie wymagał ręcznej poprawki czternastu plików.
 for doc in ("privacy", "terms"):
     for lang in LANGS:
         path = ROOT / home(lang) / doc / "index.html"
@@ -385,6 +390,9 @@ for doc in ("privacy", "terms"):
         text = path.read_text(encoding="utf-8")
         nav = lang_nav(lang, lambda l: f"{up}{home(l)}{doc}/")
         text, n = re.subn(r'<nav class="lang"[^>]*>.*?</nav>', lambda _: nav, text, count=1, flags=re.S)
+        assert n == 1, path
+        alts = "".join(f'<link rel="alternate" hreflang="{l}" href="{up}{home(l)}{doc}/">\n' for l in LANGS)
+        text, n = re.subn(r'(?:<link rel="alternate" hreflang="[^"]*" href="[^"]*">\n)+', lambda _: alts, text, count=1)
         assert n == 1, path
         path.write_text(text, encoding="utf-8")
         print("przełącznik języków:", path.relative_to(ROOT))
