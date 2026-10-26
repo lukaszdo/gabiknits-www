@@ -283,7 +283,7 @@ def page(lang):
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="brand" href="{href(lang)}"><img src="{up}assets/logo.png" alt="" width="44" height="46">Gabi Knits</a>
+  <a class="brand" href="{href(lang)}"><img src="{up}assets/logo.png" alt="" width="44" height="44">Gabi Knits</a>
   <nav class="nav" aria-label="{escape(MENU[lang])}">{links}</nav>
   <div class="langs-top">{lang_nav(lang, href, key="t")}</div>
   <details class="menu">
@@ -361,7 +361,7 @@ def page(lang):
 {tipband}</main>
 <footer class="foot"><div class="wrap">
   <div class="foot-row">
-    <a class="brand" href="{href(lang)}"><img src="{up}assets/logo.png" alt="" width="36" height="37" loading="lazy">Gabi Knits</a>
+    <a class="brand" href="{href(lang)}"><img src="{up}assets/logo.png" alt="" width="36" height="36" loading="lazy">Gabi Knits</a>
     {lang_nav(lang, href, key="f")}
   </div>
   <div class="foot-row small">
