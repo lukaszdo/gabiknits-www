@@ -34,6 +34,12 @@ SHOW_PRICE = False
 LAUNCHED = False
 PLAY_URL = "https://play.google.com/store/apps/details?id=app.gabiknits"
 
+# Skąd przyszła instalacja (2026-10-27): parametr referrer z UTM - Play Console pokazuje go w raportach
+# pozyskiwania (źródło i kampania), na stronie bez skryptów i ciasteczek. Kampania = wersja językowa
+# strony, żeby było widać, który język przyprowadza instalacje. Wartość referrer musi być zakodowana (%3D, %26).
+def play_url(lang):
+    return f"{PLAY_URL}&referrer=utm_source%3Dgabiknits.app%26utm_medium%3Dwebsite%26utm_campaign%3D{lang}"
+
 # Podpis przycisku menu na wąskim ekranie (jedyny tekst spoza T - jedno słowo na język).
 MENU = {"en": "Menu", "pl": "Menu", "cs": "Menu", "de": "Menü", "nb": "Meny", "da": "Menu", "sv": "Meny"}
 
@@ -244,7 +250,7 @@ def page(lang):
             f'</div>')
     if LAUNCHED:
         side = (f'<h2>{e(t["get_title"])}</h2><p>{e(t["get_text"])}</p>'
-                f'{play_badge(t["get_badge"], "light on-dark", href=PLAY_URL)}'
+                f'{play_badge(t["get_badge"], "light on-dark", href=play_url(lang))}'
                 f'<p class="cta-small">{e(t["get_contact"])} <a class="mail-link" href="mailto:{EMAIL}">{EMAIL}</a></p>')
     else:
         side = (f'<h2>{e(t["cta_title"])}</h2><p>{e(t["cta_text"])}</p>'
@@ -300,7 +306,7 @@ def page(lang):
     <p class="eyebrow">{e(t["hero_eyebrow"])}</p>
     <h1>{e(t["hero_title"])}</h1>
     <p class="hero-lead">{e(t["hero_text"])}</p>
-    {play_badge(t["get_badge"], href=PLAY_URL) if LAUNCHED else play_badge(t["soon"])}
+    {play_badge(t["get_badge"], href=play_url(lang)) if LAUNCHED else play_badge(t["soon"])}
     <ul class="trust">{trust}</ul>
   </div>
   <div class="stage">
