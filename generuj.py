@@ -6,6 +6,7 @@ Zrzuty aplikacji: assets/shots/<język>/*.png; brakujące zastępuje szkic z ass
 Uruchomienie: `python3 generuj.py` nadpisuje index.html (angielski, w korzeniu) i pl/, cs/, de/, nb/, da/, sv/index.html.
 Polityka prywatności (privacy/, xx/privacy/) i regulamin (terms/, xx/terms/) są pisane ręcznie -
 generator podmienia w nich tylko przełącznik języków i odnośniki hreflang.
+Na końcu zapisuje sitemap.xml (wszystkie strony bez „noindex”) i robots.txt - dla Google Search Console.
 """
 import re
 import struct
@@ -402,3 +403,19 @@ for doc in ("privacy", "terms"):
         assert n == 1, path
         path.write_text(text, encoding="utf-8")
         print("przełącznik języków:", path.relative_to(ROOT))
+
+# Mapa witryny i robots.txt dla Google Search Console (2026-10-27): wszystkie strony index.html z repozytorium
+# poza oznaczonymi „noindex” (strona testerek), więc nowa strona albo język trafiają do mapy same.
+SITE = "https://gabiknits.app/"
+pages = []
+for path in sorted(ROOT.rglob("index.html")):
+    rel = path.relative_to(ROOT)
+    if rel.parts[0].startswith(".") or "noindex" in path.read_text(encoding="utf-8"):
+        continue
+    pages.append(SITE + ("" if rel.parent == Path(".") else rel.parent.as_posix() + "/"))
+pages.sort(key=lambda u: (u.count("/"), u))
+(ROOT / "sitemap.xml").write_text(
+    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    + "".join(f"  <url><loc>{u}</loc></url>\n" for u in pages) + "</urlset>\n", encoding="utf-8")
+(ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}sitemap.xml\n", encoding="utf-8")
+print(f"mapa witryny: {len(pages)} stron, robots.txt")

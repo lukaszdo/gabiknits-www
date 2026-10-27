@@ -9,5 +9,7 @@ językach są w `teksty.py`, układ i ręcznie rysowane ikony SVG w `generuj.py`
 step1–3 .png); brakujące zastępują szkice z `assets/shots/_szkic/`, więc po dodaniu zrzutów wystarczy
 ponownie uruchomić generator. Polityka prywatności (`privacy/`, `xx/privacy/`) i regulamin (`terms/`, `xx/terms/`) są pisane ręcznie
 (`assets/doc.css`) - generator podmienia w nich tylko przełącznik języków i odnośniki hreflang.
+Generator zapisuje też `sitemap.xml` (wszystkie strony poza oznaczonymi `noindex`) i `robots.txt` - mapa jest zgłoszona
+w Google Search Console (usługa domeny gabiknits.app, weryfikacja rekordem TXT w DNS).
 
 Krój Prata - licencja SIL Open Font License, `assets/Prata-OFL.txt`.
