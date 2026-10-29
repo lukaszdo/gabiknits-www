@@ -159,11 +159,30 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* ---------- Trzy filary ---------- */
 .pillars-sec{padding:0 0 24px}
-.pillars{display:grid;grid-template-columns:repeat(3,1fr);background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
-.pillar{display:flex;gap:20px;align-items:flex-start;padding:36px 34px}
+/* Od 2026-10-29 cztery filary (doszły liczniki) - ikona nad tekstem, w wąskich kolumnach obok się nie mieściła. */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.pillar{display:flex;flex-direction:column;gap:18px;align-items:flex-start;padding:34px 30px}
 .pillar + .pillar{border-left:1px solid var(--rule)}
 .pillar h3{font-size:1.3rem;margin:4px 0 8px}
 .pillar p{color:var(--muted)}
+
+/* ---------- Liczniki (2026-10-29): tekst z punktami i telefon z powiększonym widżetem ---------- */
+.sec.counters{background:var(--teal-soft);border-top:1px solid var(--rule)}
+.ctr-body{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:64px;align-items:center}
+.cpoints{list-style:none;margin:0;padding:0;display:grid;gap:30px}
+.cpoints li{display:flex;gap:16px;align-items:flex-start}
+.cpoints .badge-ico{background:var(--card);color:var(--teal);width:52px;height:52px;border-radius:14px;box-shadow:var(--shadow-sm)}
+.cpoints .badge-ico .ico{width:26px;height:26px}
+.cpoints h3{font-size:1.22rem;margin:2px 0 6px}
+.cpoints p{color:var(--muted);font-size:1.0625rem}
+/* Telefon z prawej, przed nim powiększony widżet - wycinek tego samego ekranu, z cieniem jak karta. */
+.ctr-stage{position:relative;max-width:660px;width:100%;justify-self:center}
+.ctr-stage .device.phone{width:48%;margin-left:auto}
+.ctr-zoom{position:absolute;left:0;top:50%;transform:translateY(-46%);width:80%;margin:0;background:var(--card);border-radius:20px;padding:10px;
+  box-shadow:0 2px 6px rgba(30,51,80,.10),0 30px 60px -18px rgba(30,51,80,.45);border:1px solid var(--rule)}
+.ctr-zoom img{border-radius:12px;width:100%}
+.ctr-zoom figcaption{position:absolute;top:-14px;left:18px;background:var(--teal);color:#fff;font-size:.8rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:999px}
 
 /* ---------- E-ink: papierowa szarość, czerń i biel ---------- */
 .sec.eink{background:var(--eink-bg)}
@@ -292,6 +311,10 @@ ul,ol{margin:0;padding:0;list-style:none}
   .langs-top{display:none}
   .menu{display:block}
   .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pillars{grid-template-columns:repeat(2,1fr)}
+  .pillar:nth-child(3){border-left:0}
+  .pillar:nth-child(n+3){border-top:1px solid var(--rule)}
+  .ctr-body{gap:48px}
 }
 @media (max-width:1000px){
   .sec{padding:88px 0}
@@ -302,6 +325,8 @@ ul,ol{margin:0;padding:0;list-style:none}
   .eink .wrap{grid-template-columns:1fr;gap:56px}
   .eink-shot{max-width:400px}
   .pillars{grid-template-columns:1fr}
+  .ctr-body{grid-template-columns:1fr;gap:56px}
+  .cpoints{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 34px}
   .pillar + .pillar{border-left:0;border-top:1px solid var(--rule)}
   .steps{grid-template-columns:1fr;max-width:560px;margin:0 auto;gap:56px}
   .priv-card{grid-template-columns:1fr;padding:48px;gap:36px}
@@ -337,6 +362,10 @@ ul,ol{margin:0;padding:0;list-style:none}
   .badge-ico{width:48px;height:48px;border-radius:14px}
   .badge-ico .ico{width:24px;height:24px}
   .epoints{grid-template-columns:1fr;gap:24px}
+  .cpoints{grid-template-columns:1fr;gap:24px}
+  .ctr-stage .device.phone{width:52%}
+  .ctr-zoom{width:86%;padding:6px;border-radius:16px}
+  .ctr-zoom figcaption{font-size:.72rem;top:-12px}
   .tile{padding:32px 18px}
   .cards{grid-template-columns:1fr;gap:14px}
   .card{padding:24px 22px;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:16px;align-items:center}

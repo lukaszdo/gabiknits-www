@@ -107,9 +107,18 @@ ICONS = {
     "clock": '<circle cx="12" cy="13" r="8"/><path d="M12 9v4.2l2.8 1.8M9.5 2.8h5"/>',
     # filiżanka z parą - „Postaw kawę” (pas pod kontaktem i stopka)
     "coffee": '<path d="M4 9.5h12v4.5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5c-.7.9-.7 1.9 0 2.8M12 3.5c-.7.9-.7 1.9 0 2.8"/>',
+    # liczniki (2026-10-29): kreski piątkami / łapa / cykl / chowany widżet
+    "tally": '<path d="M5.5 5v14M9.5 5v14M13.5 5v14M17.5 5v14M3 16.5L20 7.5"/>',
+    "paw": '<ellipse cx="6" cy="10" rx="2" ry="2.6"/><ellipse cx="10" cy="6.2" rx="2" ry="2.6"/><ellipse cx="14.6" cy="6.6" rx="2" ry="2.6"/>'
+           '<ellipse cx="18.4" cy="10.6" rx="1.9" ry="2.4"/><path d="M7.5 17c0-3 2-5.2 4.6-5.2s4.6 2.2 4.6 5.2c0 2.2-2 2.9-3.2 3.5-.9.5-2 .5-2.9 0-1.2-.6-3.1-1.3-3.1-3.5z"/>',
+    "cycle": '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.8 3.5v4h-4"/><path d="M9 12h6M12 9v6"/>',
+    "widget": '<rect x="3.5" y="4" width="17" height="16" rx="2.5"/><path d="M3.5 9h17M15 6.5l1.5 1 1.5-1"/><path d="M7 13h6M7 16.5h4"/>',
     "globe": '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.5 3.5 5.3 3.5 8.5s-1.1 6-3.5 8.5c-2.4-2.5-3.5-5.3-3.5-8.5s1.1-6 3.5-8.5z"/>',
 }
-PILLAR_ICONS = ["find", "row", "tablet"]
+# Od 2026-10-29 cztery filary - liczniki na trzecim miejscu (prośba użytkownika: jedna z głównych funkcji).
+PILLAR_ICONS = ["find", "row", "tally", "tablet"]
+# Punkty sekcji Liczniki, w kolejności ctr_points z T.
+CTR_ICONS = ["paw", "tally", "cycle", "widget"]
 EINK_ICONS = ["frame", "still", "buttons", "tabletcheck"]
 # Funkcje: jedna ikona na kartę, w kolejności feats z T (sekwencja, legenda, kilka schematów, rząd na środku,
 # licznik czasu, prowadzony pierwszy projekt z kotem Gabi, postęp zapisuje się sam, języki).
@@ -139,7 +148,7 @@ def play_badge(text, cls="", href=None):
 
 
 # --- Zrzuty: prawdziwe PNG z assets/shots/<lang>/, a do czasu ich powstania szkice SVG z _szkic/
-SKETCH = {"eink": (900, 1200), "phone": (540, 1170), "tablet": (1280, 800),
+SKETCH = {"eink": (900, 1200), "phone": (540, 1170), "tablet": (1280, 800), "counters": (540, 1170), "counters-zoom": (760, 716),
           "step1": (540, 1170), "step2": (540, 1170), "step3": (540, 1170)}
 
 
@@ -190,9 +199,10 @@ def page(lang):
     href = lambda l: f"{up}{home(l)}"
     # Kolejność w menu jak sekcje na stronie: od 2026-10-24 e-ink po funkcjach (wcześniej pierwszy) -
     # stronę otwierają telefon i tablet, e-ink to atut dla tych, którzy go mają.
-    ids = ["how", "features", "eink", "faq", "contact"]
+    # Liczniki (2026-10-29) zaraz po „Jak to działa” - jedna z głównych funkcji.
+    ids = ["how", "counters", "features", "eink", "faq", "contact"]
     nav = list(t["nav"])
-    labels = nav[1:3] + nav[0:1] + nav[3:]
+    labels = nav[1:2] + [t["ctr_nav"]] + nav[2:3] + nav[0:1] + nav[3:]
     if SHOW_PRICE:
         ids.insert(3, "price")
         labels.insert(3, t["price_title"])
@@ -227,6 +237,10 @@ def page(lang):
         f'<li class="step"><div class="tile">{device("phone", img(t, lang, up, f"step{k}"))}</div>'
         f'<div class="step-text"><span class="n" aria-hidden="true">{k}</span><h3>{e(a)}</h3><p>{e(b)}</p></div></li>'
         for k, (a, b) in enumerate(t["steps"], 1)
+    )
+    cpoints = "".join(
+        f'<li><span class="badge-ico">{icon(CTR_ICONS[k])}</span><div><h3>{e(a)}</h3><p>{e(b)}</p></div></li>'
+        for k, (a, b) in enumerate(t["ctr_points"])
     )
     feats = "".join(
         f'<li class="card"><span class="badge-ico">{icon(FEAT_ICONS[k])}</span><h3>{e(a)}</h3><p>{e(b)}</p></li>'
@@ -321,6 +335,17 @@ def page(lang):
 <section id="how" class="sec how"><div class="wrap">
   <header class="sec-head center"><h2>{e(t["how_title"])}</h2><p class="lead">{e(t["how_lead"])}</p></header>
   <ol class="steps">{steps}</ol>
+</div></section>
+
+<section id="counters" class="sec counters"><div class="wrap">
+  <header class="sec-head center"><p class="eyebrow">{e(t["ctr_eyebrow"])}</p><h2>{e(t["ctr_title"])}</h2><p class="lead">{e(t["ctr_lead"])}</p></header>
+  <div class="ctr-body">
+    <div class="ctr-stage">
+      {device("phone", img(t, lang, up, "counters"))}
+      <figure class="ctr-zoom">{img(t, lang, up, "counters-zoom")}<figcaption>{e(t["ctr_zoomcap"])}</figcaption></figure>
+    </div>
+    <ul class="cpoints">{cpoints}</ul>
+  </div>
 </div></section>
 
 <section id="features" class="sec features"><div class="wrap">
