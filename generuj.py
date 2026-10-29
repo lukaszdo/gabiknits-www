@@ -8,6 +8,7 @@ Polityka prywatności (privacy/, xx/privacy/) i regulamin (terms/, xx/terms/) s�
 generator podmienia w nich tylko przełącznik języków i odnośniki hreflang.
 Na końcu zapisuje sitemap.xml (wszystkie strony bez „noindex”) i robots.txt - dla Google Search Console.
 """
+import hashlib
 import re
 import struct
 import sys
@@ -171,7 +172,10 @@ def img(t, lang, up, name, lazy=True):
     path = shot(lang, name)
     w, h = shot_size(path, name)
     extra = ' loading="lazy" decoding="async"' if lazy else ' fetchpriority="high"'
-    return f'<img src="{up}{path}" width="{w}" height="{h}" alt="{escape(t["alt"][name])}"{extra}>'
+    # Znacznik wersji z zawartości pliku (2026-10-29): nowy zrzut pod tą samą nazwą przeglądarka pobiera od razu,
+    # zamiast pokazywać stary z pamięci podręcznej.
+    ver = hashlib.md5((ROOT / path).read_bytes()).hexdigest()[:8]
+    return f'<img src="{up}{path}?v={ver}" width="{w}" height="{h}" alt="{escape(t["alt"][name])}"{extra}>'
 
 
 def text(s):
