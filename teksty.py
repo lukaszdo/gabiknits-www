@@ -222,7 +222,7 @@ T = {
     # legenda, návod (wzór PDF), jehlice; ceny w euro jak w pozostałych językach poza polskim.
     "cs": {
         "title": "Gabi Knits – schémata na pletení pro e-ink a Android",
-        "desc": "Gabi Knits otevírá návody v PDF, sama najde schéma a provede tě řadu po řadě. Vytvořená pro e-ink BOOX, funguje i na telefonu a tabletu. Bez reklam.",
+        "desc": "Gabi Knits otevírá návody v PDF, sama najde schéma, provede tě řadu po řadě a počítá opakování a ujímání. Vytvořená pro e-ink BOOX, funguje i na telefonu a tabletu. Bez reklam.",
         "nav": ("E-ink", "Jak to funguje", "Funkce", "Otázky", "Kontakt"),
         "hero_eyebrow": "Čtečka pletacích schémat",
         "hero_title": "Vždycky víš, kterou řadu pleteš.",
@@ -329,7 +329,7 @@ T = {
     },
     "de": {
         "title": "Gabi Knits – Strickdiagramme auf E-Ink und Android",
-        "desc": "Gabi Knits öffnet PDF-Strickanleitungen, findet das Diagramm und führt dich Reihe für Reihe. Gemacht für BOOX E-Ink, auch für Handy und Tablet.",
+        "desc": "Gabi Knits öffnet PDF-Strickanleitungen, findet das Diagramm, führt dich Reihe für Reihe und zählt Wiederholungen und Abnahmen. Gemacht für BOOX E-Ink, auch für Handy und Tablet. Keine Werbung.",
         "nav": ("E-Ink", "So geht’s", "Funktionen", "Fragen", "Kontakt"),
         "hero_eyebrow": "Die App für Strickdiagramme",
         "hero_title": "Du weißt immer, welche Reihe dran ist.",
@@ -436,7 +436,7 @@ T = {
     },
     "nb": {
         "title": "Gabi Knits – strikkediagrammer på e-ink og Android",
-        "desc": "Gabi Knits åpner PDF-strikkeoppskrifter, finner diagrammet og leder deg rad for rad. Laget for BOOX e-ink, også for telefon og nettbrett. Ingen reklame.",
+        "desc": "Gabi Knits åpner PDF-strikkeoppskrifter, finner diagrammet, leder deg rad for rad og teller gjentakelser og fellinger. Laget for BOOX e-ink, også for telefon og nettbrett. Ingen reklame.",
         "nav": ("E-ink", "Slik virker det", "Funksjoner", "Spørsmål", "Kontakt"),
         "hero_eyebrow": "Diagramleser for strikking",
         "hero_title": "Du vet alltid hvilken rad du er på.",
@@ -543,7 +543,7 @@ T = {
     },
     "da": {
         "title": "Gabi Knits – strikkediagrammer på e-ink og Android",
-        "desc": "Gabi Knits åbner PDF-strikkeopskrifter, finder diagrammet og fører dig række for række. Lavet til BOOX e-ink, også til telefon og tablet. Ingen reklamer.",
+        "desc": "Gabi Knits åbner PDF-strikkeopskrifter, finder diagrammet, fører dig række for række og tæller gentagelser og indtagninger. Lavet til BOOX e-ink, også til telefon og tablet. Ingen reklamer.",
         "nav": ("E-ink", "Sådan virker det", "Funktioner", "Spørgsmål", "Kontakt"),
         "hero_eyebrow": "Diagramlæser til strikning",
         "hero_title": "Du ved altid, hvilken række du er nået til.",
@@ -650,7 +650,7 @@ T = {
     },
     "sv": {
         "title": "Gabi Knits – stickdiagram på e-ink och Android",
-        "desc": "Gabi Knits öppnar stickmönster i PDF, hittar diagrammet och guidar dig varv för varv. Gjord för BOOX e-ink, även för telefon och surfplatta. Ingen reklam.",
+        "desc": "Gabi Knits öppnar stickmönster i PDF, hittar diagrammet, guidar dig varv för varv och räknar upprepningar och minskningar. Gjord för BOOX e-ink, även för telefon och surfplatta. Ingen reklam.",
         "nav": ("E-ink", "Så fungerar det", "Funktioner", "Frågor", "Kontakt"),
         "hero_eyebrow": "Diagramläsare för stickning",
         "hero_title": "Du vet alltid vilket varv du är på.",
