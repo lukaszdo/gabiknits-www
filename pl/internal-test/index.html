@@ -51,6 +51,21 @@
 .box.warn{background:var(--yarn-soft);border-left:5px solid var(--yarn)}
 .box .t{display:block;font-weight:700;color:var(--ink);margin-bottom:4px;font-size:1.12rem}
 
+/* Aktualizacja (2026-11-02, prośba użytkownika): bieżąca wersja, jak ją sprawdzić i jak zaktualizować.
+   Karta jak „Zanim zaczniesz”; kroki numerowane mniejszymi kółkami, jak pytania niżej. */
+.upd{margin:8px 0 28px}
+.upd h2{font-size:1.6rem;margin-bottom:14px}
+.upd h3{font-size:1.25rem;margin:26px 0 8px}
+.ver{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;background:var(--teal-soft);border-radius:18px;padding:16px 22px;margin:4px 0 6px}
+.ver .lbl{font-weight:600;color:var(--ink);font-size:1.08rem}
+.ver .num{font-size:1.9rem;font-weight:700;color:var(--ink);line-height:1.1}
+.ver .when{color:var(--muted);font-size:1rem}
+.upd ol{counter-reset:u;margin:10px 0 0}
+.upd ol li{position:relative;padding-left:46px;margin:14px 0;color:var(--text)}
+.upd ol li::before{counter-increment:u;content:counter(u);position:absolute;left:0;top:-2px;display:grid;place-items:center;width:32px;height:32px;
+ border-radius:50%;border:2px solid var(--yarn);background:var(--card);color:var(--yarn-ink);font-size:.98rem;font-weight:700;line-height:1}
+@media (max-width:640px){.upd{padding:22px 18px 20px}}
+
 /* Jasny blok (jak „Prywatność” na stronie głównej) - ciemny jest niżej, kontakt ze strony głównej. */
 .ask{margin:16px 0 0;background:var(--teal-soft);color:var(--text);border-radius:28px;padding:36px 30px}
 .ask p{color:var(--text)}
@@ -139,6 +154,30 @@
     <div class="box warn"><span class="t">Widzisz swoją prawdziwą kartę?</span><b>Nie kupuj.</b> Zamknij okno i napisz do Gaby – dopisze Cię do testów, a wtedy zakup będzie bezpłatny.</div>
   </li>
 </ol>
+
+<!-- Przy każdym wydaniu na test wewnętrzny: zmienić numer wersji, kompilacji i datę w .ver i w przykładzie niżej. -->
+<section class="before upd" id="aktualizacja">
+  <h2>Aktualizacja aplikacji</h2>
+  <p>Co kilka dni wgrywamy nową wersję z poprawkami – także tymi, o które prosicie. Sprawdź, czy masz najnowszą.</p>
+  <p class="ver"><span class="lbl">Najnowsza wersja:</span><span class="num">1.61</span><span class="when">kompilacja 75 · z 1 listopada 2026</span></p>
+
+  <h3>Którą wersję masz?</h3>
+  <ol>
+    <li>Otwórz Gabi Knits i dotknij <b>kota w okularach</b> w lewym górnym rogu, obok nazwy wzoru.</li>
+    <li>Otworzy się okno „O aplikacji”. Pod napisem Gabi Knits jest numer, na przykład <b>„wersja 1.61 · kompilacja 75”</b>.</li>
+  </ol>
+  <p class="hint">Numer widać też przez chwilę na ekranie powitalnym, gdy uruchamiasz aplikację („ver. 1.61”).</p>
+
+  <h3>Jak zaktualizować</h3>
+  <ol>
+    <li>Otwórz zaproszenie jeszcze raz, na tym samym telefonie albo tablecie:<br>
+      <a class="go" href="https://play.google.com/apps/internaltest/4701416030222443770">Otwórz zaproszenie<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+    <li>Dotknij <span class="btn" lang="en">Download test app</span>. Otworzy się Sklep Play.</li>
+    <li>Dotknij <span class="btn">Aktualizuj</span> i poczekaj, aż się skończy.</li>
+  </ol>
+  <p class="hint">Widzisz tylko <span class="btn">Otwórz</span>, bez <span class="btn">Aktualizuj</span>? Masz już najnowszą wersję albo Sklep Play jeszcze jej nie widzi – zajrzyj za godzinę. Sklep często aktualizuje aplikacje także sam, gdy telefon jest podłączony do Wi-Fi.</p>
+  <div class="box ok"><span class="t">Nic nie tracisz</span>Projekty, zapisane rządki, notatki i liczniki zostają. Pełna wersja też – nie trzeba jej włączać drugi raz.</div>
+</section>
 
 <section class="ask">
   <h2>Pisz do Gaby o wszystkim</h2>
