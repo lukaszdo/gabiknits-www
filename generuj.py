@@ -105,6 +105,8 @@ ICONS = {
     "key": '<rect x="3.5" y="4.5" width="4" height="4" rx=".8"/><rect x="3.5" y="10" width="4" height="4" rx=".8"/>'
            '<rect x="3.5" y="15.5" width="4" height="4" rx=".8"/><path d="M10.5 6.5h10M10.5 12h8M10.5 17.5h9"/>',
     "follow": '<path d="M3 12h18M12 2.8v5M9.6 5.2L12 2.8l2.4 2.4M12 21.2v-5M9.6 18.8l2.4 2.4 2.4-2.4"/>',
+    # rysowanie po wzorze (2026-11-05): skośne pióro i kreska, którą narysowało
+    "pen": '<path d="M14.8 4.6l4.6 4.6L9.2 19.4l-5.4.8.8-5.4z"/><path d="M12.8 6.6l4.6 4.6"/><path d="M13.5 20.2h7"/>',
     "clock": '<circle cx="12" cy="13" r="8"/><path d="M12 9v4.2l2.8 1.8M9.5 2.8h5"/>',
     # filiżanka z parą - „Postaw kawę” (pas pod kontaktem i stopka)
     "coffee": '<path d="M4 9.5h12v4.5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5c-.7.9-.7 1.9 0 2.8M12 3.5c-.7.9-.7 1.9 0 2.8"/>',
@@ -124,7 +126,7 @@ EINK_ICONS = ["frame", "still", "buttons", "tabletcheck"]
 # Funkcje: jedna ikona na kartę, w kolejności feats z T (sekwencja, legenda, kilka schematów, rząd na środku,
 # licznik czasu, prowadzony pierwszy projekt z kotem Gabi, postęp zapisuje się sam, języki).
 # Zmiana kolejności tekstów → tu też.
-FEAT_ICONS = ["sequence", "key", "layers", "follow", "clock", "cat", "bookmark", "globe"]
+FEAT_ICONS = ["pen", "key", "layers", "follow", "clock", "cat", "bookmark", "globe"]  # od 2026-11-05 rysowanie zamiast sekwencji (ta jest w „Zrobiona przy drutach”)
 # „Czym się różni” (2026-11-05), w kolejności diffs z T: jedno dotknięcie, e-ink, sekwencja, rządek na środku.
 # Sekcja tylko w językach z kluczem "diffs".
 DIFF_ICONS = ["find", "frame", "sequence", "follow"]
