@@ -155,7 +155,7 @@ def play_badge(text, cls="", href=None):
 
 # --- Zrzuty: prawdziwe PNG z assets/shots/<lang>/, a do czasu ich powstania szkice SVG z _szkic/
 SKETCH = {"eink": (900, 1200), "phone": (540, 1170), "tablet": (1280, 800), "counters": (540, 1170), "counters-zoom": (760, 716),
-          "step1": (540, 1170), "step2": (540, 1170), "step3": (540, 1170)}
+          "step1": (540, 1170), "step2": (540, 1170), "step3": (540, 1170), "menu": (540, 1170)}
 
 
 def shot(lang, name):
@@ -373,7 +373,10 @@ def page(lang):
 
 <section id="features" class="sec features"><div class="wrap">
   <header class="sec-head center"><h2>{e(t["feat_title"])}</h2><p class="lead">{e(t["feat_lead"])}</p></header>
-  <ul class="cards">{feats}</ul>
+  <div class="feat-body">
+    <div class="feat-shot">{device("phone", img(t, lang, up, "menu"))}</div>
+    <ul class="cards">{feats}</ul>
+  </div>
 </div></section>
 
 <section id="eink" class="sec eink"><div class="wrap">
