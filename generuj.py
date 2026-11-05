@@ -125,6 +125,9 @@ EINK_ICONS = ["frame", "still", "buttons", "tabletcheck"]
 # licznik czasu, prowadzony pierwszy projekt z kotem Gabi, postęp zapisuje się sam, języki).
 # Zmiana kolejności tekstów → tu też.
 FEAT_ICONS = ["sequence", "key", "layers", "follow", "clock", "cat", "bookmark", "globe"]
+# „Czym się różni” (2026-11-05), w kolejności diffs z T: jedno dotknięcie, e-ink, sekwencja, rządek na środku.
+# Sekcja tylko w językach z kluczem "diffs".
+DIFF_ICONS = ["find", "frame", "sequence", "follow"]
 
 
 def icon(name, cls="ico"):
@@ -250,9 +253,23 @@ def page(lang):
         f'<li class="card"><span class="badge-ico">{icon(FEAT_ICONS[k])}</span><h3>{e(a)}</h3><p>{e(b)}</p></li>'
         for k, (a, b) in enumerate(t["feats"])
     )
+    # Sekcja „Czym się różni” (2026-11-05) zaraz po filarach - wygląd kart z „Co potrafi” (klasa features:
+    # tło i kreski). Języki bez kluczy diff_* jej nie mają (na razie tylko polski).
+    diff = ""
+    if "diffs" in t:
+        dcards = "".join(
+            f'<li class="card"><span class="badge-ico">{icon(DIFF_ICONS[k])}</span><h3>{e(a)}</h3><p>{e(b)}</p></li>'
+            for k, (a, b) in enumerate(t["diffs"])
+        )
+        diff = (f'<section id="diff" class="sec features diff"><div class="wrap">\n'
+                f'  <header class="sec-head center"><h2>{e(t["diff_title"])}</h2><p class="lead">{e(t["diff_lead"])}</p></header>\n'
+                f'  <ul class="cards">{dcards}</ul>\n'
+                f'</div></section>\n\n')
     plans = ""
     for k, (name, price, per, trial) in enumerate(t["plans"]):
-        best = k == 1
+        # Wyróżniony plan roczny = przedostatni: przy trzech planach (z miesięcznym) drugi, przy dwóch
+        # (rok i na zawsze - po polsku od 2026-11-05, bez miesięcznego od 2026-10-17) pierwszy.
+        best = k == len(t["plans"]) - 2
         plans += (
             f'<div class="plan{" best" if best else ""}">'
             + (f'<span class="tag">{e(t["best"])}</span>' if best else "")
@@ -279,7 +296,7 @@ def page(lang):
     price = (
         f"""<section id="price" class="sec pricing"><div class="wrap">
   <header class="sec-head center"><h2>{e(t["price_title"])}</h2><p class="lead">{e(t["price_lead"])}</p></header>
-  <div class="plans">{plans}</div>
+  <div class="plans{" two" if len(t["plans"]) == 2 else ""}">{plans}</div>
   <p class="note">{e(t["price_note"])}</p>
 </div></section>
 
@@ -336,7 +353,7 @@ def page(lang):
 
 <section class="pillars-sec"><div class="wrap"><div class="pillars">{pillars}</div></div></section>
 
-<section id="how" class="sec how"><div class="wrap">
+{diff}<section id="how" class="sec how"><div class="wrap">
   <header class="sec-head center"><h2>{e(t["how_title"])}</h2><p class="lead">{e(t["how_lead"])}</p></header>
   <ol class="steps">{steps}</ol>
 </div></section>
