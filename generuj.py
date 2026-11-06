@@ -24,6 +24,7 @@ LANGS = ["en", "pl", "cs", "de", "nb", "da", "sv"]
 NAMES = {"en": "EN", "pl": "PL", "cs": "CS", "de": "DE", "nb": "NO", "da": "DA", "sv": "SV"}
 COMPANY = "ŁUKASZ DOMAŃSKI IT ONE STUDIO"
 EMAIL = "contact@gabiknits.app"
+FACEBOOK = "https://www.facebook.com/gabiknits"  # strona aplikacji na Facebooku (założona 2026-11-05; link w stopce od 2026-11-06)
 
 # Cennik ukryty do startu w sklepie (decyzja 2026-10-08: strategia cenowa nie wychodzi przed premierą).
 # Teksty sekcji zostają w słowniku T; True przywraca sekcję „Cena” i odnośnik w nagłówku.
@@ -424,7 +425,7 @@ def page(lang):
   </div>
   <div class="foot-row small">
     <span>{e(COMPANY)} · <span class="nw">{e(t["vat"])}</span></span>
-    <span><a href="{privacy}">{e(t["privacy"])}</a> · <a href="{terms}">{e(t["terms"])}</a>{tip} · <a href="mailto:{EMAIL}">{EMAIL}</a></span>
+    <span><a href="{privacy}">{e(t["privacy"])}</a> · <a href="{terms}">{e(t["terms"])}</a>{tip} · <a href="mailto:{EMAIL}">{EMAIL}</a> · <a href="{FACEBOOK}" rel="me">Facebook</a></span>
   </div>
 </div></footer>
 </body>
