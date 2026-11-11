@@ -1,9 +1,9 @@
 T = {
     "en": {
         "title": "Gabi Knits – knitting charts on phone, tablet and e-ink",
-        "desc": "PDF patterns on phone, tablet and BOOX e-ink: Gabi Knits finds the chart, counts its rows and guides you row by row. A row counter right on the page.",
+        "desc": "PDF knitting patterns on phone, tablet and BOOX e-ink: Gabi Knits finds the chart, counts its rows and guides you row by row. A row counter right on the page.",
         "nav": ("E-ink", "How it works", "Features", "Questions", "Contact"),
-        "hero_eyebrow": "Smart chart reader",
+        "hero_eyebrow": "Smart PDF chart reader for knitting",
         "hero_title": "Always know which row you’re on.",
         "hero_text": "Open a PDF pattern, tap the chart and just knit. Gabi Knits counts the rows for you and guides you smoothly, step by step, through the whole pattern. Everything you need is here: smart counters, the key always at hand and a drawing tool that lets you add your own notes and touch up the chart with the correction pen – on your phone, tablet and e-ink reader.",
         "soon": "Coming soon to Google Play",
@@ -121,9 +121,9 @@ T = {
     },
     "pl": {
         "title": "Gabi Knits – schematy na druty na telefon, tablet i e-ink",
-        "desc": "Wzory PDF na telefonie, tablecie i e-inku BOOX: Gabi Knits sama znajduje schemat, liczy rządki i prowadzi rządek po rządku. Licznik rządków na stronie.",
+        "desc": "Wzory na druty w PDF na telefonie, tablecie i e-inku BOOX: Gabi Knits sama znajduje schemat, liczy rządki i prowadzi rządek po rządku. Licznik rządków na stronie.",
         "nav": ("E-ink", "Jak to działa", "Funkcje", "Pytania", "Kontakt"),
-        "hero_eyebrow": "Inteligentny czytnik schematów",
+        "hero_eyebrow": "Inteligentny czytnik schematów PDF na druty",
         "hero_title": "Zawsze wiesz, który rządek dziergasz.",
         "hero_text": "Otwórz wzór PDF, dotknij schematu i po prostu dziergaj. Gabi Knits sama policzy rządki i płynnie poprowadzi cię krok po kroku przez cały wzór. Masz tu wszystko, czego potrzebujesz: inteligentne liczniki, legendę zawsze pod ręką oraz funkcję rysownika, która pozwala nanosić własne uwagi i poprawiać schemat za pomocą korektora – na telefonie, tablecie oraz czytniku e-ink.",
         "soon": "Wkrótce w Google Play",
@@ -250,9 +250,9 @@ T = {
     # legenda, návod (wzór PDF), jehlice; ceny w euro jak w pozostałych językach poza polskim.
     "cs": {
         "title": "Gabi Knits – pletací schémata pro telefon, tablet a e-ink",
-        "desc": "Návody v PDF na telefonu, tabletu i e-inku BOOX: Gabi Knits sama najde schéma, spočítá řady a provede tě řadu po řadě. Počítadlo řad přímo na stránce.",
+        "desc": "Návody na pletení v PDF na telefonu, tabletu i e-inku BOOX: Gabi Knits sama najde schéma, spočítá řady a provede tě řadu po řadě. Počítadlo řad přímo na stránce.",
         "nav": ("E-ink", "Jak to funguje", "Funkce", "Otázky", "Kontakt"),
-        "hero_eyebrow": "Chytrá čtečka schémat",
+        "hero_eyebrow": "Chytrá čtečka pletacích schémat v PDF",
         "hero_title": "Vždycky víš, kterou řadu pleteš.",
         "hero_text": "Otevři návod v PDF, klepni na schéma a prostě pleť. Gabi Knits sama spočítá řady a plynule tě provede krok za krokem celým návodem. Máš tu všechno, co potřebuješ: chytrá počítadla, legendu vždy po ruce a kreslení, kterým si do schématu zapíšeš vlastní poznámky a opravíš ho korektorem – na telefonu, tabletu i čtečce e-ink.",
         "soon": "Brzy na Google Play",
@@ -369,9 +369,9 @@ T = {
     },
     "de": {
         "title": "Gabi Knits – Strickdiagramme auf Handy, Tablet und E-Ink",
-        "desc": "PDF-Anleitungen auf Handy, Tablet und BOOX E-Ink: Gabi Knits findet das Diagramm, zählt die Reihen und führt dich Reihe für Reihe. Mit Reihenzähler.",
+        "desc": "PDF-Strickanleitungen auf Handy, Tablet und BOOX E-Ink: Gabi Knits findet das Diagramm, zählt die Reihen und führt dich Reihe für Reihe. Mit Reihenzähler.",
         "nav": ("E-Ink", "So geht’s", "Funktionen", "Fragen", "Kontakt"),
-        "hero_eyebrow": "Smarter Diagrammleser",
+        "hero_eyebrow": "Smarter PDF-Leser für Strickdiagramme",
         "hero_title": "Du weißt immer, welche Reihe dran ist.",
         "hero_text": "Öffne eine PDF-Anleitung, tippe aufs Diagramm und strick einfach los. Gabi Knits zählt die Reihen selbst und führt dich Schritt für Schritt durch die ganze Anleitung. Hier hast du alles, was du brauchst: smarte Zähler, die Legende immer griffbereit und eine Zeichenfunktion, mit der du eigene Notizen einträgst und das Diagramm mit dem Korrekturstift anpasst – auf Handy, Tablet und E-Ink-Reader.",
         "soon": "Bald bei Google Play",
@@ -488,9 +488,9 @@ T = {
     },
     "nb": {
         "title": "Gabi Knits – strikkediagrammer på mobil, nettbrett og e-ink",
-        "desc": "PDF-oppskrifter på mobil, nettbrett og BOOX e-ink: Gabi Knits finner diagrammet, teller radene og leder deg rad for rad. Radteller rett på siden.",
+        "desc": "PDF-strikkeoppskrifter på mobil, nettbrett og BOOX e-ink: Gabi Knits finner diagrammet, teller radene og leder deg rad for rad. Radteller rett på siden.",
         "nav": ("E-ink", "Slik virker det", "Funksjoner", "Spørsmål", "Kontakt"),
-        "hero_eyebrow": "Smart diagramleser",
+        "hero_eyebrow": "Smart PDF-leser for strikkediagrammer",
         "hero_title": "Du vet alltid hvilken rad du er på.",
         "hero_text": "Åpne en PDF-oppskrift, trykk på diagrammet og bare strikk. Gabi Knits teller radene selv og leder deg trinn for trinn gjennom hele oppskriften. Her har du alt du trenger: smarte tellere, forklaringen alltid for hånden og tegning, der du kan skrive egne notater og rette diagrammet med korrekturpennen – på mobil, nettbrett og e-ink-leser.",
         "soon": "Kommer snart på Google Play",
@@ -607,9 +607,9 @@ T = {
     },
     "da": {
         "title": "Gabi Knits – strikkediagrammer på mobil, tablet og e-ink",
-        "desc": "PDF-opskrifter på mobil, tablet og BOOX e-ink: Gabi Knits finder selv diagrammet, tæller rækkerne og fører dig række for række. Rækketæller lige på siden.",
+        "desc": "PDF-strikkeopskrifter på mobil, tablet og BOOX e-ink: Gabi Knits finder selv diagrammet, tæller rækkerne og fører dig række for række. Rækketæller lige på siden.",
         "nav": ("E-ink", "Sådan virker det", "Funktioner", "Spørgsmål", "Kontakt"),
-        "hero_eyebrow": "Smart diagramlæser",
+        "hero_eyebrow": "Smart PDF-læser til strikkediagrammer",
         "hero_title": "Du ved altid, hvilken række du er nået til.",
         "hero_text": "Åbn en PDF-opskrift, tryk på diagrammet, og strik bare løs. Gabi Knits tæller selv rækkerne og fører dig trin for trin gennem hele opskriften. Her har du alt, hvad du skal bruge: smarte tællere, forklaringen altid ved hånden og tegning, hvor du kan skrive egne noter og rette diagrammet med korrekturpennen – på mobil, tablet og e-ink-læser.",
         "soon": "Kommer snart på Google Play",
@@ -726,9 +726,9 @@ T = {
     },
     "sv": {
         "title": "Gabi Knits – stickdiagram för mobil, surfplatta och e-ink",
-        "desc": "PDF-mönster på mobil, surfplatta och BOOX e-ink: Gabi Knits hittar diagrammet själv, räknar varven och guidar dig varv för varv. Varvräknare på sidan.",
+        "desc": "PDF-stickmönster på mobil, surfplatta och BOOX e-ink: Gabi Knits hittar diagrammet själv, räknar varven och guidar dig varv för varv. Varvräknare på sidan.",
         "nav": ("E-ink", "Så fungerar det", "Funktioner", "Frågor", "Kontakt"),
-        "hero_eyebrow": "Smart diagramläsare",
+        "hero_eyebrow": "Smart PDF-läsare för stickdiagram",
         "hero_title": "Du vet alltid vilket varv du är på.",
         "hero_text": "Öppna ett PDF-mönster, tryck på diagrammet och sticka bara. Gabi Knits räknar varven själv och guidar dig steg för steg genom hela mönstret. Här har du allt du behöver: smarta räknare, förklaringen alltid nära till hands och ritverktyget, där du kan skriva egna anteckningar och rätta diagrammet med korrekturpennan – på mobil, surfplatta och e-ink-läsare.",
         "soon": "Kommer snart till Google Play",
