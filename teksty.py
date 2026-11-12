@@ -118,6 +118,10 @@ T = {
         "vat": "VAT ID PL7321956817",
         "privacy": "Privacy policy",
         "terms": "Terms of use",
+        # Napiwek przez Ko-fi (2026-11-12): strona tip/, kawa 3 €.
+        "tip": "Buy Gaba a coffee",
+        "tip_title": "Enjoying Gabi Knits?",
+        "tip_text": "It’s a voluntary tip – every coffee tells Gaba it’s worth making the app even better.",
     },
     "pl": {
         "title": "Gabi Knits – schematy na druty na telefon, tablet i e-ink",
@@ -241,7 +245,7 @@ T = {
         "vat": "NIP 7321956817",
         "privacy": "Polityka prywatności",
         "terms": "Regulamin",
-        # Napiwek (2026-10-22): na razie tylko po polsku - buycoffee.to; pozostałe języki dostaną Ko-fi.
+        # Napiwek (2026-10-22): po polsku buycoffee.to (PLN, BLIK); pozostałe języki od 2026-11-12 Ko-fi.
         "tip": "Postaw Gabie kawę",
         "tip_title": "Podoba Ci się Gabi Knits?",
         "tip_text": "To dobrowolny napiwek – każda kawa to dla Gaby znak, że warto dalej rozwijać aplikację.",
@@ -366,6 +370,10 @@ T = {
         "vat": "DIČ PL7321956817",
         "privacy": "Zásady ochrany osobních údajů",
         "terms": "Podmínky použití",
+        # Napiwek przez Ko-fi (2026-11-12): strona cs/tip/, kawa 3 €.
+        "tip": "Pozvi Gabu na kávu",
+        "tip_title": "Líbí se ti Gabi Knits?",
+        "tip_text": "Je to dobrovolné spropitné – každá káva je pro Gabu znamením, že má smysl aplikaci dál vylepšovat.",
     },
     "de": {
         "title": "Gabi Knits – Strickdiagramme auf Handy, Tablet und E-Ink",
@@ -485,6 +493,10 @@ T = {
         "vat": "USt-IdNr. PL7321956817",
         "privacy": "Datenschutzerklärung",
         "terms": "Nutzungsbedingungen",
+        # Napiwek przez Ko-fi (2026-11-12): strona de/tip/, kawa 3 €.
+        "tip": "Spendier Gaba einen Kaffee",
+        "tip_title": "Gefällt dir Gabi Knits?",
+        "tip_text": "Das ist ein freiwilliges Trinkgeld – jeder Kaffee zeigt Gaba, dass es sich lohnt, die App weiterzuentwickeln.",
     },
     "nb": {
         "title": "Gabi Knits – strikkediagrammer på mobil, nettbrett og e-ink",
@@ -604,6 +616,10 @@ T = {
         "vat": "MVA-nr. PL7321956817",
         "privacy": "Personvernerklæring",
         "terms": "Vilkår for bruk",
+        # Napiwek przez Ko-fi (2026-11-12): strona nb/tip/, kawa 3 €.
+        "tip": "Spander en kaffe på Gaba",
+        "tip_title": "Liker du Gabi Knits?",
+        "tip_text": "Det er et frivillig tips – hver kaffe viser Gaba at det er verdt å utvikle appen videre.",
     },
     "da": {
         "title": "Gabi Knits – strikkediagrammer på mobil, tablet og e-ink",
@@ -723,6 +739,10 @@ T = {
         "vat": "Moms-nr. PL7321956817",
         "privacy": "Privatlivspolitik",
         "terms": "Brugsvilkår",
+        # Napiwek przez Ko-fi (2026-11-12): strona da/tip/, kawa 3 €.
+        "tip": "Giv Gaba en kop kaffe",
+        "tip_title": "Kan du lide Gabi Knits?",
+        "tip_text": "Det er frivillige drikkepenge – hver kop kaffe viser Gaba, at det er værd at udvikle appen videre.",
     },
     "sv": {
         "title": "Gabi Knits – stickdiagram för mobil, surfplatta och e-ink",
@@ -842,5 +862,9 @@ T = {
         "vat": "Momsreg.nr PL7321956817",
         "privacy": "Integritetspolicy",
         "terms": "Användarvillkor",
+        # Napiwek przez Ko-fi (2026-11-12): strona sv/tip/, kawa 3 €.
+        "tip": "Bjud Gaba på en kaffe",
+        "tip_title": "Gillar du Gabi Knits?",
+        "tip_text": "Det är frivillig dricks – varje kaffe visar Gaba att det är värt att utveckla appen vidare.",
     },
 }
