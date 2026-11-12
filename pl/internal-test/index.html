@@ -102,8 +102,10 @@
   .ask{padding:28px 20px;border-radius:22px}
 }
 /* Wybór sklepu (2026-11-12, prośba użytkownika: testy także na iPhonie przez TestFlight): dwa duże przyciski na
-   górze, pod nimi osobne instrukcje. Bez skryptów (strona ich nie używa): przycisk prowadzi do kotwicy, a gdzie
-   przeglądarka zna :has(), druga instrukcja się chowa; na starszej widać obie, jedna pod drugą. */
+   górze, treść dopiero po wybraniu (uwaga użytkownika: „treść dopiero po wybraniu opcji”). Bez skryptów (strona ich
+   nie używa): przycisk prowadzi do kotwicy, instrukcja pokazuje się przez :target. Stare odnośniki do #aktualizacja
+   otwierają instrukcję Androida przez :has(). Pytania na dole też dopiero po wyborze - tam, gdzie przeglądarka zna
+   :has(); na starszej zostają widoczne. */
 .pick{margin:8px 0 6px}
 .pick h2{font-size:1.6rem;margin-bottom:6px}
 .pick > p{margin:0 0 16px}
@@ -113,12 +115,15 @@
 .pick a b{font-size:1.55rem;line-height:1.15}
 .pick a span{color:var(--muted);font-size:1.02rem;line-height:1.35}
 .pick a:hover{background:var(--teal-soft)}
-.platform{scroll-margin-top:16px;margin-top:40px;padding-top:28px;border-top:2px solid var(--rule)}
+.platform{scroll-margin-top:16px}
 .platform > .eyebrow{margin:0}
 .platform > h2{font-size:clamp(1.8rem,1.3rem + 2vw,2.4rem);margin:4px 0 0}
 .platform .back{display:inline-block;margin-top:10px;color:var(--muted);font-size:1rem}
-.tt:has(#iphone:target) #android, .tt:has(#android:target) #iphone{display:none}
-.tt:has(.platform:target) .platform{border-top:none;margin-top:20px;padding-top:0}
+.platform{display:none}
+.platform:target{display:block}
+.platform:has(:target){display:block}
+.tt:not(:has(.platform:target, .platform :target)) .ask{display:none}
+.platform{margin-top:36px}
 @media (max-width:640px){
   .pick-grid{gap:10px}
   .pick a{min-height:118px;padding:18px 14px;border-radius:18px}
