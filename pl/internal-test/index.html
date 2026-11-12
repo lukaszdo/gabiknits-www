@@ -101,6 +101,30 @@
   .go{font-size:1.1rem;padding:15px 22px}
   .ask{padding:28px 20px;border-radius:22px}
 }
+/* Wybór sklepu (2026-11-12, prośba użytkownika: testy także na iPhonie przez TestFlight): dwa duże przyciski na
+   górze, pod nimi osobne instrukcje. Bez skryptów (strona ich nie używa): przycisk prowadzi do kotwicy, a gdzie
+   przeglądarka zna :has(), druga instrukcja się chowa; na starszej widać obie, jedna pod drugą. */
+.pick{margin:8px 0 6px}
+.pick h2{font-size:1.6rem;margin-bottom:6px}
+.pick > p{margin:0 0 16px}
+.pick-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pick a{display:flex;flex-direction:column;justify-content:center;gap:6px;min-height:132px;padding:22px 20px;border-radius:22px;text-decoration:none;
+  background:var(--card);border:2.5px solid var(--teal);color:var(--ink);box-shadow:var(--shadow-sm)}
+.pick a b{font-size:1.55rem;line-height:1.15}
+.pick a span{color:var(--muted);font-size:1.02rem;line-height:1.35}
+.pick a:hover{background:var(--teal-soft)}
+.platform{scroll-margin-top:16px;margin-top:40px;padding-top:28px;border-top:2px solid var(--rule)}
+.platform > .eyebrow{margin:0}
+.platform > h2{font-size:clamp(1.8rem,1.3rem + 2vw,2.4rem);margin:4px 0 0}
+.platform .back{display:inline-block;margin-top:10px;color:var(--muted);font-size:1rem}
+.tt:has(#iphone:target) #android, .tt:has(#android:target) #iphone{display:none}
+.tt:has(.platform:target) .platform{border-top:none;margin-top:20px;padding-top:0}
+@media (max-width:640px){
+  .pick-grid{gap:10px}
+  .pick a{min-height:118px;padding:18px 14px;border-radius:18px}
+  .pick a b{font-size:1.3rem}
+  .pick a span{font-size:.95rem}
+}
 </style>
 </head>
 <body>
@@ -116,67 +140,153 @@
   <p class="free"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Test jest bezpłatny – nic nie płacisz.</span></p>
 </section>
 
-<section class="before">
-  <h2>Zanim zaczniesz</h2>
-  <ul class="ticks">
-    <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Potrzebny jest <b>telefon albo tablet z Androidem</b> i Sklepem Play. Na iPhonie aplikacji jeszcze nie ma.</span></li>
-    <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Gaba musi mieć <b>Twój adres Gmail</b> – ten, którego używasz w Sklepie Play. Bez niego zaproszenie nie zadziała.</span></li>
-    <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Przyda się <b>wzór na druty w PDF</b>, z którego chcesz dziergać.</span></li>
-  </ul>
+<section class="pick" id="wybor">
+  <h2>Na czym testujesz?</h2>
+  <p>Wybierz swój sklep – pokażemy instrukcję krok po kroku.</p>
+  <div class="pick-grid">
+    <a href="#android"><b>Google Play</b><span>Android – telefon i tablet</span></a>
+    <a href="#iphone"><b>App Store</b><span>iPhone i iPad</span></a>
+  </div>
 </section>
 
-<ol class="tsteps">
-  <li class="tstep">
-    <h3>Dołącz do testów</h3>
-    <p>Otwórz zaproszenie <b>na telefonie</b>, na którym chcesz dziergać:</p>
-    <a class="go" href="https://play.google.com/apps/internaltest/4701416030222443770">Otwórz zaproszenie<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <p>Jeśli telefon zapyta o konto Google, wybierz to samo, którego używasz w Sklepie Play. Jeśli zobaczysz przycisk <span class="btn" lang="en">Become a tester</span> albo <span class="btn" lang="en">Accept invite</span>, dotknij go.</p>
-    <p class="hint">Strona jest po angielsku, a zamiast nazwy aplikacji widać „app.gabiknits (unreviewed)”. Tak ma być – to wersja testowa.</p>
-  </li>
-  <li class="tstep">
-    <h3>Zainstaluj aplikację</h3>
-    <p>Na tej samej stronie dotknij <span class="btn" lang="en">Download test app</span>. Otworzy się Sklep Play – dotknij <span class="btn">Zainstaluj</span>.</p>
-    <p class="hint">Sklep nie pokazuje aplikacji? Poczekaj kwadrans i otwórz zaproszenie jeszcze raz.</p>
-  </li>
-  <li class="tstep">
-    <h3>Przejdź samouczek</h3>
-    <p>Otwórz Gabi Knits. Aplikacja zaproponuje krótki samouczek na wzorze ćwiczebnym. Warto go przejść: w kilka minut pokaże wszystko, czego potrzeba.</p>
-  </li>
-  <li class="tstep">
-    <h3>Dziergaj ze swojego wzoru</h3>
-    <p>Dodaj swój wzór PDF w <span class="btn">Projekty</span> → <span class="btn">Nowy projekt</span> i dziergaj z niego tak, jak na co dzień.</p>
-  </li>
-  <li class="tstep">
-    <h3>Włącz pełną wersję – testowo</h3>
-    <p>Przy przejściu do drugiego rządka pojawi się okno <b>„Dziergaj dalej z pełną wersją”</b>.</p>
-    <p>Wybierz <span class="btn">Na zawsze</span> i dotknij przycisku <span class="btn">Kup za…</span>. W oknie Google wybierz płatność <b>„Testowa karta, zawsze zatwierdza”</b> i potwierdź.</p>
-    <div class="box ok"><span class="t">To zakup testowy</span>W oknie Google zobaczysz napis o zamówieniu testowym. Nic nie płacisz, a aplikacja działa w pełni.</div>
-    <div class="box warn"><span class="t">Widzisz swoją prawdziwą kartę?</span><b>Nie kupuj.</b> Zamknij okno i napisz do Gaby – dopisze Cię do testów, a wtedy zakup będzie bezpłatny.</div>
-  </li>
-</ol>
+<section class="platform" id="android">
+  <p class="eyebrow">Google Play</p>
+  <h2>Android – telefon i tablet</h2>
+  <a class="back" href="#wybor">↑ Wróć do wyboru</a>
 
-<!-- Przy każdym wydaniu na test wewnętrzny: zmienić numer wersji, kompilacji i datę w .ver i w przykładzie niżej. -->
-<section class="before upd" id="aktualizacja">
-  <h2>Aktualizacja aplikacji</h2>
-  <p>Co kilka dni wgrywamy nową wersję z poprawkami – także tymi, o które prosicie. Sprawdź, czy masz najnowszą.</p>
-  <p class="ver"><span class="lbl">Najnowsza wersja:</span><span class="num">1.69</span><span class="when">kompilacja 83 · z 10 listopada 2026</span></p>
+  <section class="before">
+    <h2>Zanim zaczniesz</h2>
+    <ul class="ticks">
+      <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Potrzebny jest <b>telefon albo tablet z Androidem</b> i Sklepem Play.</span></li>
+      <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Gaba musi mieć <b>Twój adres Gmail</b> – ten, którego używasz w Sklepie Play. Bez niego zaproszenie nie zadziała.</span></li>
+      <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Przyda się <b>wzór na druty w PDF</b>, z którego chcesz dziergać.</span></li>
+    </ul>
+  </section>
 
-  <h3>Którą wersję masz?</h3>
-  <ol>
-    <li>Otwórz Gabi Knits i dotknij <b>kota w okularach</b> w lewym górnym rogu, obok nazwy wzoru.</li>
-    <li>Otworzy się okno „O aplikacji”. Pod napisem Gabi Knits jest numer, na przykład <b>„wersja 1.69 · kompilacja 83”</b>.</li>
+  <ol class="tsteps">
+    <li class="tstep">
+      <h3>Dołącz do testów</h3>
+      <p>Otwórz zaproszenie <b>na telefonie</b>, na którym chcesz dziergać:</p>
+      <a class="go" href="https://play.google.com/apps/internaltest/4701416030222443770">Otwórz zaproszenie<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <p>Jeśli telefon zapyta o konto Google, wybierz to samo, którego używasz w Sklepie Play. Jeśli zobaczysz przycisk <span class="btn" lang="en">Become a tester</span> albo <span class="btn" lang="en">Accept invite</span>, dotknij go.</p>
+      <p class="hint">Strona jest po angielsku, a zamiast nazwy aplikacji widać „app.gabiknits (unreviewed)”. Tak ma być – to wersja testowa.</p>
+    </li>
+    <li class="tstep">
+      <h3>Zainstaluj aplikację</h3>
+      <p>Na tej samej stronie dotknij <span class="btn" lang="en">Download test app</span>. Otworzy się Sklep Play – dotknij <span class="btn">Zainstaluj</span>.</p>
+      <p class="hint">Sklep nie pokazuje aplikacji? Poczekaj kwadrans i otwórz zaproszenie jeszcze raz.</p>
+    </li>
+    <li class="tstep">
+      <h3>Przejdź samouczek</h3>
+      <p>Otwórz Gabi Knits. Aplikacja zaproponuje krótki samouczek na wzorze ćwiczebnym. Warto go przejść: w kilka minut pokaże wszystko, czego potrzeba.</p>
+    </li>
+    <li class="tstep">
+      <h3>Dziergaj ze swojego wzoru</h3>
+      <p>Dodaj swój wzór PDF w <span class="btn">Projekty</span> → <span class="btn">Nowy projekt</span> i dziergaj z niego tak, jak na co dzień.</p>
+    </li>
+    <li class="tstep">
+      <h3>Włącz pełną wersję – testowo</h3>
+      <p>Przy przejściu do drugiego rządka pojawi się okno <b>„Dziergaj dalej z pełną wersją”</b>.</p>
+      <p>Wybierz <span class="btn">Na zawsze</span> i dotknij przycisku <span class="btn">Kup za…</span>. W oknie Google wybierz płatność <b>„Testowa karta, zawsze zatwierdza”</b> i potwierdź.</p>
+      <div class="box ok"><span class="t">To zakup testowy</span>W oknie Google zobaczysz napis o zamówieniu testowym. Nic nie płacisz, a aplikacja działa w pełni.</div>
+      <div class="box warn"><span class="t">Widzisz swoją prawdziwą kartę?</span><b>Nie kupuj.</b> Zamknij okno i napisz do Gaby – dopisze Cię do testów, a wtedy zakup będzie bezpłatny.</div>
+    </li>
   </ol>
-  <p class="hint">Numer widać też przez chwilę na ekranie powitalnym, gdy uruchamiasz aplikację („ver. 1.69”).</p>
 
-  <h3>Jak zaktualizować</h3>
-  <ol>
-    <li>Otwórz zaproszenie jeszcze raz, na tym samym telefonie albo tablecie:<br>
-      <a class="go" href="https://play.google.com/apps/internaltest/4701416030222443770">Otwórz zaproszenie<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
-    <li>Dotknij <span class="btn" lang="en">Download test app</span>. Otworzy się Sklep Play.</li>
-    <li>Dotknij <span class="btn">Aktualizuj</span> i poczekaj, aż się skończy.</li>
+  <!-- Przy każdym wydaniu na test wewnętrzny Google Play: zmienić numer wersji, kompilacji i datę w .ver i w przykładzie niżej. -->
+  <section class="before upd" id="aktualizacja">
+    <h2>Aktualizacja aplikacji</h2>
+    <p>Co kilka dni wgrywamy nową wersję z poprawkami – także tymi, o które prosicie. Sprawdź, czy masz najnowszą.</p>
+    <p class="ver"><span class="lbl">Najnowsza wersja:</span><span class="num">1.69</span><span class="when">kompilacja 83 · z 10 listopada 2026</span></p>
+
+    <h3>Którą wersję masz?</h3>
+    <ol>
+      <li>Otwórz Gabi Knits i dotknij <b>kota w okularach</b> w lewym górnym rogu, obok nazwy wzoru.</li>
+      <li>Otworzy się okno „O aplikacji”. Pod napisem Gabi Knits jest numer, na przykład <b>„wersja 1.69 · kompilacja 83”</b>.</li>
+    </ol>
+    <p class="hint">Numer widać też przez chwilę na ekranie powitalnym, gdy uruchamiasz aplikację („ver. 1.69”).</p>
+
+    <h3>Jak zaktualizować</h3>
+    <ol>
+      <li>Otwórz zaproszenie jeszcze raz, na tym samym telefonie albo tablecie:<br>
+        <a class="go" href="https://play.google.com/apps/internaltest/4701416030222443770">Otwórz zaproszenie<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>
+      <li>Dotknij <span class="btn" lang="en">Download test app</span>. Otworzy się Sklep Play.</li>
+      <li>Dotknij <span class="btn">Aktualizuj</span> i poczekaj, aż się skończy.</li>
+    </ol>
+    <p class="hint">Widzisz tylko <span class="btn">Otwórz</span>, bez <span class="btn">Aktualizuj</span>? Masz już najnowszą wersję albo Sklep Play jeszcze jej nie widzi – zajrzyj za godzinę. Sklep często aktualizuje aplikacje także sam, gdy telefon jest podłączony do Wi-Fi.</p>
+    <div class="box ok"><span class="t">Nic nie tracisz</span>Projekty, zapisane rządki, notatki i liczniki zostają. Pełna wersja też – nie trzeba jej włączać drugi raz.</div>
+  </section>
+  <p class="hint">Zrzut ekranu na Androidzie: przytrzymaj <b>jednocześnie przycisk zasilania i ściszania</b>.</p>
+</section>
+
+<section class="platform" id="iphone">
+  <p class="eyebrow">App Store</p>
+  <h2>iPhone i iPad</h2>
+  <a class="back" href="#wybor">↑ Wróć do wyboru</a>
+
+  <section class="before">
+    <h2>Zanim zaczniesz</h2>
+    <ul class="ticks">
+      <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Potrzebny jest <b>iPhone albo iPad z iOS 16 lub nowszym</b>.</span></li>
+      <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Gaba musi mieć <b>adres e-mail Twojego konta Apple</b> – tego, na które logujesz się w App Store. Na ten adres przyjdzie zaproszenie.</span></li>
+      <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span>Przyda się <b>wzór na druty w PDF</b>, z którego chcesz dziergać.</span></li>
+    </ul>
+  </section>
+
+  <ol class="tsteps">
+    <li class="tstep">
+      <h3>Zainstaluj TestFlight</h3>
+      <p>TestFlight to bezpłatna aplikacja Apple do wersji testowych. Zainstaluj ją z App Store:</p>
+      <a class="go" href="https://apps.apple.com/app/testflight/id899247664">TestFlight w App Store<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </li>
+    <li class="tstep">
+      <h3>Przyjmij zaproszenie</h3>
+      <p>Na iPhonie otwórz e-mail od TestFlight z zaproszeniem do Gabi Knits i dotknij <span class="btn" lang="en">View in TestFlight</span>. Otworzy się TestFlight – dotknij <span class="btn" lang="en">Accept</span>, a potem <span class="btn" lang="en">Install</span>.</p>
+      <p class="hint">E-mail jest po angielsku i przychodzi od Apple (TestFlight). Nie widzisz go? Zajrzyj do spamu. Jeśli w wiadomości jest kod, możesz go też wpisać w TestFlight: <span class="btn" lang="en">Redeem</span>.</p>
+    </li>
+    <li class="tstep">
+      <h3>Przejdź samouczek</h3>
+      <p>Otwórz Gabi Knits. Aplikacja zaproponuje krótki samouczek na wzorze ćwiczebnym. Warto go przejść: w kilka minut pokaże wszystko, czego potrzeba.</p>
+    </li>
+    <li class="tstep">
+      <h3>Dziergaj ze swojego wzoru</h3>
+      <p>Dodaj swój wzór PDF w <span class="btn">Projekty</span> → <span class="btn">Nowy projekt</span>. Otworzy się okno <b>Pliki</b> – wybierz wzór z iPhone'a, iCloud albo Dysku Google.</p>
+      <p class="hint">Wzór masz w e-mailu? Otwórz załącznik, dotknij <b>Udostępnij</b> → <b>Zachowaj w Plikach</b>, a potem dodaj go w aplikacji.</p>
+    </li>
+    <li class="tstep">
+      <h3>Włącz pełną wersję – testowo</h3>
+      <p>Przy przejściu do drugiego rządka pojawi się okno <b>„Dziergaj dalej z pełną wersją”</b>.</p>
+      <p>Wybierz <span class="btn">Rok</span> (z darmowym tygodniem) albo <span class="btn">Na zawsze</span> i dotknij dużego przycisku pod planami. W oknie Apple potwierdź zakup – tak jak zwykły zakup w App Store.</p>
+      <div class="box ok"><span class="t">W TestFlight zakupy są zawsze testowe</span>Nic nie płacisz, nawet jeśli Apple pokazuje Twoją kartę. W oknie zakupu zobaczysz dopisek o środowisku testowym (<span lang="en">Sandbox</span>).</div>
+      <div class="box warn"><span class="t">Ceny w dolarach?</span>To przypadłość wersji testowej – w App Store będą złotówki. Subskrypcja testowa odnawia się też dużo szybciej niż prawdziwa, np. co dzień zamiast co rok.</div>
+    </li>
+    <li class="tstep">
+      <h3>Sprawdź przywracanie</h3>
+      <p>Usuń Gabi Knits z iPhone'a i zainstaluj ją ponownie z TestFlight. Pełna wersja powinna wrócić sama. Jeśli nie wróci – <span class="btn">Ustawienia</span> → <span class="btn">Przywróć zakupy</span>, i napisz Gabie, co się stało.</p>
+    </li>
   </ol>
-  <p class="hint">Widzisz tylko <span class="btn">Otwórz</span>, bez <span class="btn">Aktualizuj</span>? Masz już najnowszą wersję albo Sklep Play jeszcze jej nie widzi – zajrzyj za godzinę. Sklep często aktualizuje aplikacje także sam, gdy telefon jest podłączony do Wi-Fi.</p>
-  <div class="box ok"><span class="t">Nic nie tracisz</span>Projekty, zapisane rządki, notatki i liczniki zostają. Pełna wersja też – nie trzeba jej włączać drugi raz.</div>
+
+  <!-- Przy każdym buildzie dla testerek w TestFlight: zmienić numer kompilacji i datę w .ver i w przykładzie niżej. -->
+  <section class="before upd" id="aktualizacja-iphone">
+    <h2>Aktualizacja aplikacji</h2>
+    <p>Nowe wersje przychodzą przez TestFlight. Sprawdź, czy masz najnowszą.</p>
+    <p class="ver"><span class="lbl">Najnowsza wersja:</span><span class="num">1.69</span><span class="when">kompilacja 8 · z 12 listopada 2026</span></p>
+
+    <h3>Którą wersję masz?</h3>
+    <ol>
+      <li>Otwórz Gabi Knits i dotknij <b>kota w okularach</b> w lewym górnym rogu, obok nazwy wzoru.</li>
+      <li>Otworzy się okno „O aplikacji”. Pod napisem Gabi Knits jest numer, na przykład <b>„wersja 1.69 · kompilacja 8”</b>.</li>
+    </ol>
+
+    <h3>Jak zaktualizować</h3>
+    <ol>
+      <li>Otwórz aplikację <b>TestFlight</b>.</li>
+      <li>Przy Gabi Knits dotknij <span class="btn" lang="en">Update</span> i poczekaj, aż się skończy.</li>
+    </ol>
+    <p class="hint">Widzisz <span class="btn" lang="en">Open</span> zamiast <span class="btn" lang="en">Update</span>? Masz już najnowszą wersję. TestFlight może też aktualizować sam – w TestFlight dotknij Gabi Knits i włącz <span lang="en">Automatic Updates</span>.</p>
+    <div class="box ok"><span class="t">Nic nie tracisz</span>Projekty, zapisane rządki, notatki i liczniki zostają. Pełna wersja też – nie trzeba jej włączać drugi raz.</div>
+  </section>
+  <p class="hint">Zrzut ekranu na iPhonie: naciśnij <b>jednocześnie przycisk boczny i głośniej</b> (na iPhonie z przyciskiem pod ekranem: <b>przycisk boczny i ten pod ekranem</b>).</p>
 </section>
 
 <section class="ask">
@@ -190,7 +300,7 @@
   <h3>Po kilku dniach – kilka pytań</h3>
   <p>Odpowiedz Gabie choćby na dwa–trzy. Wystarczy jedno zdanie.</p>
   <ol class="qs">
-    <li>Na czym dziergasz – na telefonie czy na tablecie?</li>
+    <li>Na czym dziergasz – na telefonie czy na tablecie? Z Androidem czy iPhone/iPad?</li>
     <li>Z jakiego wzoru dziergasz?<span>Nazwa wzoru albo projektantki. Czy aplikacja sama znalazła schemat po dotknięciu? A może któregoś nie dało się zaznaczyć?</span></li>
     <li>Czy podświetlony rządek był tam, gdzie trzeba?<span>Jeśli nie – zrzut ekranu pokaże, gdzie aplikacja się pomyliła.</span></li>
     <li>Czy trzeba było poprawiać ramkę schematu albo liczbę rządków?<span>Przy którym wzorze?</span></li>
@@ -203,7 +313,7 @@
     <li>Co podobało Ci się najbardziej?</li>
     <li>Czy polecisz Gabi Knits koleżance?<span>Dlaczego tak albo dlaczego nie.</span></li>
   </ol>
-  <p class="shot">Zrzut ekranu bardzo pomaga. Na większości telefonów zrobisz go, przytrzymując <b style="color:var(--ink)">jednocześnie przycisk zasilania i ściszania</b>.</p>
+  <p class="shot">Zrzut ekranu bardzo pomaga – jak go zrobić, piszemy na końcu instrukcji dla <a href="#android">Androida</a> i <a href="#iphone">iPhone'a</a>.</p>
 </section>
 </main>
 
