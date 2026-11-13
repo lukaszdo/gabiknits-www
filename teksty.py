@@ -184,7 +184,7 @@ T = {
             ("Legenda pod ręką", "Zaznacz legendę wzoru raz. Otwiera się jednym dotknięciem albo zostaje „zawsze na wierzchu” w małym oknie, które przesuwasz i powiększasz – a Ty dziergasz dalej."),
             ("Kilka schematów w jednym wzorze", "Każdy schemat pamięta swój rządek. Przełączasz strzałkami ‹ › na pasku przy liczniku – jednym dotknięciem, bez zasłaniania strony – albo pływającym widżetem."),
             ("Rządek na środku ekranu", "Schemat przesuwa się pod stojącym paskiem, więc dziergany rządek zostaje na środku ekranu."),
-            ("Licznik czasu", "Sprawdź, ile trwał projekt. Liczy tylko wtedy, gdy go włączysz – także w projekcie bez schematu – i sam staje, gdy wychodzisz z aplikacji."),
+            ("Licznik czasu", "Sprawdź, ile trwał projekt. Liczy tylko wtedy, gdy go włączysz – także w projekcie bez schematu – i sam się zatrzymuje, gdy wychodzisz z aplikacji."),
             ("Pierwszy projekt z przewodnikiem", "Przy pierwszym uruchomieniu samouczek prowadzi krok po kroku przez wzór ćwiczebny „Gaba” – kotkę Gabę w okularach i babeczkę. Ten wzór przerobisz w całości bez zakupu."),
             ("Postęp zapisuje się sam", "Każdy projekt ma nazwę i notatki – druty, rozmiar, zmiany – i pamięta stronę, schematy, rządki i czas dziergania. Historia rządków pokazuje ostatnie zmiany."),
             ("Siedem języków", "Polski, czeski, angielski, niemiecki, norweski, duński i szwedzki – w każdym słownictwo wzorów tego języka."),
