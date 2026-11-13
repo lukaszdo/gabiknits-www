@@ -11,7 +11,7 @@ T = {
         "pillars": [
             ("It finds the chart for you", "Tap the chart and the app finds its frame and grid and counts the rows itself. On a page with several charts it suggests the frames. You only check."),
             ("Guides you row by row", "The current row is highlighted, with its number on both sides, and the screen stays on. One big “Next row” button – handy when your other hand holds the needles."),
-            ("Counters on the page", "Count rows from the written pattern with Gaba’s paw – one tap is +1. Named counters keep track of cycles and remind you one row ahead what to do."),
+            ("Counters on the page", "You can use a simple row counter with Gaba’s paw – one tap is +1. Named counters keep track of cycles and remind you one row ahead what to do."),
             ("Phone, tablet and e-ink", "Each screen gets its own layout. Colour and smooth motion on phones and tablets, calm black and white and large buttons on an e-ink reader."),
         ],
         "diff_title": "Made with needles in hand",
@@ -135,7 +135,7 @@ T = {
         "pillars": [
             ("Sama znajduje schemat", "Dotknij schematu, a aplikacja znajdzie jego ramkę i siatkę i sama policzy rządki. Na stronie z kilkoma schematami sama zaproponuje ramki. Ty tylko sprawdzasz."),
             ("Prowadzi rządek po rządku", "Bieżący rządek jest podświetlony, z numerem po obu stronach, a ekran nie gaśnie. Jeden duży przycisk „Następny rządek” – wygodny, gdy druty trzymasz w drugiej ręce."),
-            ("Liczniki na stronie", "Rządki z opisu liczysz łapką Gaby – jedno dotknięcie to +1. Liczniki z nazwami pilnują cykli i przypominają rządek wcześniej, co trzeba zrobić."),
+            ("Liczniki na stronie", "Możesz używać zwykłego licznika rządków z łapką Gaby – jedno dotknięcie to +1. Liczniki z nazwami pilnują cykli i przypominają rządek wcześniej, co trzeba zrobić."),
             ("Telefon, tablet i e-ink", "Każdy ekran ma własny układ. Na telefonie i tablecie kolor i płynny ruch, na czytniku e-ink spokojna czerń na bieli i duże przyciski."),
         ],
         # „Czym się różni” (2026-11-05): to, czego nie musisz robić, i to, czego nie opisuje żadna przejrzana karta
@@ -264,7 +264,7 @@ T = {
         "pillars": [
             ("Schéma najde sama", "Klepni na schéma a aplikace najde jeho rámeček a mřížku a sama spočítá řady. Na stránce s více schématy sama navrhne rámečky. Ty jen zkontroluješ."),
             ("Provede tě řadu po řadě", "Aktuální řada je zvýrazněná, s číslem na obou stranách, a obrazovka nezhasne. Jedno velké tlačítko „Další řada“ – pohodlné, když držíš jehlice v druhé ruce."),
-            ("Počítadla na stránce", "Řady z návodu počítáš tlapkou Gaby – jedno klepnutí je +1. Počítadla s názvy hlídají cykly a o řadu dřív připomenou, co je třeba udělat."),
+            ("Počítadla na stránce", "Můžeš používat obyčejné počítadlo řad s tlapkou Gaby – jedno klepnutí je +1. Počítadla s názvy hlídají cykly a o řadu dřív připomenou, co je třeba udělat."),
             ("Telefon, tablet i e-ink", "Každá obrazovka má vlastní rozvržení. Na telefonu a tabletu barvy a plynulý pohyb, na čtečce e-ink klidná černá na bílé a velká tlačítka."),
         ],
         "diff_title": "Vznikla u jehlic",
@@ -387,7 +387,7 @@ T = {
         "pillars": [
             ("Findet das Diagramm selbst", "Tippe auf das Diagramm, und die App findet Rahmen und Raster und zählt die Reihen selbst. Auf einer Seite mit mehreren Diagrammen schlägt sie die Rahmen von allein vor. Du prüfst nur."),
             ("Führt dich Reihe für Reihe", "Die aktuelle Reihe ist hervorgehoben, mit der Nummer auf beiden Seiten, und der Bildschirm bleibt an. Eine große Taste „Nächste Reihe“ – bequem, wenn du die Nadeln in der anderen Hand hältst."),
-            ("Zähler auf der Seite", "Reihen aus der Anleitung zählst du mit Gabas Pfote – ein Tippen ist +1. Zähler mit Namen behalten Wiederholungen im Blick und erinnern dich eine Reihe vorher, was zu tun ist."),
+            ("Zähler auf der Seite", "Du kannst einen einfachen Reihenzähler mit Gabas Pfote nutzen – ein Tippen ist +1. Zähler mit Namen behalten Wiederholungen im Blick und erinnern dich eine Reihe vorher, was zu tun ist."),
             ("Handy, Tablet und E-Ink", "Jeder Bildschirm hat sein eigenes Layout. Auf Handy und Tablet Farbe und flüssige Bewegung, auf dem E-Ink-Reader ruhiges Schwarz auf Weiß und große Tasten."),
         ],
         "diff_title": "Entstanden beim Stricken",
@@ -510,7 +510,7 @@ T = {
         "pillars": [
             ("Finner diagrammet selv", "Trykk på diagrammet, så finner appen rammen og rutenettet og teller radene selv. På en side med flere diagrammer foreslår den rammene selv. Du sjekker bare."),
             ("Leder deg rad for rad", "Gjeldende rad er uthevet, med nummeret på begge sider, og skjermen slukker ikke. Én stor «Neste rad»-knapp – lett å trykke på når du holder pinnene i den andre hånden."),
-            ("Tellere på siden", "Rader fra oppskriften teller du med Gabas pote – ett trykk er +1. Tellere med navn holder styr på gjentakelser og minner deg én rad før på hva du skal gjøre."),
+            ("Tellere på siden", "Du kan bruke en vanlig radteller med Gabas pote – ett trykk er +1. Tellere med navn holder styr på gjentakelser og minner deg én rad før på hva du skal gjøre."),
             ("Mobil, nettbrett og e-ink", "Hver skjerm har sin egen layout. Farger og myk bevegelse på mobil og nettbrett, rolig svart på hvitt og store knapper på e-ink-leseren."),
         ],
         "diff_title": "Laget med pinnene i hånden",
@@ -633,7 +633,7 @@ T = {
         "pillars": [
             ("Finder selv diagrammet", "Tryk på diagrammet, så finder appen dets ramme og gitter og tæller selv rækkerne. På en side med flere diagrammer foreslår den selv rammerne. Du tjekker bare."),
             ("Fører dig række for række", "Den aktuelle række er fremhævet, med nummeret i begge sider, og skærmen slukker ikke. Én stor »Næste række«-knap – nem, når du holder pindene i den anden hånd."),
-            ("Tællere på siden", "Rækker fra opskriften tæller du med Gabas pote – ét tryk er +1. Tællere med navn holder styr på gentagelser og minder dig én række før om, hvad du skal gøre."),
+            ("Tællere på siden", "Du kan bruge en almindelig rækketæller med Gabas pote – ét tryk er +1. Tællere med navn holder styr på gentagelser og minder dig én række før om, hvad du skal gøre."),
             ("Mobil, tablet og e-ink", "Hver skærm har sit eget layout. Farver og bløde bevægelser på mobil og tablet, roligt sort på hvidt og store knapper på e-ink-læseren."),
         ],
         "diff_title": "Lavet med pindene i hånden",
@@ -756,7 +756,7 @@ T = {
         "pillars": [
             ("Hittar diagrammet själv", "Tryck på diagrammet, så hittar appen ramen och rutnätet och räknar varven själv. På en sida med flera diagram föreslår den ramarna själv. Du kontrollerar bara."),
             ("Guidar dig varv för varv", "Det aktuella varvet är markerat, med numret på båda sidor, och skärmen släcks inte. En stor knapp ”Nästa varv” – smidig när du håller stickorna i andra handen."),
-            ("Räknare på sidan", "Varv från mönstret räknar du med Gabas tass – ett tryck är +1. Räknare med namn håller koll på upprepningar och påminner dig ett varv innan om vad du ska göra."),
+            ("Räknare på sidan", "Du kan använda en vanlig varvräknare med Gabas tass – ett tryck är +1. Räknare med namn håller koll på upprepningar och påminner dig ett varv innan om vad du ska göra."),
             ("Mobil, surfplatta och e-ink", "Varje skärm får sin egen layout. Färg och mjuka rörelser på mobil och surfplatta, lugnt svart på vitt och stora knappar på e-ink-läsaren."),
         ],
         "diff_title": "Gjord med stickorna i hand",
