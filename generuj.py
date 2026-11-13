@@ -38,6 +38,9 @@ SHOW_PRICE = True
 # Od 2026-11-13 aplikacja jest w Google Play: oficjalne odznaki z play.google.com/intl/en_us/badges
 # (assets/badges/google-play-<język>.png, przycięte do ramki odznaki) - store_badge().
 LAUNCHED = True
+# Wersja arkusza w adresie (2026-11-13): przeglądarka trzymała stary site.css (max-age 600) przy nowym HTML-u
+# i odznaki się rozjechały - po każdej zmianie arkusza adres się zmienia.
+CSS_VER = hashlib.md5((Path(__file__).parent / "assets" / "site.css").read_bytes()).hexdigest()[:8]
 PLAY_URL = "https://play.google.com/store/apps/details?id=app.gabiknits"
 
 # Skąd przyszła instalacja (2026-10-27): parametr referrer z UTM - Play Console pokazuje go w raportach
@@ -362,7 +365,7 @@ def page(lang):
 <meta name="theme-color" content="#121820" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="{up}favicon.png">
 <link rel="preload" href="{up}assets/prata.ttf" as="font" type="font/ttf" crossorigin>
-<link rel="stylesheet" href="{up}assets/site.css">
+<link rel="stylesheet" href="{up}assets/site.css?v={CSS_VER}">
 {alts}
 </head>
 <body>
