@@ -171,21 +171,26 @@ def store_badge(lang, text, cls=""):
             f'<img src="{up}{path}?v={ver}" width="{w}" height="{h}" alt="{escape(text)}"></a>')
 
 
-def ios_soon(text, cls=""):
-    """„Niedługo w App Store” obok odznaki Google Play (prośba użytkownika 2026-11-13) - nieaktywna, bez
-    linku. NIE oficjalna odznaka Apple ani logo jabłka: wytyczne Apple pozwalają na odznakę tylko przy
-    aplikacji dostępnej w App Store. Własny znak w kształcie odznaki: przygaszony, przerywana ramka,
-    ta sama wysokość co odznaka Play. Po wejściu do App Store - oficjalna odznaka (assets/badges)."""
-    pre, sep, _ = text.partition("App Store")
-    words = (f'<span class="small">{escape(pre.strip())}</span><span class="big">App Store</span>'
-             if sep else f'<span class="big">{escape(text)}</span>')
+def ios_soon(lang, t, cls=""):
+    """Oficjalna odznaka „Pobierz z App Store” w języku strony (tools.applemediaservices.com, plik bez zmian),
+    wyszarzona, bez linku, nad nią „Niedługo w” (prośba użytkownika 2026-11-13; najpierw był własny znak
+    z przerywaną ramką - użytkownik chciał prawdziwą odznakę). Uwaga: wytyczne Apple przewidują odznakę
+    dla aplikacji dostępnej w App Store i bez zmian koloru - świadoma decyzja użytkownika. Po wejściu do
+    App Store: zdjąć wyszarzenie i napis, dodać link z UTM."""
+    up = "" if lang == "en" else "../"
+    path = f"assets/badges/app-store-{lang}.svg"
+    svg = (ROOT / path).read_text(encoding="utf-8")
+    w, h = (float(x) for x in re.search(r'<svg[^>]*\swidth="([\d.]+)"\s+height="([\d.]+)"', svg).groups())
+    ver = hashlib.md5(svg.encode()).hexdigest()[:8]
     c = f"ios-soon {cls}".strip()
-    return f'<span class="{c}" role="img" aria-label="{escape(text)}">{words}</span>'
+    return (f'<span class="{c}" role="img" aria-label="{escape(t["ios_soon"])}">'
+            f'<span class="label" aria-hidden="true">{escape(t["ios_soon_label"])}</span>'
+            f'<img src="{up}{path}?v={ver}" width="{round(w * 3)}" height="{round(h * 3)}" alt=""></span>')
 
 
 def store_badges(lang, t, cls=""):
     """Wiersz odznak: Google Play (link) + „Niedługo w App Store” (bez linku)."""
-    return f'<div class="badges">{store_badge(lang, t["get_badge"], cls)}{ios_soon(t["ios_soon"], cls)}</div>'
+    return f'<div class="badges">{store_badge(lang, t["get_badge"], cls)}{ios_soon(lang, t, cls)}</div>'
 
 
 # --- Zrzuty: prawdziwe PNG z assets/shots/<lang>/, a do czasu ich powstania szkice SVG z _szkic/

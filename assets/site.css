@@ -422,14 +422,14 @@ a.store.link:hover{filter:brightness(1.08)}
 .play-badge img{height:60px;width:auto}
 .play-badge:hover img{filter:brightness(1.15)}
 .play-badge:focus-visible{outline:3px solid var(--yarn);outline-offset:3px}
-/* Wiersz odznak: Google Play + „Niedługo w App Store” (nieaktywna, własna - nie odznaka Apple) */
-.badges{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+/* Wiersz odznak: Google Play + oficjalna odznaka App Store wyszarzona, bez linku, z „Niedługo w” nad nią */
+.badges{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 14px}
 .cta-main .badges{margin:6px 0 18px}
 .cta-main .badges .play-badge.on-dark{margin:0}
-.ios-soon{display:inline-flex;flex-direction:column;justify-content:center;height:60px;box-sizing:border-box;padding:0 18px;
-  border:1.5px dashed currentColor;border-radius:10px;color:var(--muted);line-height:1.1;cursor:default;user-select:none;opacity:.75}
-.ios-soon .small{font-size:.74rem;letter-spacing:.04em}
-.ios-soon .big{font-size:1.22rem;font-weight:600;letter-spacing:.005em}
-.ios-soon.on-dark{color:var(--cta-muted)}
-@media (max-width:640px){.ios-soon{height:54px;padding:0 14px}.ios-soon .big{font-size:1.1rem}}
+.ios-soon{display:inline-flex;flex-direction:column;align-items:flex-start;gap:4px;line-height:0;cursor:default;user-select:none}
+.ios-soon .label{line-height:1.1;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ios-soon.on-dark .label{color:var(--cta-muted)}
+.ios-soon img{height:60px;width:auto;filter:grayscale(1);opacity:.4}
+.ios-soon.on-dark img{opacity:.5}
+@media (max-width:640px){.ios-soon img{height:54px}}
 @media (max-width:640px){.play-badge img{height:54px}}
