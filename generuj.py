@@ -171,6 +171,23 @@ def store_badge(lang, text, cls=""):
             f'<img src="{up}{path}?v={ver}" width="{w}" height="{h}" alt="{escape(text)}"></a>')
 
 
+def ios_soon(text, cls=""):
+    """„Niedługo w App Store” obok odznaki Google Play (prośba użytkownika 2026-11-13) - nieaktywna, bez
+    linku. NIE oficjalna odznaka Apple ani logo jabłka: wytyczne Apple pozwalają na odznakę tylko przy
+    aplikacji dostępnej w App Store. Własny znak w kształcie odznaki: przygaszony, przerywana ramka,
+    ta sama wysokość co odznaka Play. Po wejściu do App Store - oficjalna odznaka (assets/badges)."""
+    pre, sep, _ = text.partition("App Store")
+    words = (f'<span class="small">{escape(pre.strip())}</span><span class="big">App Store</span>'
+             if sep else f'<span class="big">{escape(text)}</span>')
+    c = f"ios-soon {cls}".strip()
+    return f'<span class="{c}" role="img" aria-label="{escape(text)}">{words}</span>'
+
+
+def store_badges(lang, t, cls=""):
+    """Wiersz odznak: Google Play (link) + „Niedługo w App Store” (bez linku)."""
+    return f'<div class="badges">{store_badge(lang, t["get_badge"], cls)}{ios_soon(t["ios_soon"], cls)}</div>'
+
+
 # --- Zrzuty: prawdziwe PNG z assets/shots/<lang>/, a do czasu ich powstania szkice SVG z _szkic/
 SKETCH = {"eink": (900, 1200), "phone": (540, 1170), "tablet": (1280, 800), "counters": (540, 1170), "counters-zoom": (760, 716),
           "step1": (540, 1170), "step2": (540, 1170), "step3": (540, 1170), "menu": (540, 1170)}
@@ -306,7 +323,7 @@ def page(lang):
             f'</div>')
     if LAUNCHED:
         side = (f'<h2>{e(t["get_title"])}</h2><p>{e(t["get_text"])}</p>'
-                f'{store_badge(lang, t["get_badge"], "on-dark")}'
+                f'{store_badges(lang, t, "on-dark")}'
                 f'<p class="cta-small">{e(t["get_contact"])} <a class="mail-link" href="mailto:{EMAIL}">{EMAIL}</a></p>')
     else:
         side = (f'<h2>{e(t["cta_title"])}</h2><p>{e(t["cta_text"])}</p>'
@@ -362,7 +379,7 @@ def page(lang):
     <p class="eyebrow">{e(t["hero_eyebrow"])}</p>
     <h1>{e(t["hero_title"])}</h1>
     <p class="hero-lead">{e(t["hero_text"])}</p>
-    {store_badge(lang, t["get_badge"]) if LAUNCHED else play_badge(t["soon"])}
+    {store_badges(lang, t) if LAUNCHED else play_badge(t["soon"])}
     <ul class="trust">{trust}</ul>
   </div>
   <div class="stage">
