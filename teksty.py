@@ -77,7 +77,6 @@ T = {
             "menu": "Gabi Knits on a phone: the “…” menu open over the Gabi chart, with every tool in one place – projects, chart, draw, back to row 1, rotate, landscape, zoom, counters, history, help and settings",
         },
         "price_title": "Price",
-        "price_lead": "Two plans, no monthly subscription: a year with 7 days free, or one payment for good.",
         "plans": [
             ("Yearly", "€5.99", "per year", True),
             ("Forever", "€14.99", "one-time payment", False),
@@ -205,7 +204,6 @@ T = {
             "menu": "Gabi Knits na telefonie: rozwinięte menu „…” nad schematem Gabi, ze wszystkimi funkcjami w jednym miejscu – Projekty, Schemat, Rysuj, Do rządka 1, Obróć, Ekran poziomo, Powiększ, Liczniki, Historia, Pomoc i Ustawienia",
         },
         "price_title": "Cena",
-        "price_lead": "Dwa plany, bez abonamentu miesięcznego: rok z 7 dniami za darmo albo jedna płatność na zawsze.",
         "plans": [
             ("Rocznie", "14,99 zł", "za rok", True),
             ("Na zawsze", "39,99 zł", "jednorazowo", False),
@@ -331,7 +329,6 @@ T = {
             "menu": "Gabi Knits na telefonu: rozbalená nabídka „…“ nad schématem Gabi, se všemi funkcemi na jednom místě – projekty, schéma, kreslení, zpět na řadu 1, otočení, na šířku, zvětšení, počítadla, historie, nápověda a nastavení",
         },
         "price_title": "Cena",
-        "price_lead": "Dva plány, bez měsíčního předplatného: rok se 7 dny zdarma, nebo jedna platba navždy.",
         "plans": [
             ("Ročně", "5,99 €", "za rok", True),
             ("Navždy", "14,99 €", "jednorázově", False),
@@ -455,7 +452,6 @@ T = {
             "menu": "Gabi Knits auf dem Handy: das geöffnete Menü „…“ über dem Diagramm Gabi, mit allen Funktionen an einem Ort – Projekte, Diagramm, Zeichnen, zurück zu Reihe 1, Drehen, Querformat, Zoom, Zähler, Verlauf, Hilfe und Einstellungen",
         },
         "price_title": "Preis",
-        "price_lead": "Zwei Möglichkeiten, kein Monatsabo: ein Jahr mit 7 Tagen gratis oder eine einmalige Zahlung für immer.",
         "plans": [
             ("Jährlich", "5,99 €", "pro Jahr", True),
             ("Für immer", "14,99 €", "einmalig", False),
@@ -579,7 +575,6 @@ T = {
             "menu": "Gabi Knits på mobil: menyen «…» åpen over diagrammet Gabi, med alle funksjonene samlet – prosjekter, diagram, tegning, tilbake til rad 1, rotering, liggende, zoom, tellere, historikk, hjelp og innstillinger",
         },
         "price_title": "Pris",
-        "price_lead": "To planer, uten månedsabonnement: et år med 7 dager gratis eller én betaling for alltid.",
         "plans": [
             ("Årlig", "5,99 €", "per år", True),
             ("For alltid", "14,99 €", "engangsbetaling", False),
@@ -703,7 +698,6 @@ T = {
             "menu": "Gabi Knits på mobil: menuen »…« åben over diagrammet Gabi, med alle funktioner samlet – projekter, diagram, tegning, tilbage til række 1, drej, liggende, zoom, tællere, historik, hjælp og indstillinger",
         },
         "price_title": "Pris",
-        "price_lead": "To planer uden månedsabonnement: et år med 7 dage gratis eller én betaling for altid.",
         "plans": [
             ("Årlig", "5,99 €", "pr. år", True),
             ("For altid", "14,99 €", "engangsbetaling", False),
@@ -827,7 +821,6 @@ T = {
             "menu": "Gabi Knits i mobilen: menyn ”…” öppen över diagrammet Gabi, med alla funktioner på ett ställe – projekt, diagram, rita, tillbaka till varv 1, vrid, liggande, zoom, räknare, historik, hjälp och inställningar",
         },
         "price_title": "Pris",
-        "price_lead": "Två planer, utan månadsabonnemang: ett år med 7 dagar gratis eller en enda betalning för alltid.",
         "plans": [
             ("Årsvis", "5,99 €", "per år", True),
             ("För alltid", "14,99 €", "engångsbetalning", False),

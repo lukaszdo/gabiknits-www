@@ -332,7 +332,7 @@ def page(lang):
            f'{film}<div class="cta-main">{side}</div></div></div></section>')
     price = (
         f"""<section id="price" class="sec pricing"><div class="wrap">
-  <header class="sec-head center"><h2>{e(t["price_title"])}</h2><p class="lead">{e(t["price_lead"])}</p></header>
+  <header class="sec-head center"><h2>{e(t["price_title"])}</h2></header>
   <div class="plans{" two" if len(t["plans"]) == 2 else ""}">{plans}</div>
   <p class="note">{e(t["price_note"])}</p>
 </div></section>
