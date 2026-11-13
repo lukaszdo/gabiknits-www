@@ -28,13 +28,16 @@ FACEBOOK = "https://www.facebook.com/gabiknits"  # strona aplikacji na Facebooku
 
 # Cennik ukryty do startu w sklepie (decyzja 2026-10-08: strategia cenowa nie wychodzi przed premierą).
 # Teksty sekcji zostają w słowniku T; True przywraca sekcję „Cena” i odnośnik w nagłówku.
-SHOW_PRICE = False
+# Od 2026-11-13 (aplikacja w Google Play) cennik widoczny.
+SHOW_PRICE = True
 
 # Aplikacja w sklepie (decyzja 2026-10-09). Przed startem: „Wkrótce w Google Play” na górze i blok
 # kontaktu na dole. Po starcie (True): na górze i na dole przycisk do sklepu, a blok na dole zachęca
 # do pobrania. UWAGA: wtedy Google wymaga oficjalnej odznaki „Get it on Google Play” (wytyczne marki)
 # zamiast naszej - podmienić play_badge() na oficjalny plik odznaki w każdym języku.
-LAUNCHED = False
+# Od 2026-11-13 aplikacja jest w Google Play: oficjalne odznaki z play.google.com/intl/en_us/badges
+# (assets/badges/google-play-<język>.png, przycięte do ramki odznaki) - store_badge().
+LAUNCHED = True
 PLAY_URL = "https://play.google.com/store/apps/details?id=app.gabiknits"
 
 # Skąd przyszła instalacja (2026-10-27): parametr referrer z UTM - Play Console pokazuje go w raportach
@@ -152,6 +155,20 @@ def play_badge(text, cls="", href=None):
     if href:
         return f'<a class="{c} link" href="{href}" aria-label="{escape(text)}">{mark}<span class="words">{words}</span></a>'
     return f'<div class="{c}" role="img" aria-label="{escape(text)}">{mark}<span class="words">{words}</span></div>'
+
+
+def store_badge(lang, text, cls=""):
+    """Oficjalna odznaka Google Play w danym języku (2026-11-13) - plik bez zmian poza przycięciem
+    przezroczystych marginesów (angielska miała je szersze niż reszta). Wytyczne marki Google: odznaki
+    nie przerysowujemy ani nie przebarwiamy, prowadzi wprost do karty w sklepie. Tekst - etykieta dla
+    czytników ekranu (sam obrazek ma napis w języku strony)."""
+    up = "" if lang == "en" else "../"
+    path = f"assets/badges/google-play-{lang}.png"
+    w, h = shot_size(path, None)
+    ver = hashlib.md5((ROOT / path).read_bytes()).hexdigest()[:8]
+    c = f"play-badge {cls}".strip()
+    return (f'<a class="{c}" href="{play_url(lang)}">'
+            f'<img src="{up}{path}?v={ver}" width="{w}" height="{h}" alt="{escape(text)}"></a>')
 
 
 # --- Zrzuty: prawdziwe PNG z assets/shots/<lang>/, a do czasu ich powstania szkice SVG z _szkic/
@@ -289,7 +306,7 @@ def page(lang):
             f'</div>')
     if LAUNCHED:
         side = (f'<h2>{e(t["get_title"])}</h2><p>{e(t["get_text"])}</p>'
-                f'{play_badge(t["get_badge"], "light on-dark", href=play_url(lang))}'
+                f'{store_badge(lang, t["get_badge"], "on-dark")}'
                 f'<p class="cta-small">{e(t["get_contact"])} <a class="mail-link" href="mailto:{EMAIL}">{EMAIL}</a></p>')
     else:
         side = (f'<h2>{e(t["cta_title"])}</h2><p>{e(t["cta_text"])}</p>'
@@ -345,7 +362,7 @@ def page(lang):
     <p class="eyebrow">{e(t["hero_eyebrow"])}</p>
     <h1>{e(t["hero_title"])}</h1>
     <p class="hero-lead">{e(t["hero_text"])}</p>
-    {play_badge(t["get_badge"], href=play_url(lang)) if LAUNCHED else play_badge(t["soon"])}
+    {store_badge(lang, t["get_badge"]) if LAUNCHED else play_badge(t["soon"])}
     <ul class="trust">{trust}</ul>
   </div>
   <div class="stage">

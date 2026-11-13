@@ -415,3 +415,12 @@ ul,ol{margin:0;padding:0;list-style:none}
 a.store.link{text-decoration:none}
 a.store.link:hover{filter:brightness(1.08)}
 @media (max-width:900px){.cta-card{grid-template-columns:1fr}}
+
+/* Oficjalna odznaka Google Play (2026-11-13, aplikacja w sklepie) - obrazek bez zmian, tylko wysokość.
+   Wytyczne Google: nie mniejsza niż przyciski obok, bez przebarwiania i cieni na samej odznace. */
+.play-badge{display:inline-block;line-height:0;border-radius:10px;text-decoration:none}
+.play-badge img{height:60px;width:auto}
+.play-badge:hover img{filter:brightness(1.15)}
+.play-badge:focus-visible{outline:3px solid var(--yarn);outline-offset:3px}
+.cta-main .play-badge.on-dark{margin:6px 0 18px}
+@media (max-width:640px){.play-badge img{height:54px}}
